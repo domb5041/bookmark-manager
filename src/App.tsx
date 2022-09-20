@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useStores } from "./store";
+import { observer } from "mobx-react";
 
 const Container = styled.div`
     display: flex;
@@ -41,29 +42,76 @@ const Bookmark = styled.div`
 `;
 
 const Tag = styled.label`
-    background-color: silver;
     margin-left: 5px;
     padding: 2px 5px;
 `;
 
+const SidebarTag = styled.div<{ active: boolean }>`
+    padding: 3px 10px;
+    cursor: pointer;
+    background-color: ${props => (props.active ? "silver" : "transparent")};
+`;
+
 function App() {
     const { bookmarkStore } = useStores();
+
+    const getBookmarks = () => {
+        switch (bookmarkStore.activeFilter) {
+            case "@all":
+                return bookmarkStore.bookmarks;
+            case "@tagged":
+                return bookmarkStore.bookmarks.filter(b => b.tags.length > 0);
+            case "@untagged":
+                return bookmarkStore.bookmarks.filter(b => b.tags.length === 0);
+            default:
+                return bookmarkStore.bookmarks.filter(b => b.tags.includes(bookmarkStore.activeFilter));
+        }
+    };
+
     return (
         <Container id='app-container'>
             <Sidebar id='sidebar'>
+                <SidebarTag
+                    active={bookmarkStore.activeFilter === "@all"}
+                    onClick={() => bookmarkStore.setActiveFilter("@all")}
+                >
+                    All Items
+                </SidebarTag>
+                <SidebarTag
+                    active={bookmarkStore.activeFilter === "@tagged"}
+                    onClick={() => bookmarkStore.setActiveFilter("@tagged")}
+                >
+                    Tagged
+                </SidebarTag>
+                <SidebarTag
+                    active={bookmarkStore.activeFilter === "@untagged"}
+                    onClick={() => bookmarkStore.setActiveFilter("@untagged")}
+                    style={{ marginBottom: 10 }}
+                >
+                    Untagged
+                </SidebarTag>
                 {bookmarkStore.tags.map((tag, i) => (
-                    <div key={`${i}-${tag}`}>{tag}</div>
+                    <SidebarTag
+                        active={bookmarkStore.activeFilter === tag}
+                        onClick={() => bookmarkStore.setActiveFilter(tag)}
+                        key={`${i}-${tag}`}
+                    >
+                        #{tag}
+                    </SidebarTag>
                 ))}
             </Sidebar>
             <Container2 id='container-right'>
                 <Toolbar id='toolbar' />
                 <Container3 id='bookmarks-container'>
-                    {bookmarkStore.bookmarks.map(bookmark => (
+                    {getBookmarks().map(bookmark => (
                         <Bookmark key={bookmark.id}>
                             <a href={bookmark.url}>{bookmark.name}</a>
                             {bookmark.tags.map((tag, i) => (
-                                <Tag key={`${i}-${tag}`}>{tag}</Tag>
+                                <Tag onClick={() => bookmarkStore.setActiveFilter(tag)} key={`${i}-${tag}`}>
+                                    #{tag}
+                                </Tag>
                             ))}
+                            <button onClick={() => bookmarkStore.addTag(bookmark.id)}>+</button>
                         </Bookmark>
                     ))}
                 </Container3>
@@ -72,4 +120,4 @@ function App() {
     );
 }
 
-export default App;
+export default observer(App);
