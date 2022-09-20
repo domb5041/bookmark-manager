@@ -13,6 +13,15 @@ class bookmarkStore {
         { id: "5", name: "bookmark5", url: "url", tags: [] },
     ];
 
+    activeBookmark = "";
+    activeBookmarkIndex = -1;
+
+    setActiveBookmark = (id: string) => {
+        this.activeBookmark = id;
+        const index = this.bookmarks.findIndex(b => b.id === id);
+        this.activeBookmarkIndex = index;
+    };
+
     get tags() {
         const flattenedTags = this.bookmarks.map(b => b.tags).flat();
         const uniqueTags = [...new Set(flattenedTags)];
@@ -22,12 +31,19 @@ class bookmarkStore {
     activeFilter = "@all";
 
     setActiveFilter = (tag: string) => {
+        this.setActiveBookmark("");
         this.activeFilter = tag;
     };
 
-    addTag = (id: string) => {
-        const index = this.bookmarks.findIndex(b => b.id === id);
-        this.bookmarks[index].tags.push("newTag");
+    setTags = (tagsString: string) => {
+        const newTags = tagsString.split(", ");
+        this.bookmarks[this.activeBookmarkIndex].tags = newTags;
+    };
+
+    editTagsDialogVisible = false;
+
+    setEditTagsDialogVisible = (bool: boolean) => {
+        this.editTagsDialogVisible = bool;
     };
 }
 

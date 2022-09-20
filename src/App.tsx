@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useStores } from "./store";
 import { observer } from "mobx-react";
+import EditTags from "./components/EditTags";
 
 const Container = styled.div`
     display: flex;
@@ -23,6 +24,9 @@ const Toolbar = styled.div`
     height: 50px;
     border-bottom: 1px solid silver;
     background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
 `;
 
 const Container2 = styled.div`
@@ -36,9 +40,11 @@ const Container3 = styled.div`
     background-color: whitesmoke;
 `;
 
-const Bookmark = styled.div`
+const Bookmark = styled.div<{ active: boolean }>`
     border-bottom: 1px solid silver;
     padding: 5px;
+    background-color: ${props => (props.active ? "silver" : "transparent")};
+    cursor: pointer;
 `;
 
 const Tag = styled.label`
@@ -101,17 +107,28 @@ function App() {
                 ))}
             </Sidebar>
             <Container2 id='container-right'>
-                <Toolbar id='toolbar' />
+                <Toolbar id='toolbar'>
+                    <button
+                        onClick={() => bookmarkStore.setEditTagsDialogVisible(true)}
+                        disabled={bookmarkStore.activeBookmark === ""}
+                    >
+                        #
+                    </button>
+                </Toolbar>
+                <EditTags />
                 <Container3 id='bookmarks-container'>
                     {getBookmarks().map(bookmark => (
-                        <Bookmark key={bookmark.id}>
-                            <a href={bookmark.url}>{bookmark.name}</a>
+                        <Bookmark
+                            key={bookmark.id}
+                            onClick={() => bookmarkStore.setActiveBookmark(bookmark.id)}
+                            active={bookmarkStore.activeBookmark === bookmark.id}
+                        >
+                            <label>{bookmark.name}</label>
                             {bookmark.tags.map((tag, i) => (
                                 <Tag onClick={() => bookmarkStore.setActiveFilter(tag)} key={`${i}-${tag}`}>
                                     #{tag}
                                 </Tag>
                             ))}
-                            <button onClick={() => bookmarkStore.addTag(bookmark.id)}>+</button>
                         </Bookmark>
                     ))}
                 </Container3>
