@@ -6,11 +6,31 @@ class bookmarkStore {
     }
 
     bookmarks = [
-        { id: "1", name: "bookmark1", url: "url", tags: ["aaa", "bbb", "ccc"] },
-        { id: "2", name: "bookmark2", url: "url", tags: ["aaa", "ccc"] },
-        { id: "3", name: "bookmark3", url: "url", tags: ["bbb", "ccc"] },
-        { id: "4", name: "bookmark4", url: "url", tags: [] },
-        { id: "5", name: "bookmark5", url: "url", tags: [] },
+        {
+            id: "1",
+            name: "how-to-get-favicons-url-from-a-generic-webpage-in-javascript",
+            url: "https://stackoverflow.com/questions/10282939/how-to-get-favicons-url-from-a-generic-webpage-in-javascript",
+            tags: ["aaa", "bbb", "ccc"],
+        },
+        {
+            id: "2",
+            name: "css-transition",
+            url: "http://reactcommunity.org/react-transition-group/css-transition",
+            tags: ["aaa", "ccc"],
+        },
+        {
+            id: "3",
+            name: "bookmark-manager",
+            url: "https://github.com/domb5041/bookmark-manager",
+            tags: ["bbb", "ccc"],
+        },
+        {
+            id: "4",
+            name: "how-to-get-return-value-from-switch-statement",
+            url: "https://stackoverflow.com/questions/6612541/how-to-get-return-value-from-switch-statement",
+            tags: [],
+        },
+        { id: "5", name: "strava", url: "https://www.strava.com/dashboard", tags: [] },
     ];
 
     activeBookmark = "";

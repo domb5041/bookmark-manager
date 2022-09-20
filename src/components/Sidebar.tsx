@@ -7,6 +7,7 @@ const Container = styled.div`
     width: 250px;
     border-right: 1px solid silver;
     background-color: whitesmoke;
+    flex-shrink: 0;
 `;
 
 const SidebarTag = styled.div<{ active: boolean }>`

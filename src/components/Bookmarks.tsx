@@ -6,6 +6,7 @@ import { observer } from "mobx-react";
 const Container = styled.div`
     flex: 1;
     background-color: whitesmoke;
+    overflow: hidden;
 `;
 
 const Bookmark = styled.div<{ active: boolean }>`
@@ -13,6 +14,28 @@ const Bookmark = styled.div<{ active: boolean }>`
     padding: 5px;
     background-color: ${props => (props.active ? "silver" : "transparent")};
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    & > .bookmark-name {
+        flex: 1;
+        margin-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    & > .bookmark-url {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    & > .bookmark-tags {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 `;
 
 const Tag = styled.label`
@@ -41,13 +64,21 @@ const Bookmarks = () => {
                     key={bookmark.id}
                     onClick={() => bookmarkStore.setActiveBookmark(bookmark.id)}
                     active={bookmarkStore.activeBookmark === bookmark.id}
+                    onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
-                    <label>{bookmark.name}</label>
-                    {bookmark.tags.map((tag, i) => (
-                        <Tag onClick={() => bookmarkStore.setActiveFilter(tag)} key={`${i}-${tag}`}>
-                            #{tag}
-                        </Tag>
-                    ))}
+                    <img
+                        src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${bookmark.url}`}
+                        alt='favicon'
+                        style={{ marginRight: 5 }}
+                    />
+                    <div className='bookmark-name'>{bookmark.name}</div>
+                    <div className='bookmark-url'>{bookmark.url}</div>
+                    <div className='bookmark-tags'>
+                        {bookmark.tags.map((tag, i) => (
+                            <Tag key={`${i}-${tag}`}>#{tag}</Tag>
+                        ))}
+                    </div>
+                    <button onClick={() => window.open(bookmark.url, "_blank")}>open</button>
                 </Bookmark>
             ))}
         </Container>
