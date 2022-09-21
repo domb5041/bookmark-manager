@@ -57,30 +57,49 @@ const Bookmarks = () => {
                 return bookmarkStore.bookmarks.filter(b => b.tags.includes(bookmarkStore.activeFilter));
         }
     };
+
     return (
         <Container id='bookmarks-container'>
-            {getBookmarks().map(bookmark => (
-                <Bookmark
-                    key={bookmark.id}
-                    onClick={() => bookmarkStore.setActiveBookmark(bookmark.id)}
-                    active={bookmarkStore.activeBookmark === bookmark.id}
-                    onDoubleClick={() => window.open(bookmark.url, "_blank")}
-                >
-                    <img
-                        src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${bookmark.url}`}
-                        alt='favicon'
-                        style={{ marginRight: 5 }}
-                    />
-                    <div className='bookmark-name'>{bookmark.name}</div>
-                    <div className='bookmark-url'>{bookmark.url}</div>
-                    <div className='bookmark-tags'>
-                        {bookmark.tags.map((tag, i) => (
-                            <Tag key={`${i}-${tag}`}>#{tag}</Tag>
-                        ))}
-                    </div>
-                    <button onClick={() => window.open(bookmark.url, "_blank")}>open</button>
-                </Bookmark>
-            ))}
+            {bookmarkStore.explorerType === "list" &&
+                getBookmarks().map(bookmark => (
+                    <Bookmark
+                        key={bookmark.id}
+                        onClick={() => bookmarkStore.setActiveBookmark(bookmark.id)}
+                        active={bookmarkStore.activeBookmark === bookmark.id}
+                        onDoubleClick={() => window.open(bookmark.url, "_blank")}
+                    >
+                        <img
+                            src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${bookmark.url}`}
+                            alt='favicon'
+                            style={{ marginRight: 5 }}
+                        />
+                        <div className='bookmark-name'>{bookmark.name}</div>
+                        <div className='bookmark-url'>{bookmark.url}</div>
+                        <div className='bookmark-tags'>
+                            {bookmark.tags.map((tag, i) => (
+                                <Tag key={`${i}-${tag}`}>#{tag}</Tag>
+                            ))}
+                        </div>
+                        <button onClick={() => window.open(bookmark.url, "_blank")}>open</button>
+                    </Bookmark>
+                ))}
+            {bookmarkStore.explorerType === "thumbnails" &&
+                getBookmarks().map(bookmark => (
+                    <Bookmark
+                        key={bookmark.id}
+                        onClick={() => bookmarkStore.setActiveBookmark(bookmark.id)}
+                        active={bookmarkStore.activeBookmark === bookmark.id}
+                        onDoubleClick={() => window.open(bookmark.url, "_blank")}
+                    >
+                        <div className='bookmark-name'>{bookmark.name}</div>
+                        <div className='bookmark-url'>{bookmark.url}</div>
+                        <div className='bookmark-tags'>
+                            {bookmark.tags.map((tag, i) => (
+                                <Tag key={`${i}-${tag}`}>#{tag}</Tag>
+                            ))}
+                        </div>
+                    </Bookmark>
+                ))}
         </Container>
     );
 };

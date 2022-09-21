@@ -16,12 +16,11 @@ const Toolbar = () => {
     const { bookmarkStore } = useStores();
     return (
         <Container id='toolbar'>
-            <button
-                onClick={() => bookmarkStore.setEditTagsDialogVisible(true)}
-                disabled={bookmarkStore.activeBookmark === ""}
-            >
+            <button onClick={bookmarkStore.showEditTagsDialog} disabled={bookmarkStore.activeBookmark === ""}>
                 #
             </button>
+            <button onClick={bookmarkStore.setExplorerTypeList}>list</button>
+            <button onClick={bookmarkStore.setExplorerTypeThumbnails}>thumbnails</button>
         </Container>
     );
 };

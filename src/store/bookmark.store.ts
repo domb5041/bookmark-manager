@@ -61,10 +61,12 @@ class bookmarkStore {
     };
 
     editTagsDialogVisible = false;
+    showEditTagsDialog = () => (this.editTagsDialogVisible = true);
+    hideEditTagsDialog = () => (this.editTagsDialogVisible = false);
 
-    setEditTagsDialogVisible = (bool: boolean) => {
-        this.editTagsDialogVisible = bool;
-    };
+    explorerType = "thumbnails";
+    setExplorerTypeList = () => (this.explorerType = "list");
+    setExplorerTypeThumbnails = () => (this.explorerType = "thumbnails");
 }
 
 export default bookmarkStore;
