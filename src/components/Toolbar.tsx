@@ -15,12 +15,16 @@ const Container = styled.div`
 const Toolbar = () => {
     const { bookmarkStore } = useStores();
     return (
-        <Container id='toolbar'>
+        <Container id="toolbar">
             <button onClick={bookmarkStore.showEditTagsDialog} disabled={bookmarkStore.activeBookmark === ""}>
                 #
             </button>
             <button onClick={bookmarkStore.setExplorerTypeList}>list</button>
             <button onClick={bookmarkStore.setExplorerTypeThumbnails}>thumbnails</button>
+            <button onClick={bookmarkStore.showAddBookmarkDialog}>+</button>
+            <button onClick={bookmarkStore.showDeleteBookmarkDialog} disabled={bookmarkStore.activeBookmark === ""}>
+                delete
+            </button>
         </Container>
     );
 };

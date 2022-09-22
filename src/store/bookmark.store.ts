@@ -6,17 +6,17 @@ export interface IBookmark {
     name: string;
     url: string;
     tags: string[];
-    preview: null | {
-        contentType: string;
-        description: string;
-        favicons: string[];
-        images: string[];
-        mediaType: string;
-        siteName: string;
-        title: string;
-        url: string;
-        videos: string[];
-    };
+    // preview: null | {
+    //     contentType: string;
+    //     description: string;
+    //     favicons: string[];
+    //     images: string[];
+    //     mediaType: string;
+    //     siteName: string;
+    //     title: string;
+    //     url: string;
+    //     videos: string[];
+    // };
 }
 
 class bookmarkStore {
@@ -24,37 +24,9 @@ class bookmarkStore {
         makeAutoObservable(this);
     }
 
-    bookmarks = [
-        {
-            id: "1",
-            name: "how-to-get-favicons-url-from-a-generic-webpage-in-javascript",
-            url: "https://stackoverflow.com/questions/10282939/how-to-get-favicons-url-from-a-generic-webpage-in-javascript",
-            tags: ["aaa", "bbb", "ccc"],
-            preview: null
-        },
-        {
-            id: "2",
-            name: "css-transition",
-            url: "http://reactcommunity.org/react-transition-group/css-transition",
-            tags: ["aaa", "ccc"],
-            preview: null
-        },
-        {
-            id: "3",
-            name: "bookmark-manager",
-            url: "https://github.com/domb5041/bookmark-manager",
-            tags: ["bbb", "ccc"],
-            preview: null
-        },
-        {
-            id: "4",
-            name: "how-to-get-return-value-from-switch-statement",
-            url: "https://stackoverflow.com/questions/6612541/how-to-get-return-value-from-switch-statement",
-            tags: [],
-            preview: null
-        },
-        { id: "5", name: "strava", url: "https://www.strava.com/dashboard", tags: [], preview: null }
-    ];
+    bookmarks: IBookmark[] = [];
+
+    setBookmarks = (bookmarks: IBookmark[]) => (this.bookmarks = bookmarks);
 
     activeBookmark = "";
     activeBookmarkIndex = -1;
@@ -65,11 +37,13 @@ class bookmarkStore {
         this.activeBookmarkIndex = index;
     };
 
-    get tags() {
+    tags: string[] = [];
+
+    getTags = () => {
         const flattenedTags = this.bookmarks.map((b) => b.tags).flat();
         const uniqueTags = [...new Set(flattenedTags)];
-        return uniqueTags;
-    }
+        this.tags = uniqueTags;
+    };
 
     activeFilter = "@all";
 
@@ -78,37 +52,40 @@ class bookmarkStore {
         this.activeFilter = tag;
     };
 
-    setTags = (tagsString: string) => {
-        const newTags = tagsString.split(", ");
-        this.bookmarks[this.activeBookmarkIndex].tags = newTags;
-    };
-
     editTagsDialogVisible = false;
     showEditTagsDialog = () => (this.editTagsDialogVisible = true);
     hideEditTagsDialog = () => (this.editTagsDialogVisible = false);
 
-    explorerType = "thumbnails";
+    addBookmarkDialogVisible = false;
+    showAddBookmarkDialog = () => (this.addBookmarkDialogVisible = true);
+    hideAddBookmarkDialog = () => (this.addBookmarkDialogVisible = false);
+
+    deleteBookmarkDialogVisible = false;
+    showDeleteBookmarkDialog = () => (this.deleteBookmarkDialogVisible = true);
+    hideDeleteBookmarkDialog = () => (this.deleteBookmarkDialogVisible = false);
+
+    explorerType = "list";
     setExplorerTypeList = () => (this.explorerType = "list");
     setExplorerTypeThumbnails = () => (this.explorerType = "thumbnails");
 
-    getBookmarkPreviews = () => {
-        this.bookmarks.forEach(
-            action((b) => {
-                axios({
-                    method: "get",
-                    url: `/link-preview?url=${b.url}`
-                })
-                    .then(
-                        action((res) => {
-                            b.preview = res.data;
-                        })
-                    )
-                    .catch((err: Error) => {
-                        console.error(err);
-                    });
-            })
-        );
-    };
+    // getBookmarkPreviews = () => {
+    //     this.bookmarks.forEach(
+    //         action((b) => {
+    //             axios({
+    //                 method: "get",
+    //                 url: `/link-preview?url=${b.url}`
+    //             })
+    //                 .then(
+    //                     action((res) => {
+    //                         b.preview = res.data;
+    //                     })
+    //                 )
+    //                 .catch((err: Error) => {
+    //                     console.error(err);
+    //                 });
+    //         })
+    //     );
+    // };
 }
 
 export default bookmarkStore;

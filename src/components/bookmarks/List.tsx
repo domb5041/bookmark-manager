@@ -45,22 +45,23 @@ const Tag = styled.label`
 `;
 
 interface IListProps {
-    bookmarks: IBookmark[];
+    bookmarks: IBookmark[] | null;
 }
 
 const List: FC<IListProps> = ({ bookmarks }) => {
     const { bookmarkStore } = useStores();
     return (
         <Container id="bookmarks-container-list">
-            {bookmarks.map((bookmark) => (
+            {bookmarks?.map((bookmark) => (
                 <Bookmark
+                    id={`bookmark-${bookmark.id}`}
                     key={bookmark.id}
                     onClick={() => bookmarkStore.setActiveBookmark(bookmark.id)}
                     active={bookmarkStore.activeBookmark === bookmark.id}
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
                     <img
-                        src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${bookmark.url}`}
+                        src={bookmark.url && `https://s2.googleusercontent.com/s2/favicons?domain_url=${bookmark.url}`}
                         alt="favicon"
                         style={{ marginRight: 5 }}
                     />

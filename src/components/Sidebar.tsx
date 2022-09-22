@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
@@ -13,13 +13,18 @@ const Container = styled.div`
 const SidebarTag = styled.div<{ active: boolean }>`
     padding: 3px 10px;
     cursor: pointer;
-    background-color: ${props => (props.active ? "silver" : "transparent")};
+    background-color: ${(props) => (props.active ? "silver" : "transparent")};
 `;
 
 const Sidebar = () => {
     const { bookmarkStore } = useStores();
+
+    useEffect(() => {
+        bookmarkStore.getTags();
+    }, [bookmarkStore.bookmarks]);
+
     return (
-        <Container id='sidebar'>
+        <Container id="sidebar">
             <SidebarTag
                 active={bookmarkStore.activeFilter === "@all"}
                 onClick={() => bookmarkStore.setActiveFilter("@all")}

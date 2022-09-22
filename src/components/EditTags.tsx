@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useStores } from "../store";
 import DialogBox from "./DialogBox";
 import { observer } from "mobx-react";
+import { updateDoc, doc } from "@firebase/firestore";
+import { db } from "../firebase-config";
 
 const EditTags = () => {
     const { bookmarkStore } = useStores();
@@ -15,14 +17,22 @@ const EditTags = () => {
         setTags(initialValue);
     }, [bookmarkStore.activeBookmarkIndex, bookmarkStore.bookmarks]);
 
+    const updateTags = async (tagsString: string) => {
+        const newTags = tagsString.split(", ");
+        const id = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex].id;
+        // this.bookmarks[this.activeBookmarkIndex].tags = newTags;
+        const bookmarkDoc = doc(db, "bookmarks", id);
+        await updateDoc(bookmarkDoc, { tags: newTags });
+    };
+
     return (
         <DialogBox
-            title='Edit Tags'
+            title="Edit Tags"
             active={bookmarkStore.editTagsDialogVisible}
             close={bookmarkStore.hideEditTagsDialog}
-            onConfirm={() => bookmarkStore.setTags(tags)}
+            onConfirm={() => updateTags(tags)}
         >
-            <input value={tags} onChange={e => setTags(e.target.value)} />
+            <input value={tags} onChange={(e) => setTags(e.target.value)} />
         </DialogBox>
     );
 };
