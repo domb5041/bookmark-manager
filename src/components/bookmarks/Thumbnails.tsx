@@ -5,6 +5,7 @@ import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
 import Favicon from "./Favicon";
 import PreviewImg from "./PreviewImg";
+import Tag from "./Tag";
 
 const Container = styled.div`
     flex: 1;
@@ -49,11 +50,6 @@ const Bookmark = styled.div<{ active: boolean }>`
     }
 `;
 
-const Tag = styled.label`
-    margin-left: 5px;
-    padding: 2px 5px;
-`;
-
 interface IThumbnailsProps {
     bookmarks: IBookmark[];
 }
@@ -76,7 +72,7 @@ const Thumbnails: FC<IThumbnailsProps> = ({ bookmarks }) => {
                     <div className="bookmark-url">{bookmark.url}</div>
                     <div className="bookmark-tags">
                         {bookmark.tags.map((tag, i) => (
-                            <Tag key={`${i}-${tag}`}>#{tag}</Tag>
+                            <Tag key={`${i}-${tag}`} name={tag} />
                         ))}
                     </div>
                 </Bookmark>
