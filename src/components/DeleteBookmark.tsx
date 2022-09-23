@@ -21,6 +21,7 @@ const DeleteBookmark = () => {
             close={bookmarkStore.hideDeleteBookmarkDialog}
             confirmButton={{
                 text: "delete",
+                id: "delete-bookmark-confirm",
                 onClick: () => {
                     deleteBookmark();
                     bookmarkStore.hideDeleteBookmarkDialog();

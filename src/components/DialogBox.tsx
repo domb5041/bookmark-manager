@@ -1,6 +1,7 @@
-import React, { FC, ReactElement, useRef } from "react";
+import React, { FC, useRef } from "react";
 import styled from "styled-components";
 import { CSSTransition } from "react-transition-group";
+import Button from "./Button";
 
 const Container = styled.div`
     position: fixed;
@@ -72,7 +73,7 @@ interface IButton {
     text: string;
     onClick: () => void;
     disabled?: boolean;
-    id?: string;
+    id: string;
 }
 
 const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confirmButton }) => {
@@ -84,17 +85,16 @@ const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confir
                     <Header>{title}</Header>
                     <Body>{children}</Body>
                     <Footer>
-                        <button onClick={close}>cancel</button>
-                        <button
+                        <Button id="modal-cancel" onClick={close} text="cancel" />
+                        <Button
                             id={confirmButton.id}
+                            text={confirmButton.text}
                             disabled={confirmButton.disabled}
                             onClick={() => {
                                 confirmButton.onClick();
                                 close();
                             }}
-                        >
-                            {confirmButton.text}
-                        </button>
+                        />
                     </Footer>
                 </div>
             </Container>

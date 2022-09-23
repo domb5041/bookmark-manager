@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
+import Button from "./Button";
 
 const Container = styled.div`
     height: 50px;
@@ -16,15 +17,21 @@ const Toolbar = () => {
     const { bookmarkStore } = useStores();
     return (
         <Container id="toolbar">
-            <button onClick={bookmarkStore.showEditTagsDialog} disabled={bookmarkStore.activeBookmark === ""}>
-                #
-            </button>
-            <button onClick={bookmarkStore.setExplorerTypeList}>list</button>
-            <button onClick={bookmarkStore.setExplorerTypeThumbnails}>thumbnails</button>
-            <button onClick={bookmarkStore.showAddBookmarkDialog}>+</button>
-            <button onClick={bookmarkStore.showDeleteBookmarkDialog} disabled={bookmarkStore.activeBookmark === ""}>
-                delete
-            </button>
+            <Button
+                symbol="tag"
+                onClick={bookmarkStore.showEditTagsDialog}
+                disabled={bookmarkStore.activeBookmark === ""}
+                id="edit-tags-button"
+            />
+            <Button symbol="view_list" onClick={bookmarkStore.setExplorerTypeList} id="list-view-button" />
+            <Button symbol="grid_view" onClick={bookmarkStore.setExplorerTypeThumbnails} id="thumbnail-view-button" />
+            <Button symbol="add" onClick={bookmarkStore.showAddBookmarkDialog} id="add-bookmark-button" />
+            <Button
+                symbol="delete"
+                onClick={bookmarkStore.showDeleteBookmarkDialog}
+                disabled={bookmarkStore.activeBookmark === ""}
+                id="add-bookmark-button"
+            />
         </Container>
     );
 };

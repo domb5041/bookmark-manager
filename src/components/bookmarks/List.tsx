@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
+import Button from "../Button";
 
 const Container = styled.div`
     flex: 1;
@@ -68,7 +69,11 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                             <Tag key={`${i}-${tag}`}>#{tag}</Tag>
                         ))}
                     </div>
-                    <button onClick={() => window.open(bookmark.url, "_blank")}>open</button>
+                    <Button
+                        symbol="arrow_forward"
+                        onClick={() => window.open(bookmark.url, "_blank")}
+                        id="open-bookmark-button"
+                    />
                 </Bookmark>
             ))}
         </Container>

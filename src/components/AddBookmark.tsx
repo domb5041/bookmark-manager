@@ -66,6 +66,7 @@ const AddBookmark = () => {
             close={resetDialog}
             confirmButton={{
                 text: "save",
+                id: "save-bookmark-confirm",
                 disabled: !preview,
                 onClick: () => {
                     createBookmark();
