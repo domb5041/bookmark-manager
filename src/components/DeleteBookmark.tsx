@@ -19,9 +19,12 @@ const DeleteBookmark = () => {
             title="Delete Bookmark"
             active={bookmarkStore.deleteBookmarkDialogVisible}
             close={bookmarkStore.hideDeleteBookmarkDialog}
-            onConfirm={() => {
-                deleteBookmark();
-                bookmarkStore.hideDeleteBookmarkDialog();
+            confirmButton={{
+                text: "delete",
+                onClick: () => {
+                    deleteBookmark();
+                    bookmarkStore.hideDeleteBookmarkDialog();
+                }
             }}
         >
             <p>Are you sure?</p>

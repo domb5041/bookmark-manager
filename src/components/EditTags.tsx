@@ -29,7 +29,7 @@ const EditTags = () => {
             title="Edit Tags"
             active={bookmarkStore.editTagsDialogVisible}
             close={bookmarkStore.hideEditTagsDialog}
-            onConfirm={updateTags}
+            confirmButton={{ onClick: () => updateTags(), text: "Update" }}
         >
             <input value={tags} onChange={(e) => setTags(e.target.value)} />
         </DialogBox>

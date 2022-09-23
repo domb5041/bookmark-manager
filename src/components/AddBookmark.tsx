@@ -64,13 +64,18 @@ const AddBookmark = () => {
             title="Add Bookmark"
             active={bookmarkStore.addBookmarkDialogVisible}
             close={resetDialog}
-            onConfirm={() => {
-                createBookmark();
-                resetDialog();
+            confirmButton={{
+                text: "save",
+                disabled: !preview,
+                onClick: () => {
+                    createBookmark();
+                    resetDialog();
+                }
             }}
         >
             <input
                 value={url}
+                type="url"
                 placeholder="url"
                 onChange={(e) => {
                     debounce(() => getPreview(e.target.value), 500);

@@ -64,11 +64,18 @@ interface IDialogBoxProps {
     children: any;
     active: boolean;
     close: () => void;
-    onConfirm: () => void;
     title: string;
+    confirmButton: IButton;
 }
 
-const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, onConfirm }) => {
+interface IButton {
+    text: string;
+    onClick: () => void;
+    disabled?: boolean;
+    id?: string;
+}
+
+const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confirmButton }) => {
     const nodeRef = useRef(null);
     return (
         <CSSTransition nodeRef={nodeRef} in={active} unmountOnExit timeout={200} classNames="dialog-container">
@@ -79,12 +86,14 @@ const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, onConf
                     <Footer>
                         <button onClick={close}>cancel</button>
                         <button
+                            id={confirmButton.id}
+                            disabled={confirmButton.disabled}
                             onClick={() => {
-                                onConfirm();
+                                confirmButton.onClick();
                                 close();
                             }}
                         >
-                            confirm
+                            {confirmButton.text}
                         </button>
                     </Footer>
                 </div>
