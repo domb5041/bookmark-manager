@@ -1,22 +1,13 @@
-import axios from "axios";
-import { action, makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 export interface IBookmark {
     id: string;
     name: string;
     url: string;
     tags: string[];
-    // preview: null | {
-    //     contentType: string;
-    //     description: string;
-    //     favicons: string[];
-    //     images: string[];
-    //     mediaType: string;
-    //     siteName: string;
-    //     title: string;
-    //     url: string;
-    //     videos: string[];
-    // };
+    image?: string;
+    favicon?: string;
+    description?: string;
 }
 
 class bookmarkStore {
@@ -67,25 +58,6 @@ class bookmarkStore {
     explorerType = "list";
     setExplorerTypeList = () => (this.explorerType = "list");
     setExplorerTypeThumbnails = () => (this.explorerType = "thumbnails");
-
-    // getBookmarkPreviews = () => {
-    //     this.bookmarks.forEach(
-    //         action((b) => {
-    //             axios({
-    //                 method: "get",
-    //                 url: `/link-preview?url=${b.url}`
-    //             })
-    //                 .then(
-    //                     action((res) => {
-    //                         b.preview = res.data;
-    //                     })
-    //                 )
-    //                 .catch((err: Error) => {
-    //                     console.error(err);
-    //                 });
-    //         })
-    //     );
-    // };
 }
 
 export default bookmarkStore;

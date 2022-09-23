@@ -25,7 +25,7 @@ const Container = styled.div`
         max-width: 100%;
         max-height: 100%;
         width: 300px;
-        height: 200px;
+        height: 500px;
         border: 1px solid silver;
     }
     &.dialog-container-enter {
@@ -51,6 +51,7 @@ const Header = styled.div`
 const Body = styled.div`
     padding: 20px;
     flex: 1;
+    overflow-y: auto;
 `;
 
 const Footer = styled.div`
@@ -60,7 +61,7 @@ const Footer = styled.div`
 `;
 
 interface IDialogBoxProps {
-    children: ReactElement;
+    children: any;
     active: boolean;
     close: () => void;
     onConfirm: () => void;
@@ -70,9 +71,9 @@ interface IDialogBoxProps {
 const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, onConfirm }) => {
     const nodeRef = useRef(null);
     return (
-        <CSSTransition nodeRef={nodeRef} in={active} unmountOnExit timeout={200} classNames='dialog-container'>
+        <CSSTransition nodeRef={nodeRef} in={active} unmountOnExit timeout={200} classNames="dialog-container">
             <Container ref={nodeRef}>
-                <div className='dialog-panel' onClick={e => e.stopPropagation()}>
+                <div className="dialog-panel" onClick={(e) => e.stopPropagation()}>
                     <Header>{title}</Header>
                     <Body>{children}</Body>
                     <Footer>

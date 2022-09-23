@@ -17,10 +17,9 @@ const EditTags = () => {
         setTags(initialValue);
     }, [bookmarkStore.activeBookmarkIndex, bookmarkStore.bookmarks]);
 
-    const updateTags = async (tagsString: string) => {
-        const newTags = tagsString.split(", ");
+    const updateTags = async () => {
+        const newTags = tags.split(", ");
         const id = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex].id;
-        // this.bookmarks[this.activeBookmarkIndex].tags = newTags;
         const bookmarkDoc = doc(db, "bookmarks", id);
         await updateDoc(bookmarkDoc, { tags: newTags });
     };
@@ -30,7 +29,7 @@ const EditTags = () => {
             title="Edit Tags"
             active={bookmarkStore.editTagsDialogVisible}
             close={bookmarkStore.hideEditTagsDialog}
-            onConfirm={() => updateTags(tags)}
+            onConfirm={updateTags}
         >
             <input value={tags} onChange={(e) => setTags(e.target.value)} />
         </DialogBox>

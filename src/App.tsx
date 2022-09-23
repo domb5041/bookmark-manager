@@ -33,10 +33,6 @@ const MainArea = styled.div`
 function App() {
     const { bookmarkStore } = useStores();
 
-    // useEffect(() => {
-    //     bookmarkStore.getBookmarkPreviews();
-    // }, []);
-
     useEffect(() => {
         const getBookmarks = async () => {
             const data = await getDocs(bookmarksCollectionRef);

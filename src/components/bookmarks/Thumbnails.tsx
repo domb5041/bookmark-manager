@@ -67,8 +67,10 @@ const Thumbnails: FC<IThumbnailsProps> = ({ bookmarks }) => {
                     active={bookmarkStore.activeBookmark === bookmark.id}
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
-                    {/* <img src={bookmark.preview?.images[0]} alt="favicon" style={{ marginRight: 5 }} /> */}
-                    <div className="bookmark-name">{bookmark.name}</div>
+                    <img src={bookmark.image} alt="preview" style={{ marginRight: 5 }} />
+                    <img src={bookmark.favicon} alt="preview" style={{ marginRight: 5, width: 20 }} />
+                    <b className="bookmark-name">{bookmark.name}</b>
+                    <p className="bookmark-description">{bookmark.description}</p>
                     <div className="bookmark-url">{bookmark.url}</div>
                     <div className="bookmark-tags">
                         {bookmark.tags.map((tag, i) => (

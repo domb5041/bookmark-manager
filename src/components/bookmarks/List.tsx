@@ -7,7 +7,7 @@ import { IBookmark } from "../../store/bookmark.store";
 const Container = styled.div`
     flex: 1;
     background-color: whitesmoke;
-    overflow: hidden;
+    overflow: auto;
 `;
 
 const Bookmark = styled.div<{ active: boolean }>`
@@ -60,11 +60,7 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                     active={bookmarkStore.activeBookmark === bookmark.id}
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
-                    <img
-                        src={bookmark.url && `https://s2.googleusercontent.com/s2/favicons?domain_url=${bookmark.url}`}
-                        alt="favicon"
-                        style={{ marginRight: 5 }}
-                    />
+                    <img src={bookmark.favicon} alt="favicon" style={{ marginRight: 5, width: 20 }} />
                     <div className="bookmark-name">{bookmark.name}</div>
                     <div className="bookmark-url">{bookmark.url}</div>
                     <div className="bookmark-tags">
