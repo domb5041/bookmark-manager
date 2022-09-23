@@ -5,6 +5,7 @@ import DialogBox from "./DialogBox";
 import { addDoc } from "@firebase/firestore";
 import { bookmarksCollectionRef } from "../App";
 import axios from "axios";
+import { debounce } from "../utilities";
 
 interface IPreview {
     contentType: string;
@@ -36,17 +37,18 @@ const AddBookmark = () => {
         });
     };
 
-    const getPreview = () => {
+    const getPreview = (url: string) => {
         axios({
             method: "get",
             url: `/link-preview?url=${url}`
         })
             .then((res) => {
                 setPreview(res.data);
-                console.log(res.data);
+                // console.log(res.data);
             })
             .catch((err: Error) => {
                 console.error(err);
+                setPreview(null);
             });
     };
 
@@ -67,15 +69,21 @@ const AddBookmark = () => {
                 resetDialog();
             }}
         >
-            <input value={url} onChange={(e) => setUrl(e.target.value)} />
-            <button onClick={() => getPreview()}>get preview</button>
+            <input
+                value={url}
+                placeholder="url"
+                onChange={(e) => {
+                    debounce(() => getPreview(e.target.value), 500);
+                    setUrl(e.target.value);
+                }}
+            />
+            <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="tags" />
             {preview && (
                 <>
                     <img src={preview.images[0]} style={{ width: " 100%" }} alt="preview-img" />
                     <img src={preview.favicons[0]} alt="preview-img" />
                     <b>{preview.title}</b>
                     <p>{preview.description}</p>
-                    <input value={tags} onChange={(e) => setTags(e.target.value)} />
                 </>
             )}
         </DialogBox>
