@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
 import Button from "../Button";
+import Favicon from "./Favicon";
 
 const Container = styled.div`
     flex: 1;
@@ -61,7 +62,7 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                     active={bookmarkStore.activeBookmark === bookmark.id}
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
-                    <img src={bookmark.favicon} alt="favicon" style={{ marginRight: 5, width: 20 }} />
+                    <Favicon url={bookmark.favicon} />
                     <div className="bookmark-name">{bookmark.name}</div>
                     <div className="bookmark-url">{bookmark.url}</div>
                     <div className="bookmark-tags">

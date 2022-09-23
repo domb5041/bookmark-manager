@@ -6,6 +6,8 @@ import { addDoc } from "@firebase/firestore";
 import { bookmarksCollectionRef } from "../App";
 import axios from "axios";
 import { debounce } from "../utilities";
+import PreviewImg from "./bookmarks/PreviewImg";
+import Favicon from "./bookmarks/Favicon";
 
 interface IPreview {
     contentType: string;
@@ -86,8 +88,8 @@ const AddBookmark = () => {
             <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="tags" />
             {preview && (
                 <>
-                    <img src={preview.images[0]} style={{ width: " 100%" }} alt="preview-img" />
-                    <img src={preview.favicons[0]} alt="preview-img" />
+                    <PreviewImg url={preview.images[0]} />
+                    <Favicon url={preview.favicons[0]} />
                     <b>{preview.title}</b>
                     <p>{preview.description}</p>
                 </>

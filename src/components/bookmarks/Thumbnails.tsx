@@ -3,6 +3,8 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
+import Favicon from "./Favicon";
+import PreviewImg from "./PreviewImg";
 
 const Container = styled.div`
     flex: 1;
@@ -67,8 +69,8 @@ const Thumbnails: FC<IThumbnailsProps> = ({ bookmarks }) => {
                     active={bookmarkStore.activeBookmark === bookmark.id}
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
-                    <img src={bookmark.image} alt="preview" style={{ marginRight: 5 }} />
-                    <img src={bookmark.favicon} alt="preview" style={{ marginRight: 5, width: 20 }} />
+                    <PreviewImg url={bookmark.image} />
+                    <Favicon url={bookmark.favicon} />
                     <b className="bookmark-name">{bookmark.name}</b>
                     <p className="bookmark-description">{bookmark.description}</p>
                     <div className="bookmark-url">{bookmark.url}</div>
