@@ -66,6 +66,9 @@ class bookmarkStore {
     explorerType = "list";
     setExplorerTypeList = () => (this.explorerType = "list");
     setExplorerTypeThumbnails = () => (this.explorerType = "thumbnails");
+
+    tagsInput: string[] = [];
+    setTagsInput = (tags: string[]) => (this.tagsInput = tags);
 }
 
 export default bookmarkStore;

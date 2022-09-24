@@ -8,6 +8,7 @@ import axios from "axios";
 import { debounce } from "../utilities";
 import PreviewImg from "./bookmarks/PreviewImg";
 import Favicon from "./bookmarks/Favicon";
+import TagsInput from "./TagsInput";
 
 interface IPreview {
     contentType: string;
@@ -25,7 +26,6 @@ const AddBookmark = () => {
     const { bookmarkStore } = useStores();
     const [url, setUrl] = useState("");
     const [preview, setPreview] = useState<IPreview | null>(null);
-    const [tags, setTags] = useState("");
 
     const createBookmark = async () => {
         if (!preview) return;
@@ -33,7 +33,7 @@ const AddBookmark = () => {
             name: preview.title || "",
             description: preview.description || "",
             url: url,
-            tags: tags === "" ? [] : tags.split(", "),
+            tags: bookmarkStore.tagsInput,
             image: preview.images[0] || "",
             favicon: preview.favicons[0] || ""
         });
@@ -56,8 +56,8 @@ const AddBookmark = () => {
 
     const resetDialog = () => {
         bookmarkStore.hideAddBookmarkDialog();
+        bookmarkStore.setTagsInput([]);
         setPreview(null);
-        setTags("");
         setUrl("");
     };
 
@@ -66,6 +66,7 @@ const AddBookmark = () => {
             title="Add Bookmark"
             active={bookmarkStore.addBookmarkDialogVisible}
             close={resetDialog}
+            onEnter={() => bookmarkStore.setTagsInput([])}
             confirmButton={{
                 text: "save",
                 id: "save-bookmark-confirm",
@@ -85,7 +86,7 @@ const AddBookmark = () => {
                     setUrl(e.target.value);
                 }}
             />
-            <input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="tags" />
+            <TagsInput />
             {preview && (
                 <>
                     <PreviewImg url={preview.images[0]} />
