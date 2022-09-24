@@ -67,6 +67,7 @@ interface IDialogBoxProps {
     close: () => void;
     title: string;
     confirmButton: IButton;
+    onEnter?: () => void;
 }
 
 interface IButton {
@@ -76,10 +77,17 @@ interface IButton {
     id: string;
 }
 
-const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confirmButton }) => {
+const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confirmButton, onEnter }) => {
     const nodeRef = useRef(null);
     return (
-        <CSSTransition nodeRef={nodeRef} in={active} unmountOnExit timeout={200} classNames="dialog-container">
+        <CSSTransition
+            nodeRef={nodeRef}
+            in={active}
+            unmountOnExit
+            timeout={200}
+            classNames="dialog-container"
+            onEnter={onEnter}
+        >
             <Container ref={nodeRef}>
                 <div className="dialog-panel" onClick={(e) => e.stopPropagation()}>
                     <Header>{title}</Header>

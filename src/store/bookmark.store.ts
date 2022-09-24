@@ -55,6 +55,14 @@ class bookmarkStore {
     showDeleteBookmarkDialog = () => (this.deleteBookmarkDialogVisible = true);
     hideDeleteBookmarkDialog = () => (this.deleteBookmarkDialogVisible = false);
 
+    renameTagDialogVisible = false;
+    showRenameTagDialog = () => (this.renameTagDialogVisible = true);
+    hideRenameTagDialog = () => (this.renameTagDialogVisible = false);
+
+    deleteTagDialogVisible = false;
+    showDeleteTagDialog = () => (this.deleteTagDialogVisible = true);
+    hideDeleteTagDialog = () => (this.deleteTagDialogVisible = false);
+
     explorerType = "list";
     setExplorerTypeList = () => (this.explorerType = "list");
     setExplorerTypeThumbnails = () => (this.explorerType = "thumbnails");
