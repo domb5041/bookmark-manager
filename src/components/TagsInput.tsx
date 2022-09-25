@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useStores } from "../store";
 import Tag from "./bookmarks/Tag";
@@ -21,51 +21,116 @@ const HiddenInput = styled.input`
     background-color: transparent;
 `;
 
+const SuggestionContainer = styled.div`
+    position: relative;
+`;
+
+const TagsSuggest = styled.div`
+    position: absolute;
+    background-color: white;
+    border: 1px solid silver;
+    top: 110%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const TagSuggestRow = styled.div<{ active: boolean }>`
+    padding: 2px 10px 2px 7px;
+    background-color: ${(props) => (props.active ? "yellow" : "transparent")};
+    cursor: pointer;
+    &:first-of-type {
+        margin-top: 2px;
+    }
+    &:last-of-type {
+        margin-bottom: 2px;
+    }
+`;
+
 const TagsInput = () => {
     const { bookmarkStore } = useStores();
     const [newTag, setNewTag] = useState("");
     const [activeTagIndex, setActiveTagIndex] = useState(-1);
+    const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
+    const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
+    const [flipListAlignment, setFlipListAlignment] = useState(false);
 
-    const addTag = (validKey: boolean) => {
+    const addTag = () => {
         const notEmpty = newTag !== "";
         const notDuplicate = !bookmarkStore.tagsInput.includes(newTag);
-        if (validKey && notEmpty && notDuplicate) {
+        if (notEmpty && notDuplicate) {
             const updatedTags = [...bookmarkStore.tagsInput];
             updatedTags.push(newTag);
             bookmarkStore.setTagsInput(updatedTags);
             setNewTag("");
+            setActiveSuggestionIndex(-1);
+            setTagSuggestions([]);
         }
     };
 
     const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const validKey = e.key === "Backspace" || e.key === "ArrowLeft";
+        const key = {
+            back: e.key === "Backspace" || e.key === "ArrowLeft",
+            arrowDown: e.key === "ArrowDown",
+            arrowUp: e.key === "ArrowUp",
+            tab: e.key === "Tab",
+            enter: e.key === "Enter"
+        };
         const emptyInput = newTag === "";
         const cursorAtZero = inputRef?.current?.selectionStart === 0 && inputRef?.current?.selectionEnd === 0;
         const activeTag = activeTagIndex >= 0;
-        if (e.key === "Tab" && !emptyInput) {
+
+        if (key.tab && !emptyInput) {
             e.preventDefault();
         }
-        if (validKey && cursorAtZero && !activeTag) {
+        if (key.back && cursorAtZero && !activeTag) {
             focusTag(bookmarkStore.tagsInput.length - 1);
+        }
+        if (key.arrowDown && activeSuggestionIndex < tagSuggestions.length - 1) {
+            setActiveSuggestionIndex(activeSuggestionIndex + 1);
+            setNewTag(tagSuggestions[activeSuggestionIndex + 1]);
+            focusInput();
+        }
+        if (key.arrowUp && activeSuggestionIndex > 0) {
+            setActiveSuggestionIndex(activeSuggestionIndex - 1);
+            setNewTag(tagSuggestions[activeSuggestionIndex - 1]);
+            focusInput();
+        }
+        if (key.enter || key.tab) {
+            addTag();
         }
     };
 
+    const getTagsSuggestAlignment = () => {
+        const container = document.getElementById("tags-input-container");
+        const element = document.getElementById("suggestion-container");
+        const list = document.getElementById("suggestion-list");
+        if (!container || !element || !list) return;
+        const spaceRemaining = container.offsetLeft + container.offsetWidth - element.offsetLeft;
+        setFlipListAlignment(spaceRemaining < list.offsetWidth);
+    };
+
+    useEffect(() => getTagsSuggestAlignment(), [newTag, bookmarkStore.tagsInput]);
+
     const handleTagKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        const backspaceKey = e.key === "Backspace";
-        const keyLeft = e.key === "ArrowLeft";
-        const keyRight = e.key === "ArrowRight";
-        const activeTag = activeTagIndex >= 0;
-        if (keyLeft && activeTagIndex > 0) {
+        const key = {
+            arrowLeft: e.key === "ArrowLeft",
+            arrowRight: e.key === "ArrowRight",
+            backspace: e.key === "Backspace"
+        };
+        const tagIndex = {
+            exists: activeTagIndex > -1,
+            notFirst: activeTagIndex > 0,
+            notLast: activeTagIndex < bookmarkStore.tagsInput.length - 1,
+            isLast: activeTagIndex === bookmarkStore.tagsInput.length - 1
+        };
+
+        if (key.arrowLeft && tagIndex.notFirst) {
             focusTag(activeTagIndex - 1);
         }
-        if (keyRight) {
-            if (activeTagIndex < bookmarkStore.tagsInput.length - 1) {
-                focusTag(activeTagIndex + 1);
-            } else if (activeTagIndex === bookmarkStore.tagsInput.length - 1) {
-                focusInput();
-            }
+        if (key.arrowRight) {
+            if (tagIndex.notLast) focusTag(activeTagIndex + 1);
+            else if (tagIndex.isLast) focusInput();
         }
-        if (backspaceKey && activeTag) {
+        if (key.backspace && tagIndex.exists) {
             focusInput();
             const updatedTags = [...bookmarkStore.tagsInput];
             updatedTags.splice(activeTagIndex, 1);
@@ -85,7 +150,7 @@ const TagsInput = () => {
     };
 
     return (
-        <Container onClick={focusInput}>
+        <Container onClick={focusInput} id="tags-input-container">
             {bookmarkStore.tagsInput.map((tag, i) => (
                 <Tag
                     name={tag}
@@ -100,19 +165,36 @@ const TagsInput = () => {
                     onFocus={() => setActiveTagIndex(i)}
                 />
             ))}
-            <HiddenInput
-                style={{ width: newTag.length + "ch" }}
-                value={newTag}
-                onChange={(e) => setNewTag(e.target.value)}
-                onFocus={() => setActiveTagIndex(-1)}
-                onBlur={() => addTag(true)}
-                onKeyDown={(e) => {
-                    addTag(e.key === "Enter" || e.key === "Tab");
-                    handleInputKeyPress(e);
-                }}
-                placeholder={bookmarkStore.tagsInput.length > 0 ? "" : "tags"}
-                ref={inputRef}
-            />
+            <SuggestionContainer id="suggestion-container">
+                <HiddenInput
+                    style={{ width: newTag.length + "ch" }}
+                    value={newTag}
+                    onChange={(e) => {
+                        setNewTag(e.target.value);
+                        setTagSuggestions(e.target.value === "" ? [] : bookmarkStore.tags);
+                    }}
+                    onFocus={() => {
+                        setActiveTagIndex(-1);
+                    }}
+                    onBlur={() => addTag()}
+                    onKeyDown={(e) => handleInputKeyPress(e)}
+                    placeholder={bookmarkStore.tagsInput.length > 0 ? "" : "tags"}
+                    ref={inputRef}
+                />
+                {tagSuggestions.length > 0 && (
+                    <TagsSuggest id="suggestion-list" style={flipListAlignment ? { right: 0 } : { left: 0 }}>
+                        {tagSuggestions.map((tag, i) => (
+                            <TagSuggestRow
+                                onClick={() => setNewTag(tag)}
+                                key={`${i}-${tag}`}
+                                active={activeSuggestionIndex === i}
+                            >
+                                {tag}
+                            </TagSuggestRow>
+                        ))}
+                    </TagsSuggest>
+                )}
+            </SuggestionContainer>
         </Container>
     );
 };
