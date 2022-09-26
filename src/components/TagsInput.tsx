@@ -67,35 +67,66 @@ const TagsInput = () => {
     };
 
     const handleInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        const key = {
-            back: e.key === "Backspace" || e.key === "ArrowLeft",
-            arrowDown: e.key === "ArrowDown",
-            arrowUp: e.key === "ArrowUp",
-            tab: e.key === "Tab",
-            enter: e.key === "Enter"
-        };
         const emptyInput = newTag === "";
         const cursorAtZero = inputRef?.current?.selectionStart === 0 && inputRef?.current?.selectionEnd === 0;
         const activeTag = activeTagIndex >= 0;
 
-        if (key.tab && !emptyInput) {
-            e.preventDefault();
+        switch (e.key) {
+            case "Escape":
+                if (activeSuggestionIndex > -1) {
+                    e.preventDefault();
+                    setActiveSuggestionIndex(-1);
+                    setTagSuggestions([]);
+                    focusInput();
+                }
+                break;
+            case "Backspace":
+            case "ArrowLeft":
+                if (cursorAtZero && !activeTag) {
+                    e.preventDefault();
+                    focusTag(bookmarkStore.tagsInput.length - 1);
+                }
+                break;
+            case "ArrowDown":
+                if (activeSuggestionIndex < tagSuggestions.length - 1) {
+                    e.preventDefault();
+                    setActiveSuggestionIndex(activeSuggestionIndex + 1);
+                    setNewTag(tagSuggestions[activeSuggestionIndex + 1]);
+                    focusInput();
+                }
+                break;
+            case "ArrowUp":
+                if (activeSuggestionIndex > 0) {
+                    e.preventDefault();
+                    setActiveSuggestionIndex(activeSuggestionIndex - 1);
+                    setNewTag(tagSuggestions[activeSuggestionIndex - 1]);
+                    focusInput();
+                } else if (activeSuggestionIndex === 0) {
+                    e.preventDefault();
+                    setNewTag("");
+                    setActiveSuggestionIndex(-1);
+                    setTagSuggestions([]);
+                    focusInput();
+                }
+                break;
+            case "Enter":
+                e.preventDefault();
+                addTag();
+                break;
+            case "Tab":
+                if (!emptyInput) e.preventDefault();
+                addTag();
+                break;
         }
-        if (key.back && cursorAtZero && !activeTag) {
-            focusTag(bookmarkStore.tagsInput.length - 1);
-        }
-        if (key.arrowDown && activeSuggestionIndex < tagSuggestions.length - 1) {
-            setActiveSuggestionIndex(activeSuggestionIndex + 1);
-            setNewTag(tagSuggestions[activeSuggestionIndex + 1]);
-            focusInput();
-        }
-        if (key.arrowUp && activeSuggestionIndex > 0) {
-            setActiveSuggestionIndex(activeSuggestionIndex - 1);
-            setNewTag(tagSuggestions[activeSuggestionIndex - 1]);
-            focusInput();
-        }
-        if (key.enter || key.tab) {
-            addTag();
+    };
+
+    const handleInputValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNewTag(e.target.value);
+        if (e.target.value === "") {
+            setTagSuggestions([]);
+            setActiveSuggestionIndex(-1);
+        } else {
+            setTagSuggestions(bookmarkStore.tags);
         }
     };
 
@@ -111,11 +142,6 @@ const TagsInput = () => {
     useEffect(() => getTagsSuggestAlignment(), [newTag, bookmarkStore.tagsInput]);
 
     const handleTagKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        const key = {
-            arrowLeft: e.key === "ArrowLeft",
-            arrowRight: e.key === "ArrowRight",
-            backspace: e.key === "Backspace"
-        };
         const tagIndex = {
             exists: activeTagIndex > -1,
             notFirst: activeTagIndex > 0,
@@ -123,25 +149,31 @@ const TagsInput = () => {
             isLast: activeTagIndex === bookmarkStore.tagsInput.length - 1
         };
 
-        if (key.arrowLeft && tagIndex.notFirst) {
-            focusTag(activeTagIndex - 1);
-        }
-        if (key.arrowRight) {
-            if (tagIndex.notLast) focusTag(activeTagIndex + 1);
-            else if (tagIndex.isLast) focusInput();
-        }
-        if (key.backspace && tagIndex.exists) {
-            focusInput();
-            const updatedTags = [...bookmarkStore.tagsInput];
-            updatedTags.splice(activeTagIndex, 1);
-            bookmarkStore.setTagsInput(updatedTags);
+        switch (e.key) {
+            case "ArrowLeft":
+                if (tagIndex.notFirst) {
+                    focusTag(activeTagIndex - 1);
+                }
+                break;
+            case "ArrowRight":
+                if (tagIndex.notLast) focusTag(activeTagIndex + 1);
+                else if (tagIndex.isLast) focusInput();
+                break;
+            case "Backspace":
+                if (tagIndex.exists) {
+                    focusInput();
+                    const updatedTags = [...bookmarkStore.tagsInput];
+                    updatedTags.splice(activeTagIndex, 1);
+                    bookmarkStore.setTagsInput(updatedTags);
+                }
+                break;
         }
     };
 
     const inputRef = useRef<HTMLInputElement>(null);
 
     const focusInput = () => {
-        inputRef?.current?.select();
+        inputRef?.current?.focus();
     };
 
     const focusTag = (index: number) => {
@@ -169,10 +201,7 @@ const TagsInput = () => {
                 <HiddenInput
                     style={{ width: newTag.length + "ch" }}
                     value={newTag}
-                    onChange={(e) => {
-                        setNewTag(e.target.value);
-                        setTagSuggestions(e.target.value === "" ? [] : bookmarkStore.tags);
-                    }}
+                    onChange={(e) => handleInputValueChange(e)}
                     onFocus={() => {
                         setActiveTagIndex(-1);
                     }}
@@ -185,7 +214,13 @@ const TagsInput = () => {
                     <TagsSuggest id="suggestion-list" style={flipListAlignment ? { right: 0 } : { left: 0 }}>
                         {tagSuggestions.map((tag, i) => (
                             <TagSuggestRow
-                                onClick={() => setNewTag(tag)}
+                                onMouseDown={(e) => {
+                                    e.preventDefault();
+                                }}
+                                onClick={(e) => {
+                                    setActiveSuggestionIndex(i);
+                                    setNewTag(tag);
+                                }}
                                 key={`${i}-${tag}`}
                                 active={activeSuggestionIndex === i}
                             >
