@@ -61,8 +61,7 @@ const TagsInput = () => {
             updatedTags.push(newTag);
             bookmarkStore.setTagsInput(updatedTags);
             setNewTag("");
-            setActiveSuggestionIndex(-1);
-            setTagSuggestions([]);
+            resetSuggestionList();
         }
     };
 
@@ -73,10 +72,9 @@ const TagsInput = () => {
 
         switch (e.key) {
             case "Escape":
-                if (activeSuggestionIndex > -1) {
+                if (tagSuggestions.length > 0) {
                     e.preventDefault();
-                    setActiveSuggestionIndex(-1);
-                    setTagSuggestions([]);
+                    resetSuggestionList();
                     focusInput();
                 }
                 break;
@@ -104,8 +102,7 @@ const TagsInput = () => {
                 } else if (activeSuggestionIndex === 0) {
                     e.preventDefault();
                     setNewTag("");
-                    setActiveSuggestionIndex(-1);
-                    setTagSuggestions([]);
+                    resetSuggestionList();
                     focusInput();
                 }
                 break;
@@ -123,10 +120,9 @@ const TagsInput = () => {
     const handleInputValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNewTag(e.target.value);
         if (e.target.value === "") {
-            setTagSuggestions([]);
-            setActiveSuggestionIndex(-1);
+            resetSuggestionList();
         } else {
-            setTagSuggestions(bookmarkStore.tags);
+            getSuggestionList();
         }
     };
 
@@ -181,6 +177,29 @@ const TagsInput = () => {
         tag?.focus();
     };
 
+    const getSuggestionList = () => {
+        const allTags = bookmarkStore.tags;
+        const tagsInput = bookmarkStore.tagsInput;
+        const filteredTags = allTags.filter((tag) => {
+            return !tagsInput.includes(tag);
+        });
+        setTagSuggestions(filteredTags);
+    };
+
+    const resetSuggestionList = () => {
+        setActiveSuggestionIndex(-1);
+        setTagSuggestions([]);
+    };
+
+    const handleRowSuggestClick = (tag: string, i: number) => {
+        if (activeSuggestionIndex === i) {
+            addTag();
+        } else {
+            setActiveSuggestionIndex(i);
+            setNewTag(tag);
+        }
+    };
+
     return (
         <Container onClick={focusInput} id="tags-input-container">
             {bookmarkStore.tagsInput.map((tag, i) => (
@@ -215,12 +234,9 @@ const TagsInput = () => {
                         {tagSuggestions.map((tag, i) => (
                             <TagSuggestRow
                                 onMouseDown={(e) => {
-                                    e.preventDefault();
+                                    e.preventDefault(); // prevent input blur event
                                 }}
-                                onClick={(e) => {
-                                    setActiveSuggestionIndex(i);
-                                    setNewTag(tag);
-                                }}
+                                onClick={() => handleRowSuggestClick(tag, i)}
                                 key={`${i}-${tag}`}
                                 active={activeSuggestionIndex === i}
                             >
