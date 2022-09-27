@@ -19,7 +19,7 @@ const Toolbar = () => {
         <Container id="toolbar">
             <Button
                 symbol="edit"
-                onClick={bookmarkStore.showEditTagsDialog}
+                onClick={bookmarkStore.showEditBookmarkDialog}
                 disabled={bookmarkStore.activeBookmark === ""}
                 id="edit-bookmark-button"
             />

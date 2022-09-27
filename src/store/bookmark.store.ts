@@ -48,9 +48,9 @@ class bookmarkStore {
         this.activeFilter = tag;
     };
 
-    editTagsDialogVisible = false;
-    showEditTagsDialog = () => (this.editTagsDialogVisible = true);
-    hideEditTagsDialog = () => (this.editTagsDialogVisible = false);
+    editBookmarkDialogVisible = false;
+    showEditBookmarkDialog = () => (this.editBookmarkDialogVisible = true);
+    hideEditBookmarkDialog = () => (this.editBookmarkDialogVisible = false);
 
     addBookmarkDialogVisible = false;
     showAddBookmarkDialog = () => (this.addBookmarkDialogVisible = true);
