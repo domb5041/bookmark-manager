@@ -33,7 +33,8 @@ class bookmarkStore {
     getTags = () => {
         const flattenedTags = this.bookmarks.map((b) => b.tags).flat();
         const uniqueTags = [...new Set(flattenedTags)];
-        this.tags = uniqueTags;
+        const alphabeticalTags = uniqueTags.sort((a, b) => (a === b ? 0 : a < b ? -1 : 1));
+        this.tags = alphabeticalTags;
     };
 
     activeFilter = "@all";

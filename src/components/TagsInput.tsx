@@ -220,7 +220,7 @@ const TagsInput = () => {
             ))}
             <SuggestionContainer id="suggestion-container">
                 <HiddenInput
-                    style={{ width: newTag.length + "ch" }}
+                    style={{ width: newTag.length + 1 + "ch" }}
                     value={newTag}
                     onChange={(e) => handleInputValueChange(e)}
                     onFocus={() => {
