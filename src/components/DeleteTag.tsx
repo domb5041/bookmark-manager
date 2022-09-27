@@ -21,6 +21,7 @@ const DeleteTag = () => {
             }
         });
         await batch.commit();
+        bookmarkStore.setActiveFilter("@all");
     };
 
     return (

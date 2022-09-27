@@ -13,6 +13,10 @@ const EditTags = () => {
         const id = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex].id;
         const bookmarkDoc = doc(db, "bookmarks", id);
         await updateDoc(bookmarkDoc, { tags: bookmarkStore.tagsInput });
+
+        if (!bookmarkStore.tags.includes(bookmarkStore.activeFilter)) {
+            bookmarkStore.setActiveFilter("@all");
+        }
     };
 
     return (

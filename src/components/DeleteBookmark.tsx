@@ -12,6 +12,10 @@ const DeleteBookmark = () => {
         const id = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex].id;
         const bookmarkDoc = doc(db, "bookmarks", id);
         await deleteDoc(bookmarkDoc);
+
+        if (!bookmarkStore.tags.includes(bookmarkStore.activeFilter)) {
+            bookmarkStore.setActiveFilter("@all");
+        }
     };
 
     return (

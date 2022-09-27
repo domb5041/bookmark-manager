@@ -22,6 +22,7 @@ const RenameTag = () => {
             }
         });
         await batch.commit();
+        bookmarkStore.setActiveFilter(newName);
     };
 
     return (
