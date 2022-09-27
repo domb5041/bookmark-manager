@@ -122,7 +122,7 @@ const TagsInput = () => {
         if (e.target.value === "") {
             resetSuggestionList();
         } else {
-            getSuggestionList();
+            getSuggestionList(e.target.value);
         }
     };
 
@@ -177,11 +177,13 @@ const TagsInput = () => {
         tag?.focus();
     };
 
-    const getSuggestionList = () => {
+    const getSuggestionList = (newTag: string) => {
         const allTags = bookmarkStore.tags;
         const tagsInput = bookmarkStore.tagsInput;
         const filteredTags = allTags.filter((tag) => {
-            return !tagsInput.includes(tag);
+            const notAlreadyInInput = !tagsInput.includes(tag);
+            const matchesCurrentString = new RegExp("^" + newTag).test(tag);
+            return notAlreadyInInput && matchesCurrentString;
         });
         setTagSuggestions(filteredTags);
     };
