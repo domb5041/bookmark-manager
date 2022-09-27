@@ -14,7 +14,7 @@ const DeleteBookmark = () => {
         await deleteDoc(bookmarkDoc);
 
         if (!bookmarkStore.tags.includes(bookmarkStore.activeFilter)) {
-            bookmarkStore.setActiveFilter("@all");
+            bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter);
         }
     };
 

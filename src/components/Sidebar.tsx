@@ -34,9 +34,9 @@ const Sidebar = () => {
     }, [bookmarkStore.bookmarks]);
 
     const noTagSelected =
-        bookmarkStore.activeFilter === "@all" ||
-        bookmarkStore.activeFilter === "@tagged" ||
-        bookmarkStore.activeFilter === "@untagged";
+        bookmarkStore.activeFilter === bookmarkStore.allItemsFilter ||
+        bookmarkStore.activeFilter === bookmarkStore.taggedItemsFilter ||
+        bookmarkStore.activeFilter === bookmarkStore.untaggedItemsFilter;
 
     return (
         <Container id="sidebar">
@@ -57,20 +57,20 @@ const Sidebar = () => {
             <RenameTag />
             <DeleteTag />
             <SidebarTag
-                active={bookmarkStore.activeFilter === "@all"}
-                onClick={() => bookmarkStore.setActiveFilter("@all")}
+                active={bookmarkStore.activeFilter === bookmarkStore.allItemsFilter}
+                onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter)}
             >
                 All Items
             </SidebarTag>
             <SidebarTag
-                active={bookmarkStore.activeFilter === "@tagged"}
-                onClick={() => bookmarkStore.setActiveFilter("@tagged")}
+                active={bookmarkStore.activeFilter === bookmarkStore.taggedItemsFilter}
+                onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.taggedItemsFilter)}
             >
                 Tagged
             </SidebarTag>
             <SidebarTag
-                active={bookmarkStore.activeFilter === "@untagged"}
-                onClick={() => bookmarkStore.setActiveFilter("@untagged")}
+                active={bookmarkStore.activeFilter === bookmarkStore.untaggedItemsFilter}
+                onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.untaggedItemsFilter)}
                 style={{ marginBottom: 10 }}
             >
                 Untagged

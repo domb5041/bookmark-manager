@@ -14,11 +14,12 @@ const Container = styled.div`
     cursor: text;
 `;
 
-const HiddenInput = styled.input`
+const HiddenInput = styled.input<{ inputValidationError: boolean }>`
     min-width: 25px;
     outline: none;
     border: none;
     background-color: transparent;
+    color: ${(props) => (props.inputValidationError ? "red" : "initial")};
 `;
 
 const SuggestionContainer = styled.div`
@@ -37,12 +38,17 @@ const TagSuggestRow = styled.div<{ active: boolean }>`
     padding: 2px 10px 2px 7px;
     background-color: ${(props) => (props.active ? "yellow" : "transparent")};
     cursor: pointer;
+    white-space: nowrap;
     &:first-of-type {
         margin-top: 2px;
     }
     &:last-of-type {
         margin-bottom: 2px;
     }
+`;
+
+const Error = styled.p`
+    color: red;
 `;
 
 const TagsInput = () => {
@@ -52,16 +58,26 @@ const TagsInput = () => {
     const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
     const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
     const [flipListAlignment, setFlipListAlignment] = useState(false);
+    const [inputValidationError, setInputValidationError] = useState(false);
 
     const addTag = () => {
-        const notEmpty = newTag !== "";
-        const notDuplicate = !bookmarkStore.tagsInput.includes(newTag);
-        if (notEmpty && notDuplicate) {
+        const empty = newTag === "";
+        const lowerCaseTags = bookmarkStore.tagsInput.map((tag) => tag.toLowerCase());
+        const duplicate = lowerCaseTags.includes(newTag.toLowerCase());
+        const restricted = [
+            bookmarkStore.allItemsFilter,
+            bookmarkStore.taggedItemsFilter,
+            bookmarkStore.untaggedItemsFilter
+        ].includes(newTag.toLowerCase());
+
+        if (!empty && !duplicate && !restricted) {
             const updatedTags = [...bookmarkStore.tagsInput];
             updatedTags.push(newTag);
             bookmarkStore.setTagsInput(updatedTags);
             setNewTag("");
             resetSuggestionList();
+        } else if (duplicate || restricted) {
+            setInputValidationError(true);
         }
     };
 
@@ -118,6 +134,7 @@ const TagsInput = () => {
     };
 
     const handleInputValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValidationError(false);
         setNewTag(e.target.value);
         if (e.target.value === "") {
             resetSuggestionList();
@@ -203,52 +220,56 @@ const TagsInput = () => {
     };
 
     return (
-        <Container onClick={focusInput} id="tags-input-container">
-            {bookmarkStore.tagsInput.map((tag, i) => (
-                <Tag
-                    name={tag}
-                    key={`${i}-${tag}`}
-                    active={activeTagIndex === i}
-                    onKeyDown={(e) => handleTagKeyPress(e)}
-                    id={`tags-input-${i}`}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        focusTag(i);
-                    }}
-                    onFocus={() => setActiveTagIndex(i)}
-                />
-            ))}
-            <SuggestionContainer id="suggestion-container">
-                <HiddenInput
-                    style={{ width: newTag.length + 1 + "ch" }}
-                    value={newTag}
-                    onChange={(e) => handleInputValueChange(e)}
-                    onFocus={() => {
-                        setActiveTagIndex(-1);
-                    }}
-                    onBlur={() => addTag()}
-                    onKeyDown={(e) => handleInputKeyPress(e)}
-                    placeholder={bookmarkStore.tagsInput.length > 0 ? "" : "tags"}
-                    ref={inputRef}
-                />
-                {tagSuggestions.length > 0 && (
-                    <TagsSuggest id="suggestion-list" style={flipListAlignment ? { right: 0 } : { left: 0 }}>
-                        {tagSuggestions.map((tag, i) => (
-                            <TagSuggestRow
-                                onMouseDown={(e) => {
-                                    e.preventDefault(); // prevent input blur event
-                                }}
-                                onClick={() => handleRowSuggestClick(tag, i)}
-                                key={`${i}-${tag}`}
-                                active={activeSuggestionIndex === i}
-                            >
-                                {tag}
-                            </TagSuggestRow>
-                        ))}
-                    </TagsSuggest>
-                )}
-            </SuggestionContainer>
-        </Container>
+        <>
+            <Container onClick={focusInput} id="tags-input-container">
+                {bookmarkStore.tagsInput.map((tag, i) => (
+                    <Tag
+                        name={tag}
+                        key={`${i}-${tag}`}
+                        active={activeTagIndex === i}
+                        onKeyDown={(e) => handleTagKeyPress(e)}
+                        id={`tags-input-${i}`}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            focusTag(i);
+                        }}
+                        onFocus={() => setActiveTagIndex(i)}
+                    />
+                ))}
+                <SuggestionContainer id="suggestion-container">
+                    <HiddenInput
+                        style={{ width: newTag.length * 10 + "px" }}
+                        value={newTag}
+                        onChange={(e) => handleInputValueChange(e)}
+                        onFocus={() => {
+                            setActiveTagIndex(-1);
+                        }}
+                        onBlur={() => addTag()}
+                        onKeyDown={(e) => handleInputKeyPress(e)}
+                        placeholder={bookmarkStore.tagsInput.length > 0 ? "" : "tags"}
+                        ref={inputRef}
+                        inputValidationError={inputValidationError}
+                    />
+                    {tagSuggestions.length > 0 && (
+                        <TagsSuggest id="suggestion-list" style={flipListAlignment ? { right: 0 } : { left: 0 }}>
+                            {tagSuggestions.map((tag, i) => (
+                                <TagSuggestRow
+                                    onMouseDown={(e) => {
+                                        e.preventDefault(); // prevent input blur event
+                                    }}
+                                    onClick={() => handleRowSuggestClick(tag, i)}
+                                    key={`${i}-${tag}`}
+                                    active={activeSuggestionIndex === i}
+                                >
+                                    {tag}
+                                </TagSuggestRow>
+                            ))}
+                        </TagsSuggest>
+                    )}
+                </SuggestionContainer>
+            </Container>
+            {inputValidationError && <Error>Tag already exists</Error>}
+        </>
     );
 };
 

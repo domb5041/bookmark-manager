@@ -37,7 +37,11 @@ class bookmarkStore {
         this.tags = alphabeticalTags;
     };
 
-    activeFilter = "@all";
+    allItemsFilter = "all items";
+    taggedItemsFilter = "tagged";
+    untaggedItemsFilter = "untagged";
+
+    activeFilter = this.allItemsFilter;
 
     setActiveFilter = (tag: string) => {
         this.setActiveBookmark("");

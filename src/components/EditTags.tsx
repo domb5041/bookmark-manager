@@ -15,7 +15,7 @@ const EditTags = () => {
         await updateDoc(bookmarkDoc, { tags: bookmarkStore.tagsInput });
 
         if (!bookmarkStore.tags.includes(bookmarkStore.activeFilter)) {
-            bookmarkStore.setActiveFilter("@all");
+            bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter);
         }
     };
 

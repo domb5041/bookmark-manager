@@ -11,11 +11,11 @@ const Bookmarks = () => {
     const getBookmarks2 = () => {
         const bookmarks = bookmarkStore.bookmarks as IBookmark[];
         switch (bookmarkStore.activeFilter) {
-            case "@all":
+            case bookmarkStore.allItemsFilter:
                 return bookmarks;
-            case "@tagged":
+            case bookmarkStore.taggedItemsFilter:
                 return bookmarks.filter((b) => b.tags.length > 0);
-            case "@untagged":
+            case bookmarkStore.untaggedItemsFilter:
                 return bookmarks.filter((b) => b.tags.length === 0);
             default:
                 return bookmarks.filter((b) => b.tags.includes(bookmarkStore.activeFilter));
