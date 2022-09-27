@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import EditTags from "./components/EditTags";
+import EditBookmark from "./components/EditBookmark";
 import Sidebar from "./components/Sidebar";
 import Toolbar from "./components/Toolbar";
 import Bookmarks from "./components/Bookmarks";
@@ -56,7 +56,7 @@ function App() {
             <Sidebar />
             <MainArea id="container-right">
                 <Toolbar />
-                <EditTags />
+                <EditBookmark />
                 <AddBookmark />
                 <DeleteBookmark />
                 <Bookmarks />

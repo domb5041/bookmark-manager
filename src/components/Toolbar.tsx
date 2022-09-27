@@ -18,10 +18,10 @@ const Toolbar = () => {
     return (
         <Container id="toolbar">
             <Button
-                symbol="tag"
+                symbol="edit"
                 onClick={bookmarkStore.showEditTagsDialog}
                 disabled={bookmarkStore.activeBookmark === ""}
-                id="edit-tags-button"
+                id="edit-bookmark-button"
             />
             <Button symbol="view_list" onClick={bookmarkStore.setExplorerTypeList} id="list-view-button" />
             <Button symbol="grid_view" onClick={bookmarkStore.setExplorerTypeThumbnails} id="thumbnail-view-button" />

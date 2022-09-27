@@ -6,7 +6,7 @@ import { updateDoc, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 import TagsInput from "./TagsInput";
 
-const EditTags = () => {
+const EditBookmark = () => {
     const { bookmarkStore } = useStores();
 
     const updateTags = async () => {
@@ -21,7 +21,7 @@ const EditTags = () => {
 
     return (
         <DialogBox
-            title="Edit Tags"
+            title="Edit Bookmark"
             active={bookmarkStore.editTagsDialogVisible}
             close={bookmarkStore.hideEditTagsDialog}
             confirmButton={{ onClick: () => updateTags(), text: "Update", id: "update-tags-confirm" }}
@@ -38,4 +38,4 @@ const EditTags = () => {
     );
 };
 
-export default observer(EditTags);
+export default observer(EditBookmark);
