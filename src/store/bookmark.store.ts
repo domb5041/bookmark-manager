@@ -96,6 +96,9 @@ class bookmarkStore {
 
     tagsInput: string[] = [];
     setTagsInput = (tags: string[]) => (this.tagsInput = tags);
+
+    sidebarVisible = true;
+    setSidebarVisible = () => (this.sidebarVisible = !this.sidebarVisible);
 }
 
 export default bookmarkStore;

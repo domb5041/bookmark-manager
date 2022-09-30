@@ -17,6 +17,7 @@ const Toolbar = () => {
     const { bookmarkStore } = useStores();
     return (
         <Container id="toolbar">
+            <Button symbol="list_alt" onClick={bookmarkStore.setSidebarVisible} id="toggle-sidebar-button" />
             <Button
                 symbol="edit"
                 onClick={bookmarkStore.showEditBookmarkDialog}
