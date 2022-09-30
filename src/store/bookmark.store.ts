@@ -29,17 +29,39 @@ class bookmarkStore {
     };
 
     tags: string[] = [];
+    tagCounts: number[] = [];
 
-    getTags = () => {
+    getTagsAndCounts = () => {
         const flattenedTags = this.bookmarks.map((b) => b.tags).flat();
         const uniqueTags = [...new Set(flattenedTags)];
         const alphabeticalTags = uniqueTags.sort((a, b) => (a === b ? 0 : a < b ? -1 : 1));
+        const tagCounts = alphabeticalTags.map((tag) => this.getCount(tag));
         this.tags = alphabeticalTags;
+        this.tagCounts = tagCounts;
+        this.allItemsCount = this.getCount("all");
+        this.taggedItemsCount = this.getCount("tagged");
+        this.untaggedItemsCount = this.getCount("untagged");
+    };
+
+    getCount = (name: string) => {
+        switch (name) {
+            case "all":
+                return this.bookmarks.length;
+            case "tagged":
+                return this.bookmarks.filter((bookmark) => bookmark.tags.length > 0).length;
+            case "untagged":
+                return this.bookmarks.filter((bookmark) => bookmark.tags.length === 0).length;
+            default:
+                return this.bookmarks.filter((bookmark) => bookmark.tags.includes(name)).length;
+        }
     };
 
     allItemsFilter = "all items";
     taggedItemsFilter = "tagged";
     untaggedItemsFilter = "untagged";
+    allItemsCount = 0;
+    taggedItemsCount = 0;
+    untaggedItemsCount = 0;
 
     activeFilter = this.allItemsFilter;
 

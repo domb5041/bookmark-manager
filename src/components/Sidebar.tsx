@@ -30,8 +30,8 @@ const Sidebar = () => {
     const { bookmarkStore } = useStores();
 
     useEffect(() => {
-        bookmarkStore.getTags();
-    }, [bookmarkStore.bookmarks]);
+        bookmarkStore.getTagsAndCounts();
+    }, [bookmarkStore.bookmarks, bookmarkStore]);
 
     const noTagSelected =
         bookmarkStore.activeFilter === bookmarkStore.allItemsFilter ||
@@ -60,20 +60,20 @@ const Sidebar = () => {
                 active={bookmarkStore.activeFilter === bookmarkStore.allItemsFilter}
                 onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter)}
             >
-                All Items
+                All Items ({bookmarkStore.allItemsCount})
             </SidebarTag>
             <SidebarTag
                 active={bookmarkStore.activeFilter === bookmarkStore.taggedItemsFilter}
                 onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.taggedItemsFilter)}
             >
-                Tagged
+                Tagged ({bookmarkStore.taggedItemsCount})
             </SidebarTag>
             <SidebarTag
                 active={bookmarkStore.activeFilter === bookmarkStore.untaggedItemsFilter}
                 onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.untaggedItemsFilter)}
                 style={{ marginBottom: 10 }}
             >
-                Untagged
+                Untagged ({bookmarkStore.untaggedItemsCount})
             </SidebarTag>
             {bookmarkStore.tags.map((tag, i) => (
                 <SidebarTag
@@ -81,7 +81,7 @@ const Sidebar = () => {
                     onClick={() => bookmarkStore.setActiveFilter(tag)}
                     key={`${i}-${tag}`}
                 >
-                    #{tag}
+                    #{tag} ({bookmarkStore.tagCounts[i]})
                 </SidebarTag>
             ))}
         </Container>
