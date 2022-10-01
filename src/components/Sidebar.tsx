@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
 import Button from "./Button";
-import RenameTag from "./RenameTag";
+import EditTag from "./EditTag";
 import DeleteTag from "./DeleteTag";
 import { CSSTransition } from "react-transition-group";
 import Symbol from "./Symbol";
@@ -109,7 +109,7 @@ const Sidebar = () => {
                 <Toolbar>
                     <Button
                         symbol="tag"
-                        onClick={bookmarkStore.showRenameTagDialog}
+                        onClick={bookmarkStore.showEditTagDialog}
                         disabled={noTagSelected}
                         id="edit-tag-button"
                     />
@@ -120,7 +120,7 @@ const Sidebar = () => {
                         id="delete-tag-button"
                     />
                 </Toolbar>
-                <RenameTag />
+                <EditTag />
                 <DeleteTag />
                 <SidebarTag
                     active={bookmarkStore.activeFilter === bookmarkStore.allItemsFilter}

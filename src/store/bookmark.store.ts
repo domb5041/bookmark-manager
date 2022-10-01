@@ -87,9 +87,9 @@ class bookmarkStore {
     showDeleteBookmarkDialog = () => (this.deleteBookmarkDialogVisible = true);
     hideDeleteBookmarkDialog = () => (this.deleteBookmarkDialogVisible = false);
 
-    renameTagDialogVisible = false;
-    showRenameTagDialog = () => (this.renameTagDialogVisible = true);
-    hideRenameTagDialog = () => (this.renameTagDialogVisible = false);
+    editTagDialogVisible = false;
+    showEditTagDialog = () => (this.editTagDialogVisible = true);
+    hideEditTagDialog = () => (this.editTagDialogVisible = false);
 
     deleteTagDialogVisible = false;
     showDeleteTagDialog = () => (this.deleteTagDialogVisible = true);

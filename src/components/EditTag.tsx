@@ -5,7 +5,7 @@ import DialogBox from "./DialogBox";
 import { writeBatch, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 
-const RenameTag = () => {
+const EditTag = () => {
     const { bookmarkStore } = useStores();
     const [newName, setNewName] = useState("");
 
@@ -30,16 +30,16 @@ const RenameTag = () => {
 
     return (
         <DialogBox
-            title="Rename Tag"
-            active={bookmarkStore.renameTagDialogVisible}
-            close={bookmarkStore.hideRenameTagDialog}
+            title="Edit Tag"
+            active={bookmarkStore.editTagDialogVisible}
+            close={bookmarkStore.hideEditTagDialog}
             onEnter={() => setNewName(bookmarkStore.activeFilter)}
             confirmButton={{
                 text: "update",
-                id: "rename-tag-confirm",
+                id: "edit-tag-confirm",
                 onClick: () => {
                     renameTag();
-                    bookmarkStore.hideRenameTagDialog();
+                    bookmarkStore.hideEditTagDialog();
                 }
             }}
         >
@@ -48,4 +48,4 @@ const RenameTag = () => {
     );
 };
 
-export default observer(RenameTag);
+export default observer(EditTag);
