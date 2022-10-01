@@ -198,11 +198,11 @@ const TagsInput = () => {
         const allTags = bookmarkStore.tagSet;
         const tagsInput = bookmarkStore.tagsInput;
         const filteredTags = allTags.filter((tag) => {
-            const notAlreadyInInput = !tagsInput.includes(tag.id);
-            const matchesCurrentString = new RegExp("^" + newTag).test(tag.id);
+            const notAlreadyInInput = !tagsInput.includes(tag.name);
+            const matchesCurrentString = new RegExp("^" + newTag).test(tag.name);
             return notAlreadyInInput && matchesCurrentString;
         });
-        const suggestions = filteredTags.map((tag) => tag.id);
+        const suggestions = filteredTags.map((tag) => tag.name);
         setTagSuggestions(suggestions);
     };
 
