@@ -13,7 +13,9 @@ const DeleteBookmark = () => {
         const bookmarkDoc = doc(db, "bookmarks", id);
         await deleteDoc(bookmarkDoc);
 
-        if (!bookmarkStore.tags.includes(bookmarkStore.activeFilter)) {
+        const tagExists = () => bookmarkStore.tagSet.some((tag) => tag.id === bookmarkStore.activeFilter);
+
+        if (!tagExists) {
             bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter);
         }
     };

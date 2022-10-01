@@ -195,14 +195,15 @@ const TagsInput = () => {
     };
 
     const getSuggestionList = (newTag: string) => {
-        const allTags = bookmarkStore.tags;
+        const allTags = bookmarkStore.tagSet;
         const tagsInput = bookmarkStore.tagsInput;
         const filteredTags = allTags.filter((tag) => {
-            const notAlreadyInInput = !tagsInput.includes(tag);
-            const matchesCurrentString = new RegExp("^" + newTag).test(tag);
+            const notAlreadyInInput = !tagsInput.includes(tag.id);
+            const matchesCurrentString = new RegExp("^" + newTag).test(tag.id);
             return notAlreadyInInput && matchesCurrentString;
         });
-        setTagSuggestions(filteredTags);
+        const suggestions = filteredTags.map((tag) => tag.id);
+        setTagSuggestions(suggestions);
     };
 
     const resetSuggestionList = () => {

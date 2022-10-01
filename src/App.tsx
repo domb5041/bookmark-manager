@@ -9,9 +9,10 @@ import { db } from "./firebase-config";
 import { collection, getDocs, onSnapshot } from "@firebase/firestore";
 import AddBookmark from "./components/AddBookmark";
 import DeleteBookmark from "./components/DeleteBookmark";
-import { IBookmark } from "./store/bookmark.store";
+import { IBookmark, ITag } from "./store/bookmark.store";
 
 export const bookmarksCollectionRef = collection(db, "bookmarks");
+export const tagsCollectionRef = collection(db, "tags");
 
 const Container = styled.div`
     display: flex;
@@ -41,15 +42,33 @@ function App() {
         };
         getBookmarks();
 
-        const unsubscribe = onSnapshot(bookmarksCollectionRef, (snapshot) => {
+        const unsubscribeBookmarks = onSnapshot(bookmarksCollectionRef, (snapshot) => {
             const snapshotMap = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as IBookmark[];
             bookmarkStore.setBookmarks(snapshotMap);
         });
 
         return () => {
-            unsubscribe();
+            unsubscribeBookmarks();
         };
-    }, []);
+    }, [bookmarkStore]);
+
+    useEffect(() => {
+        const getTags = async () => {
+            const data = await getDocs(tagsCollectionRef);
+            const dataMap = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as ITag[];
+            bookmarkStore.updateTagSet(dataMap);
+        };
+        getTags();
+
+        const unsubscribeTags = onSnapshot(tagsCollectionRef, (snapshot) => {
+            const snapshotMap = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as ITag[];
+            bookmarkStore.updateTagSet(snapshotMap);
+        });
+
+        return () => {
+            unsubscribeTags();
+        };
+    }, [bookmarkStore]);
 
     return (
         <Container id="app-container">

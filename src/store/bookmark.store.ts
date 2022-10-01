@@ -10,13 +10,20 @@ export interface IBookmark {
     description?: string;
 }
 
+export interface ITag {
+    id: string;
+    name: string;
+    icon: string;
+    color: string;
+    count: number;
+}
+
 class bookmarkStore {
     constructor() {
         makeAutoObservable(this);
     }
 
     bookmarks: IBookmark[] = [];
-
     setBookmarks = (bookmarks: IBookmark[]) => (this.bookmarks = bookmarks);
 
     activeBookmark = "";
@@ -28,16 +35,13 @@ class bookmarkStore {
         this.activeBookmarkIndex = index;
     };
 
-    tags: string[] = [];
-    tagCounts: number[] = [];
+    tagSet: ITag[] = [];
+    updateTagSet = (tags: ITag[]) => {
+        const alphabeticalTags = tags.sort((a, b) => (a === b ? 0 : a.id < b.id ? -1 : 1));
+        this.tagSet = alphabeticalTags;
+    };
 
-    getTagsAndCounts = () => {
-        const flattenedTags = this.bookmarks.map((b) => b.tags).flat();
-        const uniqueTags = [...new Set(flattenedTags)];
-        const alphabeticalTags = uniqueTags.sort((a, b) => (a === b ? 0 : a < b ? -1 : 1));
-        const tagCounts = alphabeticalTags.map((tag) => this.getCount(tag));
-        this.tags = alphabeticalTags;
-        this.tagCounts = tagCounts;
+    updateTotalsCounts = () => {
         this.allItemsCount = this.getCount("all");
         this.taggedItemsCount = this.getCount("tagged");
         this.untaggedItemsCount = this.getCount("untagged");
@@ -64,6 +68,7 @@ class bookmarkStore {
     untaggedItemsCount = 0;
 
     activeFilter = this.allItemsFilter;
+    activeFilterIndex = -1;
 
     setActiveFilter = (tag: string) => {
         this.setActiveBookmark("");

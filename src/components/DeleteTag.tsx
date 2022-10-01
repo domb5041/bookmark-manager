@@ -20,6 +20,9 @@ const DeleteTag = () => {
                 batch.update(bookmarkDoc, { tags: tags });
             }
         });
+        const id = bookmarkStore.tagSet.filter((tag2) => tag2.name === bookmarkStore.activeFilter)[0].id;
+        const tagDoc = doc(db, "tags", id);
+        batch.delete(tagDoc);
         await batch.commit();
         bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter);
     };
