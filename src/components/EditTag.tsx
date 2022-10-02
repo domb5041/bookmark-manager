@@ -7,6 +7,7 @@ import { db } from "../firebase-config";
 import styled from "styled-components";
 import Symbol from "./Symbol";
 import { tagColors, getTagBackground } from "../theme";
+import TextInput from "./TextInput";
 
 const Swatch = styled.div<{ color: string }>`
     background-color: ${(props) => () => getTagBackground(props.color)};
@@ -46,8 +47,8 @@ const Preview = styled(Swatch)`
 const EditTag = () => {
     const { bookmarkStore, tagStore } = useStores();
     const [newName, setNewName] = useState("");
-    const [newColor, setNewColor] = useState("");
-    const [newIcon, setNewIcon] = useState("");
+    const [newColor, setNewColor] = useState(tagColors[0]);
+    const [newIcon, setNewIcon] = useState("tag");
 
     const icons = [
         "tag",
@@ -132,10 +133,11 @@ const EditTag = () => {
             <Preview color={newColor}>
                 <Symbol name={newIcon} color={newColor} size="30px" />
             </Preview>
-            <input
+            <TextInput
+                id="tag-name-input"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                style={{ width: "100%", boxSizing: "border-box", marginBottom: 10 }}
+                style={{ marginBottom: 10 }}
             />
             <Swatches>
                 {tagColors.map((color, i) => (

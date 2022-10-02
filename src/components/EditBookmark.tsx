@@ -8,6 +8,7 @@ import TagsInput from "./TagsInput";
 import PreviewImg from "./bookmarks/PreviewImg";
 import axios from "axios";
 import Favicon from "./bookmarks/Favicon";
+import TextInput from "./TextInput";
 
 const EditBookmark = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -74,9 +75,21 @@ const EditBookmark = () => {
         >
             <button onClick={refreshPreview}>Refresh data</button>
             <PreviewImg url={newImg} />
-            <input value={newUrl} onChange={(e) => setNewUrl(e.target.value)} />
             <Favicon url={newFavicon} />
-            <input value={newName} onChange={(e) => setNewName(e.target.value)} />
+            <TextInput
+                label="Url"
+                id="url-input"
+                value={newUrl}
+                onChange={(e) => setNewUrl(e.target.value)}
+                style={{ marginBottom: 10 }}
+            />
+            <TextInput
+                label="Title"
+                id="title-input"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                style={{ marginBottom: 10 }}
+            />
             <TagsInput />
             <textarea value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
         </DialogBox>

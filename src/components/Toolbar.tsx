@@ -13,20 +13,38 @@ const Container = styled.div`
     padding: 0 10px;
 `;
 
+const Title = styled.div`
+    flex: 1;
+    padding: 0 20px;
+    font-weight: bold;
+`;
+
 const Toolbar = () => {
     const { bookmarkStore, tagStore } = useStores();
     return (
         <Container id="toolbar">
             <Button symbol="list_alt" onClick={tagStore.setSidebarVisible} id="toggle-sidebar-button" />
+            <Title>{tagStore.activeFilter.name}</Title>
             <Button
                 symbol="edit"
                 onClick={bookmarkStore.showEditBookmarkDialog}
                 disabled={bookmarkStore.activeBookmark === ""}
                 id="edit-bookmark-button"
+                style={{ marginRight: 10 }}
             />
             <Button symbol="view_list" onClick={bookmarkStore.setExplorerTypeList} id="list-view-button" />
-            <Button symbol="grid_view" onClick={bookmarkStore.setExplorerTypeThumbnails} id="thumbnail-view-button" />
-            <Button symbol="add" onClick={bookmarkStore.showAddBookmarkDialog} id="add-bookmark-button" />
+            <Button
+                symbol="grid_view"
+                onClick={bookmarkStore.setExplorerTypeThumbnails}
+                id="thumbnail-view-button"
+                style={{ marginRight: 10 }}
+            />
+            <Button
+                symbol="add"
+                onClick={bookmarkStore.showAddBookmarkDialog}
+                id="add-bookmark-button"
+                style={{ marginRight: 10 }}
+            />
             <Button
                 symbol="delete"
                 onClick={bookmarkStore.showDeleteBookmarkDialog}

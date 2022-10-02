@@ -9,6 +9,7 @@ import { debounce } from "../utilities";
 import PreviewImg from "./bookmarks/PreviewImg";
 import Favicon from "./bookmarks/Favicon";
 import TagsInput from "./TagsInput";
+import TextInput from "./TextInput";
 
 interface IPreview {
     contentType: string;
@@ -77,10 +78,12 @@ const AddBookmark = () => {
                 }
             }}
         >
-            <input
+            <TextInput
                 value={url}
-                type="url"
                 placeholder="url"
+                label="url"
+                id="bookmark-url-input"
+                style={{ marginBottom: 10 }}
                 onChange={(e) => {
                     debounce(() => getPreview(e.target.value), 500);
                     setUrl(e.target.value);

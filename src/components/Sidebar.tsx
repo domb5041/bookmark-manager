@@ -100,6 +100,7 @@ const Sidebar = () => {
                         onClick={tagStore.showEditTagDialog}
                         disabled={noTagSelected}
                         id="edit-tag-button"
+                        style={{ marginRight: 10 }}
                     />
                     <Button
                         symbol="delete"
