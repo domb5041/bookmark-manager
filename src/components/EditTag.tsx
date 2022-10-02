@@ -6,23 +6,41 @@ import { writeBatch, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 import styled from "styled-components";
 import Symbol from "./Symbol";
+import { tagColors, getTagBackground } from "../theme";
 
-const Swatch = styled.div<{ color: string; active: boolean }>`
-    background-color: ${(props) => props.color};
-    width: 40px;
-    height: 40px;
+const Swatch = styled.div<{ color: string }>`
+    background-color: ${(props) => () => getTagBackground(props.color)};
+    transition: 0.3s;
+    & > .material-symbols-outlined {
+        transition: 0.3s;
+    }
+    width: 30px;
+    height: 30px;
     border-radius: 100%;
     box-sizing: border-box;
-    border: 5px solid ${(props) => (props.active ? "black" : "transparent")};
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 `;
 
+const SwatchSelect = styled.div<{ active: boolean }>`
+    padding: 2px;
+    border-radius: 100%;
+    box-sizing: border-box;
+    border: 2px solid ${(props) => (props.active ? "grey" : "transparent")};
+`;
+
 const Swatches = styled.div`
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 10px;
+`;
+
+const Preview = styled(Swatch)`
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 10px auto;
 `;
 
 const EditTag = () => {
@@ -31,8 +49,42 @@ const EditTag = () => {
     const [newColor, setNewColor] = useState("");
     const [newIcon, setNewIcon] = useState("");
 
-    const colors = ["grey", "red", "green", "blue", "orange", "purple"];
-    const icons = ["tag", "add", "photo_camera", "palette", "nature", "flash_on", "wb_sunny"];
+    const icons = [
+        "tag",
+        "photo_camera",
+        "palette",
+        "nature",
+        "wb_sunny",
+        "bolt",
+        "luggage",
+        "liquor",
+        "nightlife",
+        "pool",
+        "festival",
+        "fitness_center",
+        "apartment",
+        "spa",
+        "golf_course",
+        "lightbulb",
+        "push_pin",
+        "support",
+        "schedule",
+        "code_blocks",
+        "piano",
+        "roller_skating",
+        "school",
+        "science",
+        "sports_basketball",
+        "self_improvement",
+        "sports_esports",
+        "construction",
+        "mail",
+        "notifications",
+        "inventory_2",
+        "account_balance",
+        "savings",
+        "credit_card"
+    ];
 
     const batch = writeBatch(db);
 
@@ -77,29 +129,30 @@ const EditTag = () => {
                 }
             }}
         >
-            <input value={newName} onChange={(e) => setNewName(e.target.value)} />
-            <hr />
+            <Preview color={newColor}>
+                <Symbol name={newIcon} color={newColor} size="30px" />
+            </Preview>
+            <input
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                style={{ width: "100%", boxSizing: "border-box", marginBottom: 10 }}
+            />
             <Swatches>
-                {colors.map((color, i) => (
-                    <Swatch
-                        color={color}
-                        key={`${i}-${color}`}
-                        onClick={() => setNewColor(color)}
-                        active={newColor === color}
-                    />
+                {tagColors.map((color, i) => (
+                    <SwatchSelect key={`${i}-${color}`} active={newColor === color}>
+                        <Swatch color={color} onClick={() => setNewColor(color)}>
+                            <Symbol name={newIcon} color={color} size="20px" />
+                        </Swatch>
+                    </SwatchSelect>
                 ))}
             </Swatches>
-            <hr />
             <Swatches>
                 {icons.map((icon, i) => (
-                    <Swatch
-                        color={newColor}
-                        key={`${i}-${icon}`}
-                        onClick={() => setNewIcon(icon)}
-                        active={newIcon === icon}
-                    >
-                        <Symbol name={icon} color="white" />
-                    </Swatch>
+                    <SwatchSelect key={`${i}-${icon}`} active={newIcon === icon}>
+                        <Swatch color={newColor} key={`${i}-${icon}`} onClick={() => setNewIcon(icon)}>
+                            <Symbol name={icon} color={newColor} size="20px" />
+                        </Swatch>
+                    </SwatchSelect>
                 ))}
             </Swatches>
         </DialogBox>

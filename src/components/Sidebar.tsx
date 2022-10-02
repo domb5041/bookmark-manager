@@ -6,10 +6,11 @@ import Button from "./Button";
 import EditTag from "./EditTag";
 import DeleteTag from "./DeleteTag";
 import { CSSTransition } from "react-transition-group";
-import Symbol from "./Symbol";
 import { addDoc, doc, writeBatch } from "@firebase/firestore";
 import { db } from "../firebase-config";
 import { tagsCollectionRef } from "../App";
+import SidebarRow from "./SidebarRow";
+import { tagColors } from "../theme";
 
 const Container = styled.div`
     width: 250px;
@@ -29,19 +30,6 @@ const Container = styled.div`
     &.dialog-container-exit-active {
         width: 0;
         transition: 0.5s;
-    }
-`;
-
-const SidebarTag = styled.div<{ active: boolean }>`
-    padding: 3px 10px;
-    cursor: pointer;
-    background-color: ${(props) => (props.active ? "silver" : "transparent")};
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    & .tag-name {
-        flex: 1;
-        padding-left: 5px;
     }
 `;
 
@@ -71,7 +59,7 @@ const Sidebar = () => {
                     await addDoc(tagsCollectionRef, {
                         name: bookmarkTag,
                         icon: "tag",
-                        color: "grey",
+                        color: tagColors[0],
                         count: 1
                     });
                 }
@@ -122,38 +110,35 @@ const Sidebar = () => {
                 </Toolbar>
                 <EditTag />
                 <DeleteTag />
-                <SidebarTag active={allItemsSelected} onClick={() => tagStore.setActiveFilter(tagStore.allItemsFilter)}>
-                    <Symbol name="tag" color="grey" />
-                    <div className="tag-name">All Items</div>
-                    <div className="tag-count">({tagStore.allItemsFilter.count})</div>
-                </SidebarTag>
-                <SidebarTag
+                <SidebarRow
+                    active={allItemsSelected}
+                    name="All Items"
+                    count={tagStore.allItemsFilter.count}
+                    onClick={() => tagStore.setActiveFilter(tagStore.allItemsFilter)}
+                />
+                <SidebarRow
                     active={taggedSelected}
                     onClick={() => tagStore.setActiveFilter(tagStore.taggedItemsFilter)}
-                >
-                    <Symbol name="tag" color="grey" />
-                    <div className="tag-name">Tagged</div>
-                    <div className="tag-count">({tagStore.taggedItemsFilter.count})</div>
-                </SidebarTag>
-                <SidebarTag
+                    name="Tagged"
+                    count={tagStore.taggedItemsFilter.count}
+                />
+                <SidebarRow
                     active={untaggedSelected}
                     onClick={() => tagStore.setActiveFilter(tagStore.untaggedItemsFilter)}
+                    name="Untagged"
+                    count={tagStore.untaggedItemsFilter.count}
                     style={{ marginBottom: 10 }}
-                >
-                    <Symbol name="tag" color="grey" />
-                    <div className="tag-name">Untagged</div>
-                    <div className="tag-count">({tagStore.untaggedItemsFilter.count})</div>
-                </SidebarTag>
+                />
                 {tagStore.tagSet.map((tag, i) => (
-                    <SidebarTag
+                    <SidebarRow
+                        color={tag.color}
+                        icon={tag.icon}
                         active={tagStore.activeFilter.name === tag.name}
                         onClick={() => tagStore.setActiveFilter(tag)}
                         key={`${i}-${tag.name}`}
-                    >
-                        <Symbol name={tag.icon} color={tag.color} />
-                        <div className="tag-name">{tag.name}</div>
-                        <div className="tag-count">({tag.count})</div>
-                    </SidebarTag>
+                        name={tag.name}
+                        count={tag.count}
+                    />
                 ))}
             </Container>
         </CSSTransition>
