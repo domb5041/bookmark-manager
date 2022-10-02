@@ -10,6 +10,7 @@ const Container = styled.div`
     align-items: center;
     overflow: hidden;
     background-color: white;
+    border-radius: 5px;
     & > img {
         width: 90%;
     }

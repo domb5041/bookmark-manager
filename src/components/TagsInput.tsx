@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useStores } from "../store";
 import Tag from "./bookmarks/Tag";
@@ -51,7 +51,11 @@ const Error = styled.p`
     color: red;
 `;
 
-const TagsInput = () => {
+interface ITagsInputProps {
+    style?: any;
+}
+
+const TagsInput: FC<ITagsInputProps> = ({ style }) => {
     const { tagStore } = useStores();
     const [newTag, setNewTag] = useState("");
     const [activeTagIndex, setActiveTagIndex] = useState(-1);
@@ -222,7 +226,7 @@ const TagsInput = () => {
 
     return (
         <>
-            <Container onClick={focusInput} id="tags-input-container">
+            <Container onClick={focusInput} id="tags-input-container" style={style}>
                 {tagStore.tagsInput.map((tag, i) => (
                     <Tag
                         name={tag}

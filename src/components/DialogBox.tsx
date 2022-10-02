@@ -47,6 +47,9 @@ const Container = styled.div`
 
 const Header = styled.div`
     padding: 5px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 3px ${(props) => props.theme.color.background.border};
 `;
 
 const Body = styled.div`
@@ -59,6 +62,7 @@ const Footer = styled.div`
     display: flex;
     padding: 5px;
     justify-content: space-between;
+    box-shadow: 0 -2px 3px ${(props) => props.theme.color.background.border};
 `;
 
 interface IDialogBoxProps {

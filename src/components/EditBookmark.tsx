@@ -10,6 +10,7 @@ import axios from "axios";
 import Favicon from "./bookmarks/Favicon";
 import TextInput from "./TextInput";
 import Button from "./Button";
+import Textarea from "./Textarea";
 
 const EditBookmark = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -91,8 +92,12 @@ const EditBookmark = () => {
                 onChange={(e) => setNewName(e.target.value)}
                 style={{ marginBottom: 10 }}
             />
-            <TagsInput />
-            <textarea value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+            <TagsInput style={{ marginBottom: 10 }} />
+            <Textarea
+                id="description-input"
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
+            />
         </DialogBox>
     );
 };
