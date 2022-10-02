@@ -9,7 +9,8 @@ import { db } from "./firebase-config";
 import { collection, getDocs, onSnapshot } from "@firebase/firestore";
 import AddBookmark from "./components/AddBookmark";
 import DeleteBookmark from "./components/DeleteBookmark";
-import { IBookmark, ITag } from "./store/bookmark.store";
+import { IBookmark } from "./store/bookmark.store";
+import { ITag } from "./store/tag.store";
 
 export const bookmarksCollectionRef = collection(db, "bookmarks");
 export const tagsCollectionRef = collection(db, "tags");
@@ -32,7 +33,7 @@ const MainArea = styled.div`
 `;
 
 function App() {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
 
     useEffect(() => {
         const getBookmarks = async () => {
@@ -56,19 +57,19 @@ function App() {
         const getTags = async () => {
             const data = await getDocs(tagsCollectionRef);
             const dataMap = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as ITag[];
-            bookmarkStore.updateTagSet(dataMap);
+            tagStore.updateTagSet(dataMap);
         };
         getTags();
 
         const unsubscribeTags = onSnapshot(tagsCollectionRef, (snapshot) => {
             const snapshotMap = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as ITag[];
-            bookmarkStore.updateTagSet(snapshotMap);
+            tagStore.updateTagSet(snapshotMap);
         });
 
         return () => {
             unsubscribeTags();
         };
-    }, [bookmarkStore]);
+    }, [tagStore]);
 
     return (
         <Container id="app-container">

@@ -6,19 +6,19 @@ import Thumbnails from "./bookmarks/Thumbnails";
 import { IBookmark } from "../store/bookmark.store";
 
 const Bookmarks = () => {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
 
     const getBookmarks2 = () => {
         const bookmarks = bookmarkStore.bookmarks as IBookmark[];
-        switch (bookmarkStore.activeFilter) {
-            case bookmarkStore.allItemsFilter:
+        switch (tagStore.activeFilter) {
+            case tagStore.allItemsFilter:
                 return bookmarks;
-            case bookmarkStore.taggedItemsFilter:
+            case tagStore.taggedItemsFilter:
                 return bookmarks.filter((b) => b.tags.length > 0);
-            case bookmarkStore.untaggedItemsFilter:
+            case tagStore.untaggedItemsFilter:
                 return bookmarks.filter((b) => b.tags.length === 0);
             default:
-                return bookmarks.filter((b) => b.tags.includes(bookmarkStore.activeFilter));
+                return bookmarks.filter((b) => b.tags.includes(tagStore.activeFilter));
         }
     };
 

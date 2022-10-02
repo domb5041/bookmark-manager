@@ -6,17 +6,17 @@ import { deleteDoc, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 
 const DeleteBookmark = () => {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
 
     const deleteBookmark = async () => {
         const id = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex].id;
         const bookmarkDoc = doc(db, "bookmarks", id);
         await deleteDoc(bookmarkDoc);
 
-        const tagExists = () => bookmarkStore.tagSet.some((tag) => tag.id === bookmarkStore.activeFilter);
+        const tagExists = () => tagStore.tagSet.some((tag) => tag.id === tagStore.activeFilter);
 
         if (!tagExists) {
-            bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter);
+            tagStore.setActiveFilter(tagStore.allItemsFilter);
         }
     };
 

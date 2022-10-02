@@ -26,7 +26,7 @@ const Swatches = styled.div`
 `;
 
 const EditTag = () => {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
     const [newName, setNewName] = useState("");
     const [newColor, setNewColor] = useState("");
     const [newIcon, setNewIcon] = useState("");
@@ -39,30 +39,28 @@ const EditTag = () => {
     const renameTag = async () => {
         bookmarkStore.bookmarks.forEach((bookmark) => {
             const tags = [...bookmark.tags];
-            if (tags.includes(bookmarkStore.activeFilter)) {
+            if (tags.includes(tagStore.activeFilter)) {
                 const bookmarkDoc = doc(db, "bookmarks", bookmark.id);
-                const index = tags.indexOf(bookmarkStore.activeFilter);
+                const index = tags.indexOf(tagStore.activeFilter);
                 tags.splice(index, 1, newName);
                 batch.update(bookmarkDoc, { tags: tags });
             }
         });
-        const id = bookmarkStore.tagSet.filter((tag2) => tag2.name === bookmarkStore.activeFilter)[0].id;
+        const id = tagStore.tagSet.filter((tag2) => tag2.name === tagStore.activeFilter)[0].id;
         const tagDoc = doc(db, "tags", id);
         batch.update(tagDoc, { name: newName, color: newColor, icon: newIcon });
         await batch.commit();
-        bookmarkStore.setActiveFilter(newName);
+        tagStore.setActiveFilter(newName);
     };
 
     return (
         <DialogBox
             title="Edit Tag"
-            active={bookmarkStore.editTagDialogVisible}
-            close={bookmarkStore.hideEditTagDialog}
+            active={tagStore.editTagDialogVisible}
+            close={tagStore.hideEditTagDialog}
             onEnter={() => {
-                const { color, icon } = bookmarkStore.tagSet.filter(
-                    (tag2) => tag2.name === bookmarkStore.activeFilter
-                )[0];
-                setNewName(bookmarkStore.activeFilter);
+                const { color, icon } = tagStore.tagSet.filter((tag2) => tag2.name === tagStore.activeFilter)[0];
+                setNewName(tagStore.activeFilter);
                 setNewColor(color);
                 setNewIcon(icon);
             }}
@@ -71,7 +69,7 @@ const EditTag = () => {
                 id: "edit-tag-confirm",
                 onClick: () => {
                     renameTag();
-                    bookmarkStore.hideEditTagDialog();
+                    tagStore.hideEditTagDialog();
                 }
             }}
         >

@@ -29,15 +29,17 @@ interface ITagProps {
 }
 
 const Tag: FC<ITagProps> = ({ name, active, onKeyDown, id, onClick, onFocus }) => {
-    const { bookmarkStore } = useStores();
+    const { tagStore } = useStores();
     const [icon, setIcon] = useState("");
     const [color, setColor] = useState("");
 
     useEffect(() => {
-        const { color, icon } = bookmarkStore.tagSet.filter((tag2) => tag2.name === name)[0];
-        setIcon(icon);
-        setColor(color);
-    }, [bookmarkStore.tagSet, name]);
+        const tagIndex = tagStore.tagSet.findIndex((tag) => tag.name === name);
+        if (tagIndex > -1) {
+            setIcon(tagStore.tagSet[tagIndex].icon);
+            setColor(tagStore.tagSet[tagIndex].color);
+        }
+    }, [tagStore.tagSet, name]);
 
     return (
         <Container

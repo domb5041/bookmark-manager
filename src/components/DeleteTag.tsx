@@ -6,38 +6,38 @@ import { writeBatch, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 
 const DeleteTag = () => {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
 
     const batch = writeBatch(db);
 
     const deleteTag = async () => {
         bookmarkStore.bookmarks.forEach((bookmark) => {
             const tags = [...bookmark.tags];
-            if (tags.includes(bookmarkStore.activeFilter)) {
+            if (tags.includes(tagStore.activeFilter)) {
                 const bookmarkDoc = doc(db, "bookmarks", bookmark.id);
-                const index = tags.indexOf(bookmarkStore.activeFilter);
+                const index = tags.indexOf(tagStore.activeFilter);
                 tags.splice(index, 1);
                 batch.update(bookmarkDoc, { tags: tags });
             }
         });
-        const id = bookmarkStore.tagSet.filter((tag2) => tag2.name === bookmarkStore.activeFilter)[0].id;
+        const id = tagStore.tagSet.filter((tag2) => tag2.name === tagStore.activeFilter)[0].id;
         const tagDoc = doc(db, "tags", id);
         batch.delete(tagDoc);
         await batch.commit();
-        bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter);
+        tagStore.setActiveFilter(tagStore.allItemsFilter);
     };
 
     return (
         <DialogBox
             title="Delete Tag"
-            active={bookmarkStore.deleteTagDialogVisible}
-            close={bookmarkStore.hideDeleteTagDialog}
+            active={tagStore.deleteTagDialogVisible}
+            close={tagStore.hideDeleteTagDialog}
             confirmButton={{
                 text: "delete",
                 id: "delete-tag-confirm",
                 onClick: () => {
                     deleteTag();
-                    bookmarkStore.hideDeleteTagDialog();
+                    tagStore.hideDeleteTagDialog();
                 }
             }}
         >

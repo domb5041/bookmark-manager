@@ -52,7 +52,7 @@ const Error = styled.p`
 `;
 
 const TagsInput = () => {
-    const { bookmarkStore } = useStores();
+    const { tagStore } = useStores();
     const [newTag, setNewTag] = useState("");
     const [activeTagIndex, setActiveTagIndex] = useState(-1);
     const [tagSuggestions, setTagSuggestions] = useState<string[]>([]);
@@ -62,18 +62,16 @@ const TagsInput = () => {
 
     const addTag = () => {
         const empty = newTag === "";
-        const lowerCaseTags = bookmarkStore.tagsInput.map((tag) => tag.toLowerCase());
+        const lowerCaseTags = tagStore.tagsInput.map((tag) => tag.toLowerCase());
         const duplicate = lowerCaseTags.includes(newTag.toLowerCase());
-        const restricted = [
-            bookmarkStore.allItemsFilter,
-            bookmarkStore.taggedItemsFilter,
-            bookmarkStore.untaggedItemsFilter
-        ].includes(newTag.toLowerCase());
+        const restricted = [tagStore.allItemsFilter, tagStore.taggedItemsFilter, tagStore.untaggedItemsFilter].includes(
+            newTag.toLowerCase()
+        );
 
         if (!empty && !duplicate && !restricted) {
-            const updatedTags = [...bookmarkStore.tagsInput];
+            const updatedTags = [...tagStore.tagsInput];
             updatedTags.push(newTag);
-            bookmarkStore.setTagsInput(updatedTags);
+            tagStore.setTagsInput(updatedTags);
             setNewTag("");
             resetSuggestionList();
         } else if (duplicate || restricted) {
@@ -98,7 +96,7 @@ const TagsInput = () => {
             case "ArrowLeft":
                 if (cursorAtZero && !activeTag) {
                     e.preventDefault();
-                    focusTag(bookmarkStore.tagsInput.length - 1);
+                    focusTag(tagStore.tagsInput.length - 1);
                 }
                 break;
             case "ArrowDown":
@@ -152,14 +150,14 @@ const TagsInput = () => {
         setFlipListAlignment(spaceRemaining < list.offsetWidth);
     };
 
-    useEffect(() => getTagsSuggestAlignment(), [newTag, bookmarkStore.tagsInput]);
+    useEffect(() => getTagsSuggestAlignment(), [newTag, tagStore.tagsInput]);
 
     const handleTagKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
         const tagIndex = {
             exists: activeTagIndex > -1,
             notFirst: activeTagIndex > 0,
-            notLast: activeTagIndex < bookmarkStore.tagsInput.length - 1,
-            isLast: activeTagIndex === bookmarkStore.tagsInput.length - 1
+            notLast: activeTagIndex < tagStore.tagsInput.length - 1,
+            isLast: activeTagIndex === tagStore.tagsInput.length - 1
         };
 
         switch (e.key) {
@@ -175,9 +173,9 @@ const TagsInput = () => {
             case "Backspace":
                 if (tagIndex.exists) {
                     focusInput();
-                    const updatedTags = [...bookmarkStore.tagsInput];
+                    const updatedTags = [...tagStore.tagsInput];
                     updatedTags.splice(activeTagIndex, 1);
-                    bookmarkStore.setTagsInput(updatedTags);
+                    tagStore.setTagsInput(updatedTags);
                 }
                 break;
         }
@@ -195,8 +193,8 @@ const TagsInput = () => {
     };
 
     const getSuggestionList = (newTag: string) => {
-        const allTags = bookmarkStore.tagSet;
-        const tagsInput = bookmarkStore.tagsInput;
+        const allTags = tagStore.tagSet;
+        const tagsInput = tagStore.tagsInput;
         const filteredTags = allTags.filter((tag) => {
             const notAlreadyInInput = !tagsInput.includes(tag.name);
             const matchesCurrentString = new RegExp("^" + newTag).test(tag.name);
@@ -223,7 +221,7 @@ const TagsInput = () => {
     return (
         <>
             <Container onClick={focusInput} id="tags-input-container">
-                {bookmarkStore.tagsInput.map((tag, i) => (
+                {tagStore.tagsInput.map((tag, i) => (
                     <Tag
                         name={tag}
                         key={`${i}-${tag}`}
@@ -247,7 +245,7 @@ const TagsInput = () => {
                         }}
                         onBlur={() => addTag()}
                         onKeyDown={(e) => handleInputKeyPress(e)}
-                        placeholder={bookmarkStore.tagsInput.length > 0 ? "" : "tags"}
+                        placeholder={tagStore.tagsInput.length > 0 ? "" : "tags"}
                         ref={inputRef}
                         inputValidationError={inputValidationError}
                     />

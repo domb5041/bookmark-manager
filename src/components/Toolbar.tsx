@@ -14,10 +14,10 @@ const Container = styled.div`
 `;
 
 const Toolbar = () => {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
     return (
         <Container id="toolbar">
-            <Button symbol="list_alt" onClick={bookmarkStore.setSidebarVisible} id="toggle-sidebar-button" />
+            <Button symbol="list_alt" onClick={tagStore.setSidebarVisible} id="toggle-sidebar-button" />
             <Button
                 symbol="edit"
                 onClick={bookmarkStore.showEditBookmarkDialog}

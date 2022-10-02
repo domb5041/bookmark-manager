@@ -53,10 +53,10 @@ const Toolbar = styled.div`
 `;
 
 const Sidebar = () => {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
 
     useEffect(() => {
-        bookmarkStore.updateTotalsCounts();
+        tagStore.updateTotalsCounts();
     }, [bookmarkStore.bookmarks, bookmarkStore]);
 
     const batch = writeBatch(db);
@@ -66,7 +66,7 @@ const Sidebar = () => {
             const flattenedTags = bookmarkStore.bookmarks.map((b) => b.tags).flat();
             const bookmarkTagSet = [...new Set(flattenedTags)];
             bookmarkTagSet.forEach(async (bookmarkTag) => {
-                const tagExists = bookmarkStore.tagSet.findIndex((tag) => tag.name === bookmarkTag) > -1;
+                const tagExists = tagStore.tagSet.findIndex((tag) => tag.name === bookmarkTag) > -1;
                 if (!tagExists) {
                     await addDoc(tagsCollectionRef, {
                         name: bookmarkTag,
@@ -76,9 +76,9 @@ const Sidebar = () => {
                     });
                 }
             });
-            bookmarkStore.tagSet.forEach((tag) => {
+            tagStore.tagSet.forEach((tag) => {
                 const tagDoc = doc(db, "tags", tag.id);
-                const count = bookmarkStore.getCount(tag.name);
+                const count = tagStore.getCount(tag.name);
                 if (count > 0) {
                     batch.update(tagDoc, { count: count });
                 } else {
@@ -88,19 +88,19 @@ const Sidebar = () => {
             await batch.commit();
         };
         syncTags();
-    }, [bookmarkStore.bookmarks, bookmarkStore]);
+    }, [bookmarkStore.bookmarks, bookmarkStore, tagStore]);
 
     const noTagSelected =
-        bookmarkStore.activeFilter === bookmarkStore.allItemsFilter ||
-        bookmarkStore.activeFilter === bookmarkStore.taggedItemsFilter ||
-        bookmarkStore.activeFilter === bookmarkStore.untaggedItemsFilter;
+        tagStore.activeFilter === tagStore.allItemsFilter ||
+        tagStore.activeFilter === tagStore.taggedItemsFilter ||
+        tagStore.activeFilter === tagStore.untaggedItemsFilter;
 
     const nodeRef = useRef(null);
 
     return (
         <CSSTransition
             nodeRef={nodeRef}
-            in={bookmarkStore.sidebarVisible}
+            in={tagStore.sidebarVisible}
             unmountOnExit
             timeout={500}
             classNames="dialog-container"
@@ -109,13 +109,13 @@ const Sidebar = () => {
                 <Toolbar>
                     <Button
                         symbol="tag"
-                        onClick={bookmarkStore.showEditTagDialog}
+                        onClick={tagStore.showEditTagDialog}
                         disabled={noTagSelected}
                         id="edit-tag-button"
                     />
                     <Button
                         symbol="delete"
-                        onClick={bookmarkStore.showDeleteTagDialog}
+                        onClick={tagStore.showDeleteTagDialog}
                         disabled={noTagSelected}
                         id="delete-tag-button"
                     />
@@ -123,34 +123,34 @@ const Sidebar = () => {
                 <EditTag />
                 <DeleteTag />
                 <SidebarTag
-                    active={bookmarkStore.activeFilter === bookmarkStore.allItemsFilter}
-                    onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter)}
+                    active={tagStore.activeFilter === tagStore.allItemsFilter}
+                    onClick={() => tagStore.setActiveFilter(tagStore.allItemsFilter)}
                 >
                     <Symbol name="tag" color="grey" />
                     <div className="tag-name">All Items</div>
-                    <div className="tag-count">({bookmarkStore.allItemsCount})</div>
+                    <div className="tag-count">({tagStore.allItemsCount})</div>
                 </SidebarTag>
                 <SidebarTag
-                    active={bookmarkStore.activeFilter === bookmarkStore.taggedItemsFilter}
-                    onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.taggedItemsFilter)}
+                    active={tagStore.activeFilter === tagStore.taggedItemsFilter}
+                    onClick={() => tagStore.setActiveFilter(tagStore.taggedItemsFilter)}
                 >
                     <Symbol name="tag" color="grey" />
                     <div className="tag-name">Tagged</div>{" "}
-                    <div className="tag-count">({bookmarkStore.taggedItemsCount})</div>
+                    <div className="tag-count">({tagStore.taggedItemsCount})</div>
                 </SidebarTag>
                 <SidebarTag
-                    active={bookmarkStore.activeFilter === bookmarkStore.untaggedItemsFilter}
-                    onClick={() => bookmarkStore.setActiveFilter(bookmarkStore.untaggedItemsFilter)}
+                    active={tagStore.activeFilter === tagStore.untaggedItemsFilter}
+                    onClick={() => tagStore.setActiveFilter(tagStore.untaggedItemsFilter)}
                     style={{ marginBottom: 10 }}
                 >
                     <Symbol name="tag" color="grey" />
                     <div className="tag-name">Untagged</div>{" "}
-                    <div className="tag-count">({bookmarkStore.untaggedItemsCount})</div>
+                    <div className="tag-count">({tagStore.untaggedItemsCount})</div>
                 </SidebarTag>
-                {bookmarkStore.tagSet.map((tag, i) => (
+                {tagStore.tagSet.map((tag, i) => (
                     <SidebarTag
-                        active={bookmarkStore.activeFilter === tag.name}
-                        onClick={() => bookmarkStore.setActiveFilter(tag.name)}
+                        active={tagStore.activeFilter === tag.name}
+                        onClick={() => tagStore.setActiveFilter(tag.name)}
                         key={`${i}-${tag.name}`}
                     >
                         <Symbol name={tag.icon} color={tag.color} />

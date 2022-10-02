@@ -10,7 +10,7 @@ import axios from "axios";
 import Favicon from "./bookmarks/Favicon";
 
 const EditBookmark = () => {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
     const [newName, setNewName] = useState("");
     const [newDescription, setNewDescription] = useState("");
     const [newImg, setNewImg] = useState("");
@@ -20,7 +20,7 @@ const EditBookmark = () => {
     const onDialogOpening = () => {
         if (bookmarkStore.activeBookmarkIndex > -1) {
             const activeBookmark = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex];
-            bookmarkStore.setTagsInput(activeBookmark.tags);
+            tagStore.setTagsInput(activeBookmark.tags);
             setNewName(activeBookmark.name);
             setNewDescription(activeBookmark.description || "");
             setNewImg(activeBookmark.image || "");
@@ -35,16 +35,16 @@ const EditBookmark = () => {
         await updateDoc(bookmarkDoc, {
             name: newName,
             description: newDescription,
-            tags: bookmarkStore.tagsInput,
+            tags: tagStore.tagsInput,
             image: newImg,
             url: newUrl,
             favicon: newFavicon
         });
 
-        const tagExists = () => bookmarkStore.tagSet.some((tag) => tag.name === bookmarkStore.activeFilter);
+        const tagExists = () => tagStore.tagSet.some((tag) => tag.name === tagStore.activeFilter);
 
         if (!tagExists) {
-            bookmarkStore.setActiveFilter(bookmarkStore.allItemsFilter);
+            tagStore.setActiveFilter(tagStore.allItemsFilter);
         }
     };
 

@@ -23,7 +23,7 @@ interface IPreview {
 }
 
 const AddBookmark = () => {
-    const { bookmarkStore } = useStores();
+    const { bookmarkStore, tagStore } = useStores();
     const [url, setUrl] = useState("");
     const [preview, setPreview] = useState<IPreview | null>(null);
 
@@ -33,7 +33,7 @@ const AddBookmark = () => {
             name: preview.title || "",
             description: preview.description || "",
             url: url,
-            tags: bookmarkStore.tagsInput,
+            tags: tagStore.tagsInput,
             image: preview.images[0] || "",
             favicon: preview.favicons[0] || ""
         });
@@ -56,7 +56,7 @@ const AddBookmark = () => {
 
     const resetDialog = () => {
         bookmarkStore.hideAddBookmarkDialog();
-        bookmarkStore.setTagsInput([]);
+        tagStore.setTagsInput([]);
         setPreview(null);
         setUrl("");
     };
@@ -66,7 +66,7 @@ const AddBookmark = () => {
             title="Add Bookmark"
             active={bookmarkStore.addBookmarkDialogVisible}
             close={resetDialog}
-            onEnter={() => bookmarkStore.setTagsInput([])}
+            onEnter={() => tagStore.setTagsInput([])}
             confirmButton={{
                 text: "save",
                 id: "save-bookmark-confirm",
