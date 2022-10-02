@@ -64,9 +64,11 @@ const TagsInput = () => {
         const empty = newTag === "";
         const lowerCaseTags = tagStore.tagsInput.map((tag) => tag.toLowerCase());
         const duplicate = lowerCaseTags.includes(newTag.toLowerCase());
-        const restricted = [tagStore.allItemsFilter, tagStore.taggedItemsFilter, tagStore.untaggedItemsFilter].includes(
-            newTag.toLowerCase()
-        );
+        const restricted = [
+            tagStore.allItemsFilter.name,
+            tagStore.taggedItemsFilter.name,
+            tagStore.untaggedItemsFilter.name
+        ].includes(newTag.toLowerCase());
 
         if (!empty && !duplicate && !restricted) {
             const updatedTags = [...tagStore.tagsInput];

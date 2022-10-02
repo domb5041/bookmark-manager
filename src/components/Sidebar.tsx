@@ -90,10 +90,10 @@ const Sidebar = () => {
         syncTags();
     }, [bookmarkStore.bookmarks, bookmarkStore, tagStore]);
 
-    const noTagSelected =
-        tagStore.activeFilter === tagStore.allItemsFilter ||
-        tagStore.activeFilter === tagStore.taggedItemsFilter ||
-        tagStore.activeFilter === tagStore.untaggedItemsFilter;
+    const allItemsSelected = tagStore.activeFilter.name === tagStore.allItemsFilter.name;
+    const taggedSelected = tagStore.activeFilter.name === tagStore.taggedItemsFilter.name;
+    const untaggedSelected = tagStore.activeFilter.name === tagStore.untaggedItemsFilter.name;
+    const noTagSelected = allItemsSelected || taggedSelected || untaggedSelected;
 
     const nodeRef = useRef(null);
 
@@ -122,35 +122,32 @@ const Sidebar = () => {
                 </Toolbar>
                 <EditTag />
                 <DeleteTag />
-                <SidebarTag
-                    active={tagStore.activeFilter === tagStore.allItemsFilter}
-                    onClick={() => tagStore.setActiveFilter(tagStore.allItemsFilter)}
-                >
+                <SidebarTag active={allItemsSelected} onClick={() => tagStore.setActiveFilter(tagStore.allItemsFilter)}>
                     <Symbol name="tag" color="grey" />
                     <div className="tag-name">All Items</div>
-                    <div className="tag-count">({tagStore.allItemsCount})</div>
+                    <div className="tag-count">({tagStore.allItemsFilter.count})</div>
                 </SidebarTag>
                 <SidebarTag
-                    active={tagStore.activeFilter === tagStore.taggedItemsFilter}
+                    active={taggedSelected}
                     onClick={() => tagStore.setActiveFilter(tagStore.taggedItemsFilter)}
                 >
                     <Symbol name="tag" color="grey" />
-                    <div className="tag-name">Tagged</div>{" "}
-                    <div className="tag-count">({tagStore.taggedItemsCount})</div>
+                    <div className="tag-name">Tagged</div>
+                    <div className="tag-count">({tagStore.taggedItemsFilter.count})</div>
                 </SidebarTag>
                 <SidebarTag
-                    active={tagStore.activeFilter === tagStore.untaggedItemsFilter}
+                    active={untaggedSelected}
                     onClick={() => tagStore.setActiveFilter(tagStore.untaggedItemsFilter)}
                     style={{ marginBottom: 10 }}
                 >
                     <Symbol name="tag" color="grey" />
-                    <div className="tag-name">Untagged</div>{" "}
-                    <div className="tag-count">({tagStore.untaggedItemsCount})</div>
+                    <div className="tag-name">Untagged</div>
+                    <div className="tag-count">({tagStore.untaggedItemsFilter.count})</div>
                 </SidebarTag>
                 {tagStore.tagSet.map((tag, i) => (
                     <SidebarTag
-                        active={tagStore.activeFilter === tag.name}
-                        onClick={() => tagStore.setActiveFilter(tag.name)}
+                        active={tagStore.activeFilter.name === tag.name}
+                        onClick={() => tagStore.setActiveFilter(tag)}
                         key={`${i}-${tag.name}`}
                     >
                         <Symbol name={tag.icon} color={tag.color} />

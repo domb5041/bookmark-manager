@@ -10,15 +10,15 @@ const Bookmarks = () => {
 
     const getBookmarks2 = () => {
         const bookmarks = bookmarkStore.bookmarks as IBookmark[];
-        switch (tagStore.activeFilter) {
-            case tagStore.allItemsFilter:
+        switch (tagStore.activeFilter.name) {
+            case tagStore.allItemsFilter.name:
                 return bookmarks;
-            case tagStore.taggedItemsFilter:
+            case tagStore.taggedItemsFilter.name:
                 return bookmarks.filter((b) => b.tags.length > 0);
-            case tagStore.untaggedItemsFilter:
+            case tagStore.untaggedItemsFilter.name:
                 return bookmarks.filter((b) => b.tags.length === 0);
             default:
-                return bookmarks.filter((b) => b.tags.includes(tagStore.activeFilter));
+                return bookmarks.filter((b) => b.tags.includes(tagStore.activeFilter.name));
         }
     };
 

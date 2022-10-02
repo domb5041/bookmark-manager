@@ -39,18 +39,23 @@ const EditTag = () => {
     const renameTag = async () => {
         bookmarkStore.bookmarks.forEach((bookmark) => {
             const tags = [...bookmark.tags];
-            if (tags.includes(tagStore.activeFilter)) {
+            if (tags.includes(tagStore.activeFilter.name)) {
                 const bookmarkDoc = doc(db, "bookmarks", bookmark.id);
-                const index = tags.indexOf(tagStore.activeFilter);
+                const index = tags.indexOf(tagStore.activeFilter.name);
                 tags.splice(index, 1, newName);
                 batch.update(bookmarkDoc, { tags: tags });
             }
         });
-        const id = tagStore.tagSet.filter((tag2) => tag2.name === tagStore.activeFilter)[0].id;
-        const tagDoc = doc(db, "tags", id);
+        const tagDoc = doc(db, "tags", tagStore.activeFilter.id);
         batch.update(tagDoc, { name: newName, color: newColor, icon: newIcon });
         await batch.commit();
-        tagStore.setActiveFilter(newName);
+        tagStore.setActiveFilter({
+            id: tagStore.activeFilter.id,
+            name: newName,
+            color: newColor,
+            icon: newIcon,
+            count: tagStore.activeFilter.count
+        });
     };
 
     return (
@@ -59,10 +64,9 @@ const EditTag = () => {
             active={tagStore.editTagDialogVisible}
             close={tagStore.hideEditTagDialog}
             onEnter={() => {
-                const { color, icon } = tagStore.tagSet.filter((tag2) => tag2.name === tagStore.activeFilter)[0];
-                setNewName(tagStore.activeFilter);
-                setNewColor(color);
-                setNewIcon(icon);
+                setNewName(tagStore.activeFilter.name);
+                setNewColor(tagStore.activeFilter.color);
+                setNewIcon(tagStore.activeFilter.icon);
             }}
             confirmButton={{
                 text: "update",

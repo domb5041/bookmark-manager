@@ -13,15 +13,14 @@ const DeleteTag = () => {
     const deleteTag = async () => {
         bookmarkStore.bookmarks.forEach((bookmark) => {
             const tags = [...bookmark.tags];
-            if (tags.includes(tagStore.activeFilter)) {
+            if (tags.includes(tagStore.activeFilter.name)) {
                 const bookmarkDoc = doc(db, "bookmarks", bookmark.id);
-                const index = tags.indexOf(tagStore.activeFilter);
+                const index = tags.indexOf(tagStore.activeFilter.name);
                 tags.splice(index, 1);
                 batch.update(bookmarkDoc, { tags: tags });
             }
         });
-        const id = tagStore.tagSet.filter((tag2) => tag2.name === tagStore.activeFilter)[0].id;
-        const tagDoc = doc(db, "tags", id);
+        const tagDoc = doc(db, "tags", tagStore.activeFilter.id);
         batch.delete(tagDoc);
         await batch.commit();
         tagStore.setActiveFilter(tagStore.allItemsFilter);

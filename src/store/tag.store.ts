@@ -23,9 +23,9 @@ class tagStore {
     };
 
     updateTotalsCounts = () => {
-        this.allItemsCount = this.getCount("all");
-        this.taggedItemsCount = this.getCount("tagged");
-        this.untaggedItemsCount = this.getCount("untagged");
+        this.allItemsFilter.count = this.getCount("all");
+        this.taggedItemsFilter.count = this.getCount("tagged");
+        this.untaggedItemsFilter.count = this.getCount("untagged");
     };
 
     getCount = (name: string) => {
@@ -42,17 +42,15 @@ class tagStore {
         }
     };
 
-    allItemsFilter = "all items";
-    taggedItemsFilter = "tagged";
-    untaggedItemsFilter = "untagged";
-    allItemsCount = 0;
-    taggedItemsCount = 0;
-    untaggedItemsCount = 0;
-
-    activeFilter = this.allItemsFilter;
     activeFilterIndex = -1;
 
-    setActiveFilter = (tag: string) => {
+    allItemsFilter = { id: "all items", name: "all items", color: "grey", icon: "tag", count: 0 };
+    taggedItemsFilter = { id: "tagged", name: "tagged", color: "grey", icon: "tag", count: 0 };
+    untaggedItemsFilter = { id: "untagged", name: "untagged", color: "grey", icon: "tag", count: 0 };
+
+    activeFilter = this.allItemsFilter;
+
+    setActiveFilter = (tag: ITag) => {
         this.rootStore.bookmarkStore.setActiveBookmark("");
         this.activeFilter = tag;
     };

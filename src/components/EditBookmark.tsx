@@ -41,7 +41,7 @@ const EditBookmark = () => {
             favicon: newFavicon
         });
 
-        const tagExists = () => tagStore.tagSet.some((tag) => tag.name === tagStore.activeFilter);
+        const tagExists = () => tagStore.tagSet.some((tag) => tag.name === tagStore.activeFilter.name);
 
         if (!tagExists) {
             tagStore.setActiveFilter(tagStore.allItemsFilter);
