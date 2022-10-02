@@ -16,7 +16,7 @@ const Container = styled.div`
     background: rgba(0, 0, 0, 0.1);
     padding: 10px;
     & .dialog-panel {
-        background: whitesmoke;
+        background: ${(props) => props.theme.color.background.void};
         border-radius: 5px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         display: flex;
@@ -27,7 +27,7 @@ const Container = styled.div`
         max-height: 100%;
         width: 300px;
         height: 500px;
-        border: 1px solid silver;
+        border: 1px solid ${(props) => props.theme.color.background.border};
     }
     &.dialog-container-enter {
         opacity: 0;

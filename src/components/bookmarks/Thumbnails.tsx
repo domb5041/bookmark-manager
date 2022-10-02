@@ -9,7 +9,7 @@ import Tag from "./Tag";
 
 const Container = styled.div`
     flex: 1;
-    background-color: whitesmoke;
+    background-color: ${(props) => props.theme.color.background.void};
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
@@ -18,33 +18,16 @@ const Container = styled.div`
 `;
 
 const Bookmark = styled.div<{ active: boolean }>`
-    border: 1px solid silver;
+    border: 1px solid ${(props) => props.theme.color.background.border};
     padding: 5px;
-    background-color: ${(props) => (props.active ? "silver" : "white")};
+    border-radius: 5px;
+    background-color: ${(props) =>
+        props.active ? props.theme.color.accent.secondary : props.theme.color.background.surface};
     cursor: pointer;
     width: 250px;
     height: 500px;
     overflow: hidden;
     margin: 0 10px 10px 0;
-    & > .bookmark-name {
-        flex: 1;
-        margin-right: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    & > .bookmark-url {
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    & > .bookmark-tags {
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
     & > img {
         width: 100%;
     }

@@ -8,8 +8,8 @@ const Container = styled.div`
     display: flex;
     padding: 5px;
     background-color: white;
-    border: 1px solid grey;
-    border-radius: 3px;
+    border: 1px solid ${(props) => props.theme.color.background.border};
+    border-radius: 5px;
     flex-wrap: wrap;
     cursor: text;
 `;

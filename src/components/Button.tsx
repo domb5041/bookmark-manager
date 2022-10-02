@@ -1,29 +1,24 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import Symbol from "./Symbol";
-import { lighten, darken } from "polished";
+import { darken } from "polished";
 
 const StyledButton = styled.button`
     border: none;
-    background-color: silver;
+    background-color: ${(props) => props.theme.color.background.object};
     display: flex;
     align-items: center;
     height: 28px;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.1s;
-    border: 1px solid ${darken(0.05, "silver")};
+    border: 1px solid ${(props) => darken(0.05, props.theme.color.background.object)};
     &:hover:not(:disabled) {
-        background-color: ${lighten(0.07, "silver")};
+        background-color: ${(props) => props.theme.color.background.hover.object};
     }
     &:disabled {
         cursor: not-allowed;
-        & > * {
-            color: grey;
-        }
-    }
-    & > * {
-        color: black;
+        color: grey;
     }
 `;
 

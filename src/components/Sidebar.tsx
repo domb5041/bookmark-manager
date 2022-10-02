@@ -14,8 +14,8 @@ import { tagColors } from "../theme";
 
 const Container = styled.div`
     width: 250px;
-    border-right: 1px solid silver;
-    background-color: whitesmoke;
+    border-right: 1px solid ${(props) => props.theme.color.background.border};
+    background-color: ${(props) => props.theme.color.background.surface};
     flex-shrink: 0;
     &.dialog-container-enter {
         width: 0;
@@ -38,6 +38,8 @@ const Toolbar = styled.div`
     display: flex;
     align-items: center;
     padding: 0 10px;
+    border-bottom: 1px solid ${(props) => props.theme.color.background.border};
+    margin-bottom: 5px;
 `;
 
 const Sidebar = () => {

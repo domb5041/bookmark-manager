@@ -8,6 +8,9 @@ const Container = styled.div`
         flex: 1;
         box-sizing: border-box;
         height: 28px;
+        border: 1px solid ${(props) => props.theme.color.background.border};
+        border-radius: 5px;
+        padding: 0 7px;
     }
     & > label {
         padding-right: 10px;

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 
 const Span = styled.span<{ size?: string; color?: string }>`
-    color: ${(props) => props.color || "silver"};
+    color: ${(props) => props.color || "inherit"};
     font-size: ${(props) => props.size || "24px"};
 `;
 

@@ -9,6 +9,7 @@ import PreviewImg from "./bookmarks/PreviewImg";
 import axios from "axios";
 import Favicon from "./bookmarks/Favicon";
 import TextInput from "./TextInput";
+import Button from "./Button";
 
 const EditBookmark = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -73,7 +74,7 @@ const EditBookmark = () => {
             confirmButton={{ onClick: () => updateBookmark(), text: "Update", id: "update-tags-confirm" }}
             onEnter={onDialogOpening}
         >
-            <button onClick={refreshPreview}>Refresh data</button>
+            <Button onClick={refreshPreview} id="refresh-data-button" symbol="refresh" />
             <PreviewImg url={newImg} />
             <Favicon url={newFavicon} />
             <TextInput

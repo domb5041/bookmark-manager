@@ -6,17 +6,22 @@ import { IBookmark } from "../../store/bookmark.store";
 import Button from "../Button";
 import Favicon from "./Favicon";
 import Tag from "./Tag";
+import { darken } from "polished";
 
 const Container = styled.div`
     flex: 1;
-    background-color: whitesmoke;
+    background-color: ${(props) => props.theme.color.background.void};
     overflow: auto;
 `;
 
 const Bookmark = styled.div<{ active: boolean }>`
-    border-bottom: 1px solid silver;
+    border-bottom: 1px solid ${(props) => darken(0.05, props.theme.color.background.void)};
     padding: 5px;
-    background-color: ${(props) => (props.active ? "silver" : "transparent")};
+    background-color: ${(props) => (props.active ? props.theme.color.accent.secondary : "transparent")};
+    &:hover {
+        background-color: ${(props) =>
+            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover.void};
+    }
     cursor: pointer;
     display: flex;
     align-items: center;

@@ -3,16 +3,25 @@ import styled from "styled-components";
 import { getTagBackground, tagColors } from "../theme";
 import Symbol from "./Symbol";
 
-const Container = styled.div<{ active: boolean }>`
+const Container = styled.div<{ active: boolean; color: string }>`
     padding: 3px 10px;
     cursor: pointer;
-    background-color: ${(props) => (props.active ? "silver" : "transparent")};
+    background-color: ${(props) => (props.active ? props.theme.color.accent.secondary : "transparent")};
+    transition: 0.1s;
+    &:hover {
+        background-color: ${(props) =>
+            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover.surface};
+    }
     white-space: nowrap;
     display: flex;
     align-items: center;
     & .tag-name {
         flex: 1;
         padding-left: 5px;
+    }
+    & .tag-count {
+        font-weight: bold;
+        color: ${(props) => props.theme.color.foreground.secondary};
     }
 `;
 
@@ -38,12 +47,12 @@ interface ISidebarRowProps {
 
 const SidebarRow: FC<ISidebarRowProps> = ({ icon, color, active, count, onClick, name, style }) => {
     return (
-        <Container active={active} onClick={onClick} style={style}>
+        <Container active={active} onClick={onClick} style={style} color={color || tagColors[0]}>
             <Icon color={color || tagColors[0]}>
                 <Symbol name={icon || "tag"} color={color || tagColors[0]} size="20px" />
             </Icon>
             <div className="tag-name">{name}</div>
-            <div className="tag-count">({count})</div>
+            <div className="tag-count">{count}</div>
         </Container>
     );
 };

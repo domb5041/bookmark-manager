@@ -6,8 +6,8 @@ import Button from "./Button";
 
 const Container = styled.div`
     height: 50px;
-    border-bottom: 1px solid silver;
-    background-color: whitesmoke;
+    border-bottom: 1px solid ${(props) => props.theme.color.background.border};
+    background-color: ${(props) => props.theme.color.background.surface};
     display: flex;
     align-items: center;
     padding: 0 10px;
