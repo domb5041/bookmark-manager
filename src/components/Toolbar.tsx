@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
 import Button from "./Button";
+import TextInput from "./TextInput";
 
 const Container = styled.div`
     height: 50px;
@@ -13,10 +14,8 @@ const Container = styled.div`
     padding: 0 10px;
 `;
 
-const Title = styled.div`
+const Spacer = styled.div`
     flex: 1;
-    padding: 0 20px;
-    font-weight: bold;
 `;
 
 const Toolbar = () => {
@@ -24,7 +23,15 @@ const Toolbar = () => {
     return (
         <Container id="toolbar">
             <Button symbol="list_alt" onClick={tagStore.setSidebarVisible} id="toggle-sidebar-button" />
-            <Title>{tagStore.activeFilter.name}</Title>
+            <Spacer />
+            <TextInput
+                id="search-bookmarks-input"
+                value={bookmarkStore.searchTerm}
+                onChange={(e) => bookmarkStore.setSearchTerm(e.target.value)}
+                placeholder={"search " + tagStore.activeFilter.name}
+                style={{ width: 400 }}
+            />
+            <Spacer />
             <Button
                 symbol="edit"
                 onClick={bookmarkStore.showEditBookmarkDialog}

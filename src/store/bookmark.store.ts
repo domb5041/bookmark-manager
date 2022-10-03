@@ -27,6 +27,10 @@ class bookmarkStore {
         this.activeBookmarkIndex = index;
     };
 
+    searchTerm = "";
+    setSearchTerm = (text: string) => (this.searchTerm = text);
+    resetSearchTerm = () => (this.searchTerm = "");
+
     editBookmarkDialogVisible = false;
     showEditBookmarkDialog = () => (this.editBookmarkDialogVisible = true);
     hideEditBookmarkDialog = () => (this.editBookmarkDialogVisible = false);

@@ -53,6 +53,7 @@ class tagStore {
 
     setActiveFilter = (tag: ITag) => {
         this.rootStore.bookmarkStore.setActiveBookmark("");
+        this.rootStore.bookmarkStore.resetSearchTerm();
         this.activeFilter = tag;
     };
 
