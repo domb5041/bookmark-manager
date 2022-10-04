@@ -16,3 +16,10 @@ export const isValidHttpUrl = (string: string) => {
 
     return url.protocol === "http:" || url.protocol === "https:";
 };
+
+export const formatUrl = (url: string) => {
+    const partsToRemove = /https?:\/\/|www./g;
+    const trimmedStart = url.replace(partsToRemove, "");
+    const trimmedEnd = trimmedStart.split("/")[0];
+    return trimmedEnd;
+};

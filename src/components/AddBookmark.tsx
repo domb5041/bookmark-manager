@@ -7,7 +7,6 @@ import { bookmarksCollectionRef } from "../App";
 import axios from "axios";
 import { debounce, isValidHttpUrl } from "../utilities";
 import PreviewImg from "./bookmarks/PreviewImg";
-import Favicon from "./bookmarks/Favicon";
 import TagsInput from "./TagsInput";
 import TextInput from "./TextInput";
 
@@ -92,8 +91,7 @@ const AddBookmark = () => {
             <TagsInput style={{ marginBottom: 10 }} />
             {preview && (
                 <>
-                    <PreviewImg url={preview.images[0]} />
-                    <Favicon url={preview.favicons[0]} />
+                    <PreviewImg imgUrl={preview.images[0]} style={{ marginBottom: 10 }} />
                     <b>{preview.title}</b>
                     <p>{preview.description}</p>
                 </>

@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
-import Favicon from "./Favicon";
+import { formatUrl } from "../../utilities";
 import PreviewImg from "./PreviewImg";
 import Tag from "./Tag";
 
@@ -28,9 +28,6 @@ const Bookmark = styled.div<{ active: boolean }>`
     height: 500px;
     overflow: hidden;
     margin: 0 10px 10px 0;
-    & > img {
-        width: 100%;
-    }
 `;
 
 interface IThumbnailsProps {
@@ -48,9 +45,10 @@ const Thumbnails: FC<IThumbnailsProps> = ({ bookmarks }) => {
                     active={bookmarkStore.activeBookmark === bookmark.id}
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
-                    <PreviewImg url={bookmark.image} />
-                    <Favicon url={bookmark.favicon} />
-                    <b className="bookmark-name">{bookmark.name}</b>
+                    <PreviewImg imgUrl={bookmark.image} style={{ marginBottom: 10 }} />
+                    <b className="bookmark-name">
+                        {bookmark.name} | {formatUrl(bookmark.url)}
+                    </b>
                     <p className="bookmark-description">{bookmark.description}</p>
                     <div className="bookmark-url">{bookmark.url}</div>
                     <div className="bookmark-tags">

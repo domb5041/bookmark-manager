@@ -7,7 +7,6 @@ import { db } from "../firebase-config";
 import TagsInput from "./TagsInput";
 import PreviewImg from "./bookmarks/PreviewImg";
 import axios from "axios";
-import Favicon from "./bookmarks/Favicon";
 import TextInput from "./TextInput";
 import Button from "./Button";
 import Textarea from "./Textarea";
@@ -96,8 +95,7 @@ const EditBookmark = () => {
                 />
                 <Button onClick={refreshPreview} id="refresh-data-button" symbol="refresh" disabled={!validUrl} />
             </UrlField>
-            <PreviewImg url={newImg} />
-            <Favicon url={newFavicon} />
+            <PreviewImg imgUrl={newImg} style={{ marginBottom: 10 }} />
             <TextInput
                 id="title-input"
                 value={newName}
