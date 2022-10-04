@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStores } from "../store";
 import DialogBox from "./DialogBox";
 import { observer } from "mobx-react";
@@ -11,6 +11,13 @@ import Favicon from "./bookmarks/Favicon";
 import TextInput from "./TextInput";
 import Button from "./Button";
 import Textarea from "./Textarea";
+import styled from "styled-components";
+import { isValidHttpUrl } from "../utilities";
+
+const UrlField = styled.div`
+    display: flex;
+    margin-bottom: 10px;
+`;
 
 const EditBookmark = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -19,6 +26,7 @@ const EditBookmark = () => {
     const [newImg, setNewImg] = useState("");
     const [newUrl, setNewUrl] = useState("");
     const [newFavicon, setNewFavicon] = useState("");
+    const [validUrl, setValidUrl] = useState(false);
 
     const onDialogOpening = () => {
         if (bookmarkStore.activeBookmarkIndex > -1) {
@@ -67,6 +75,10 @@ const EditBookmark = () => {
             });
     };
 
+    useEffect(() => {
+        setValidUrl(isValidHttpUrl(newUrl));
+    }, [newUrl]);
+
     return (
         <DialogBox
             title="Edit Bookmark"
@@ -75,18 +87,18 @@ const EditBookmark = () => {
             confirmButton={{ onClick: () => updateBookmark(), text: "Update", id: "update-tags-confirm" }}
             onEnter={onDialogOpening}
         >
-            <Button onClick={refreshPreview} id="refresh-data-button" symbol="refresh" />
+            <UrlField>
+                <TextInput
+                    id="url-input"
+                    value={newUrl}
+                    onChange={(e) => setNewUrl(e.target.value)}
+                    style={{ marginRight: 5, flex: 1 }}
+                />
+                <Button onClick={refreshPreview} id="refresh-data-button" symbol="refresh" disabled={!validUrl} />
+            </UrlField>
             <PreviewImg url={newImg} />
             <Favicon url={newFavicon} />
             <TextInput
-                label="Url"
-                id="url-input"
-                value={newUrl}
-                onChange={(e) => setNewUrl(e.target.value)}
-                style={{ marginBottom: 10 }}
-            />
-            <TextInput
-                label="Title"
                 id="title-input"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}

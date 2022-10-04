@@ -5,7 +5,7 @@ import DialogBox from "./DialogBox";
 import { addDoc } from "@firebase/firestore";
 import { bookmarksCollectionRef } from "../App";
 import axios from "axios";
-import { debounce } from "../utilities";
+import { debounce, isValidHttpUrl } from "../utilities";
 import PreviewImg from "./bookmarks/PreviewImg";
 import Favicon from "./bookmarks/Favicon";
 import TagsInput from "./TagsInput";
@@ -71,7 +71,6 @@ const AddBookmark = () => {
             confirmButton={{
                 text: "save",
                 id: "save-bookmark-confirm",
-                disabled: !preview,
                 onClick: () => {
                     createBookmark();
                     resetDialog();
@@ -81,15 +80,16 @@ const AddBookmark = () => {
             <TextInput
                 value={url}
                 placeholder="url"
-                label="url"
                 id="bookmark-url-input"
                 style={{ marginBottom: 10 }}
                 onChange={(e) => {
-                    debounce(() => getPreview(e.target.value), 500);
+                    if (isValidHttpUrl(e.target.value)) {
+                        debounce(() => getPreview(e.target.value), 500);
+                    }
                     setUrl(e.target.value);
                 }}
             />
-            <TagsInput />
+            <TagsInput style={{ marginBottom: 10 }} />
             {preview && (
                 <>
                     <PreviewImg url={preview.images[0]} />

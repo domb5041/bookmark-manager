@@ -19,7 +19,7 @@ class tagStore {
 
     tagSet: ITag[] = [];
     updateTagSet = (tags: ITag[]) => {
-        const alphabeticalTags = tags.sort((a, b) => (a === b ? 0 : a.id < b.id ? -1 : 1));
+        const alphabeticalTags = tags.sort((a, b) => (a === b ? 0 : a.name < b.name ? -1 : 1));
         this.tagSet = alphabeticalTags;
     };
 
