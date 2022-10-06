@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
-import { formatUrl } from "../../utilities";
+import Url from "../Url";
 import PreviewImg from "./PreviewImg";
 import Tag from "./Tag";
 
@@ -46,11 +46,9 @@ const Thumbnails: FC<IThumbnailsProps> = ({ bookmarks }) => {
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
                     <PreviewImg imgUrl={bookmark.image} style={{ marginBottom: 10 }} />
-                    <b className="bookmark-name">
-                        {bookmark.name} | {formatUrl(bookmark.url)}
-                    </b>
+                    <b className="bookmark-name">{bookmark.name}</b>
                     <p className="bookmark-description">{bookmark.description}</p>
-                    <div className="bookmark-url">{bookmark.url}</div>
+                    <Url url={bookmark.url} />
                     <div className="bookmark-tags">
                         {bookmark.tags.map((tag, i) => (
                             <Tag key={`${i}-${tag}`} name={tag} />

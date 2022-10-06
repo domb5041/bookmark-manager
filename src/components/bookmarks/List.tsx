@@ -7,7 +7,7 @@ import Button from "../Button";
 import Favicon from "./Favicon";
 import Tag from "./Tag";
 import { darken } from "polished";
-import { formatUrl } from "../../utilities";
+import Url from "../Url";
 
 const Container = styled.div`
     flex: 1;
@@ -65,10 +65,10 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
                     <Favicon url={bookmark.favicon} />
-                    <div className="bookmark-name">
-                        {bookmark.name} | {formatUrl(bookmark.url)}
+                    <div className="bookmark-name">{bookmark.name}</div>
+                    <div className="bookmark-url">
+                        <Url url={bookmark.url} />
                     </div>
-                    <div className="bookmark-url">{bookmark.url}</div>
                     <div className="bookmark-tags">
                         {bookmark.tags.map((tag, i) => (
                             <Tag key={`${i}-${tag}`} name={tag} />
