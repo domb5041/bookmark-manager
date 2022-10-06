@@ -29,11 +29,12 @@ interface IButtonProps {
     disabled?: boolean;
     onClick: () => void;
     style?: any;
+    className?: string;
 }
 
-const Button: FC<IButtonProps> = ({ text, symbol, disabled, onClick, style }) => {
+const Button: FC<IButtonProps> = ({ text, symbol, disabled, onClick, style, className }) => {
     return (
-        <StyledButton disabled={disabled} onClick={onClick} style={style}>
+        <StyledButton disabled={disabled} onClick={onClick} style={style} className={className}>
             {text && <span>{text}</span>}
             {symbol && <Symbol name={symbol} size="22px" />}
         </StyledButton>

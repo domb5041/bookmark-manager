@@ -15,6 +15,7 @@ const Container = styled.div<{ active?: boolean; color: string }>`
     overflow: hidden;
     cursor: pointer;
     height: 22px;
+    flex-shrink: 0;
     & .tag-name {
         font-size: 14px;
         color: ${(props) => props.color};

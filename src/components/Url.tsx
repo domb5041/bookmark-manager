@@ -12,15 +12,16 @@ const Container = styled.div`
 
 interface IUrlProps {
     url: string;
+    style?: any;
 }
 
-const Url: FC<IUrlProps> = ({ url }) => {
+const Url: FC<IUrlProps> = ({ url, style }) => {
     const formatUrl = () => {
         const partsToRemove = /https?:\/\/|www./g;
         const trimmedStart = url.replace(partsToRemove, "");
         const urlParts = trimmedStart.split("/");
         return (
-            <Container>
+            <Container style={style}>
                 {urlParts[0]}
                 {urlParts[1] && <span className="subdomain">/{urlParts[1]}</span>}
             </Container>
