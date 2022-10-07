@@ -12,6 +12,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     padding: 0 10px;
+    flex-shrink: 0;
 `;
 
 const Spacer = styled.div`

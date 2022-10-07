@@ -17,6 +17,7 @@ const Container = styled.div`
     border-right: 1px solid ${(props) => props.theme.color.background.border};
     background-color: ${(props) => props.theme.color.background.surface};
     flex-shrink: 0;
+    overflow: hidden;
     &.dialog-container-enter {
         width: 0;
     }

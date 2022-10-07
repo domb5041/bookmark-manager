@@ -6,13 +6,9 @@ import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
 import Url from "../Url";
 import Tag from "./Tag";
-import Symbol from "../Symbol";
+import PreviewImg from "./PreviewImg";
 
 const Container = styled.div<{ active: boolean }>`
-    width: 100%;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
     background-color: ${(props) => props.theme.color.background.void};
     border-radius: 5px;
@@ -21,27 +17,13 @@ const Container = styled.div<{ active: boolean }>`
     border: 1px solid ${(props) => props.theme.color.background.border};
     outline: ${(props) => (props.active ? "2px solid grey" : "none")};
     cursor: pointer;
-`;
-
-const Image = styled.div<{ url?: string; active: boolean }>`
-    height: 150px;
-    background-image: url(${(props) => props.url});
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0 30px 30px 0;
 `;
 
 const ContainerInner = styled.div`
-    border-top: 1px solid ${(props) => props.theme.color.background.border};
-    display: flex;
-    flex-direction: column;
-    flex: 1;
     padding: 8px;
+    border-top: 1px solid ${(props) => props.theme.color.background.border};
+    box-sizing: border-box;
 `;
 
 const Headline = styled.div`
@@ -58,15 +40,12 @@ const Description = styled.div`
     margin-bottom: 7px;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 `;
 
 const Tags = styled.div`
     display: flex;
-    align-items: flex-end;
-    margin-top: 10px;
-    height: 22px;
     overflow-x: scroll;
     border-radius: 3px;
     &::-webkit-scrollbar {
@@ -86,18 +65,18 @@ const Thumbnail: FC<IThumbnailProps> = ({ bookmark }) => {
             active={bookmarkStore.activeBookmark === bookmark.id}
             onDoubleClick={() => window.open(bookmark.url, "_blank")}
         >
-            <Image url={bookmark.image} active={bookmarkStore.activeBookmark === bookmark.id}>
-                {!bookmark.image && <Symbol name="web_asset_off" size="100px" color="silver" />}
-            </Image>
+            <PreviewImg imgUrl={bookmark.image} />
             <ContainerInner>
                 <Headline>{bookmark.name}</Headline>
                 <Description>{bookmark.description}</Description>
-                <Url url={bookmark.url} style={{ fontSize: 13, whiteSpace: "nowrap", marginTop: "auto" }} />
-                <Tags>
-                    {bookmark.tags.map((tag, i) => (
-                        <Tag key={`${i}-${tag}`} name={tag} />
-                    ))}
-                </Tags>
+                <Url url={bookmark.url} style={{ fontSize: 13, whiteSpace: "nowrap", marginBottom: 7 }} />
+                {bookmark.tags.length > 0 && (
+                    <Tags>
+                        {bookmark.tags.map((tag, i) => (
+                            <Tag key={`${i}-${tag}`} name={tag} />
+                        ))}
+                    </Tags>
+                )}
             </ContainerInner>
         </Container>
     );

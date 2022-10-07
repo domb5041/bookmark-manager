@@ -1,22 +1,20 @@
-import { transparentize } from "polished";
 import React, { FC } from "react";
 import styled from "styled-components";
 import Symbol from "../Symbol";
 
-const Container = styled.div`
+const Image = styled.img`
     width: 100%;
-    /* height: 150px; */
+    min-height: 100px;
+    max-height: 200px;
+    object-fit: cover;
+    margin-bottom: -3px;
+`;
+
+const Placeholder = styled.div`
+    height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    background-color: white;
-    border-radius: 5px;
-    position: relative;
-    box-shadow: 0 5px 10px ${transparentize(0.9, "black")};
-    & .preview-img {
-        width: 100%;
-    }
 `;
 
 interface IPreviewImgProps {
@@ -25,10 +23,12 @@ interface IPreviewImgProps {
 }
 
 const PreviewImg: FC<IPreviewImgProps> = ({ imgUrl, style }) => {
-    return (
-        <Container style={style}>
-            {imgUrl ? <img src={imgUrl} alt="preview-img" className="preview-img" /> : <Symbol name="link" />}
-        </Container>
+    return imgUrl ? (
+        <Image src={imgUrl} style={style} />
+    ) : (
+        <Placeholder style={style}>
+            <Symbol name="web_asset_off" size="100px" color="silver" />
+        </Placeholder>
     );
 };
 
