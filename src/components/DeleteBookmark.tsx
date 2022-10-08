@@ -9,8 +9,8 @@ const DeleteBookmark = () => {
     const { bookmarkStore, tagStore } = useStores();
 
     const deleteBookmark = async () => {
-        const id = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex].id;
-        const bookmarkDoc = doc(db, "bookmarks", id);
+        if (!bookmarkStore.activeBookmark) return;
+        const bookmarkDoc = doc(db, "bookmarks", bookmarkStore.activeBookmark.id);
         await deleteDoc(bookmarkDoc);
 
         const tagExists = () => tagStore.tagSet.some((tag) => tag.name === tagStore.activeFilter.name);

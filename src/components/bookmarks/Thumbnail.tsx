@@ -61,8 +61,8 @@ const Thumbnail: FC<IThumbnailProps> = ({ bookmark }) => {
     const { bookmarkStore } = useStores();
     return (
         <Container
-            onClick={() => bookmarkStore.setActiveBookmark(bookmark.id)}
-            active={bookmarkStore.activeBookmark === bookmark.id}
+            onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
+            active={bookmarkStore.activeBookmark?.id === bookmark.id}
             onDoubleClick={() => window.open(bookmark.url, "_blank")}
         >
             <PreviewImg imgUrl={bookmark.image} />

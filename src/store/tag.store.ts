@@ -52,7 +52,7 @@ class tagStore {
     activeFilter = this.allItemsFilter;
 
     setActiveFilter = (tag: ITag) => {
-        this.rootStore.bookmarkStore.setActiveBookmark("");
+        this.rootStore.bookmarkStore.setActiveBookmark(null);
         this.rootStore.bookmarkStore.resetSearchTerm();
         this.activeFilter = tag;
     };

@@ -60,8 +60,8 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                 <Bookmark
                     id={`bookmark-${bookmark.id}`}
                     key={bookmark.id}
-                    onClick={() => bookmarkStore.setActiveBookmark(bookmark.id)}
-                    active={bookmarkStore.activeBookmark === bookmark.id}
+                    onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
+                    active={bookmarkStore.activeBookmark?.id === bookmark.id}
                     onDoubleClick={() => window.open(bookmark.url, "_blank")}
                 >
                     <Favicon url={bookmark.favicon} />

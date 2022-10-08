@@ -18,14 +18,8 @@ class bookmarkStore {
     bookmarks: IBookmark[] = [];
     setBookmarks = (bookmarks: IBookmark[]) => (this.bookmarks = bookmarks);
 
-    activeBookmark = "";
-    activeBookmarkIndex = -1;
-
-    setActiveBookmark = (id: string) => {
-        this.activeBookmark = id;
-        const index = this.bookmarks.findIndex((b) => b.id === id);
-        this.activeBookmarkIndex = index;
-    };
+    activeBookmark: IBookmark | null = null;
+    setActiveBookmark = (bookmark: IBookmark | null) => (this.activeBookmark = bookmark);
 
     searchTerm = "";
     setSearchTerm = (text: string) => (this.searchTerm = text);

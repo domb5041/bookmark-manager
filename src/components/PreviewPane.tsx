@@ -1,5 +1,5 @@
 import { observer } from "mobx-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { useStores } from "../store";
 import PreviewImg from "./bookmarks/PreviewImg";
@@ -44,32 +44,6 @@ const EditDelete = styled.div`
 
 const PreviewPane = () => {
     const { bookmarkStore } = useStores();
-    const [newName, setNewName] = useState("");
-    const [newDescription, setNewDescription] = useState("");
-    const [newImg, setNewImg] = useState("");
-    const [newUrl, setNewUrl] = useState("");
-    const [newTags, setNewTags] = useState<string[]>([]);
-
-    useEffect(() => {
-        const onDialogOpening = () => {
-            if (bookmarkStore.activeBookmarkIndex > -1) {
-                const activeBookmark = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex];
-                setNewName(activeBookmark.name || "");
-                setNewDescription(activeBookmark.description || "");
-                setNewImg(activeBookmark.image || "");
-                setNewUrl(activeBookmark.url || "");
-                setNewTags(activeBookmark.tags || []);
-            } else {
-                setNewName("");
-                setNewDescription("");
-                setNewImg("");
-                setNewUrl("");
-                setNewTags([]);
-            }
-        };
-        onDialogOpening();
-    }, [bookmarkStore.activeBookmarkIndex, bookmarkStore.bookmarks]);
-
     const nodeRef = useRef(null);
 
     return (
@@ -81,29 +55,32 @@ const PreviewPane = () => {
             classNames="preview-container"
         >
             <Container ref={nodeRef}>
-                <div>
-                    <EditDelete>
-                        <Button
-                            symbol="edit"
-                            text="Edit"
-                            onClick={bookmarkStore.showEditBookmarkDialog}
-                            disabled={bookmarkStore.activeBookmark === ""}
-                            id="edit-bookmark-button"
-                        />
-                        <Button
-                            symbol="delete"
-                            text="delete"
-                            onClick={bookmarkStore.showDeleteBookmarkDialog}
-                            disabled={bookmarkStore.activeBookmark === ""}
-                            id="add-bookmark-button"
-                        />
-                    </EditDelete>
-                    <PreviewImg imgUrl={newImg} style={{ marginBottom: 10 }} />
-                    <b>{newName}</b>
-                    <p>{newDescription}</p>
-                    <Url url={newUrl} />
-                    {newTags.length > 0 && newTags.map((tag, i) => <Tag key={`${i}-${tag}`} name={tag} />)}
-                </div>
+                {bookmarkStore.activeBookmark && (
+                    <div>
+                        <EditDelete>
+                            <Button
+                                symbol="edit"
+                                text="Edit"
+                                onClick={bookmarkStore.showEditBookmarkDialog}
+                                disabled={!bookmarkStore.activeBookmark}
+                                id="edit-bookmark-button"
+                            />
+                            <Button
+                                symbol="delete"
+                                text="delete"
+                                onClick={bookmarkStore.showDeleteBookmarkDialog}
+                                disabled={!bookmarkStore.activeBookmark}
+                                id="add-bookmark-button"
+                            />
+                        </EditDelete>
+                        <PreviewImg imgUrl={bookmarkStore.activeBookmark.image} style={{ marginBottom: 10 }} />
+                        <b>{bookmarkStore.activeBookmark.name}</b>
+                        <p>{bookmarkStore.activeBookmark.description}</p>
+                        <Url url={bookmarkStore.activeBookmark.url} />
+                        {bookmarkStore.activeBookmark.tags.length > 0 &&
+                            bookmarkStore.activeBookmark.tags.map((tag, i) => <Tag key={`${i}-${tag}`} name={tag} />)}
+                    </div>
+                )}
             </Container>
         </CSSTransition>
     );

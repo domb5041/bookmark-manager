@@ -28,20 +28,20 @@ const EditBookmark = () => {
     const [validUrl, setValidUrl] = useState(false);
 
     const onDialogOpening = () => {
-        if (bookmarkStore.activeBookmarkIndex > -1) {
-            const activeBookmark = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex];
-            tagStore.setTagsInput(activeBookmark.tags);
-            setNewName(activeBookmark.name);
-            setNewDescription(activeBookmark.description || "");
-            setNewImg(activeBookmark.image || "");
-            setNewUrl(activeBookmark.url);
-            setNewFavicon(activeBookmark.favicon || "");
+        if (bookmarkStore.activeBookmark) {
+            const { tags, name, description, image, url, favicon } = bookmarkStore.activeBookmark;
+            tagStore.setTagsInput(tags);
+            setNewName(name);
+            setNewDescription(description || "");
+            setNewImg(image || "");
+            setNewUrl(url);
+            setNewFavicon(favicon || "");
         }
     };
 
     const updateBookmark = async () => {
-        const id = bookmarkStore.bookmarks[bookmarkStore.activeBookmarkIndex].id;
-        const bookmarkDoc = doc(db, "bookmarks", id);
+        if (!bookmarkStore.activeBookmark) return;
+        const bookmarkDoc = doc(db, "bookmarks", bookmarkStore.activeBookmark.id);
         await updateDoc(bookmarkDoc, {
             name: newName,
             description: newDescription,

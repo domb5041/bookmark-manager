@@ -61,8 +61,8 @@ const Bookmarks = () => {
             <PreviewPane />
             <OpenButton
                 symbol="arrow_forward"
-                onClick={() => window.open("", "_blank")}
-                disabled={bookmarkStore.activeBookmark === ""}
+                onClick={() => window.open(bookmarkStore.activeBookmark?.url, "_blank")}
+                disabled={!bookmarkStore.activeBookmark}
                 id="open-bookmark-button"
             />
         </Container>
