@@ -8,6 +8,7 @@ import styled from "styled-components";
 import Symbol from "./Symbol";
 import { tagColors, getTagBackground } from "../theme";
 import TextInput from "./TextInput";
+import moment from "moment";
 
 const Swatch = styled.div<{ color: string }>`
     background-color: ${(props) => () => getTagBackground(props.color)};
@@ -96,7 +97,7 @@ const EditTag = () => {
                 const bookmarkDoc = doc(db, "bookmarks", bookmark.id);
                 const index = tags.indexOf(tagStore.activeFilter.name);
                 tags.splice(index, 1, newName);
-                batch.update(bookmarkDoc, { tags: tags });
+                batch.update(bookmarkDoc, { tags: tags, dateModified: Number(moment().format("X")) });
             }
         });
         const tagDoc = doc(db, "tags", tagStore.activeFilter.id);

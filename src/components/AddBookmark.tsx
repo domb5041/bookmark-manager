@@ -9,6 +9,7 @@ import { debounce, isValidHttpUrl } from "../utilities";
 import PreviewImg from "./bookmarks/PreviewImg";
 import TagsInput from "./TagsInput";
 import TextInput from "./TextInput";
+import moment from "moment";
 
 interface IPreview {
     contentType: string;
@@ -35,7 +36,8 @@ const AddBookmark = () => {
             url: url,
             tags: tagStore.tagsInput,
             image: preview.images[0] || "",
-            favicon: preview.favicons[0] || ""
+            favicon: preview.favicons[0] || "",
+            dateAdded: Number(moment().format("X"))
         });
     };
 

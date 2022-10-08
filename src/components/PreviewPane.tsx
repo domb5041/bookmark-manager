@@ -7,6 +7,7 @@ import Tag from "./bookmarks/Tag";
 import Button from "./Button";
 import Url from "./Url";
 import { CSSTransition } from "react-transition-group";
+import moment from "moment";
 
 const Container = styled.div`
     width: 300px;
@@ -42,9 +43,19 @@ const EditDelete = styled.div`
     margin-bottom: 10px;
 `;
 
+const Date = styled.div`
+    font-size: 14px;
+    margin: 5px;
+`;
+
 const PreviewPane = () => {
     const { bookmarkStore } = useStores();
     const nodeRef = useRef(null);
+
+    const formatDate = (timestamp: number | undefined) => {
+        if (!timestamp) return "-";
+        return moment.unix(timestamp).format("dddd, D MMMM YYYY, H:mm");
+    };
 
     return (
         <CSSTransition
@@ -79,6 +90,15 @@ const PreviewPane = () => {
                         <Url url={bookmarkStore.activeBookmark.url} />
                         {bookmarkStore.activeBookmark.tags.length > 0 &&
                             bookmarkStore.activeBookmark.tags.map((tag, i) => <Tag key={`${i}-${tag}`} name={tag} />)}
+                        <Date>
+                            <b>Created:</b> {formatDate(bookmarkStore.activeBookmark.dateAdded)}
+                        </Date>
+                        <Date>
+                            <b>Modified:</b> {formatDate(bookmarkStore.activeBookmark.dateModified)}
+                        </Date>
+                        <Date>
+                            <b>Last Opened:</b> {formatDate(bookmarkStore.activeBookmark.dateOpened)}
+                        </Date>
                     </div>
                 )}
             </Container>

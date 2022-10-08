@@ -12,6 +12,8 @@ import Button from "./Button";
 import Textarea from "./Textarea";
 import styled from "styled-components";
 import { isValidHttpUrl } from "../utilities";
+import moment from "moment";
+import { IBookmark } from "../store/bookmark.store";
 
 const UrlField = styled.div`
     display: flex;
@@ -42,14 +44,19 @@ const EditBookmark = () => {
     const updateBookmark = async () => {
         if (!bookmarkStore.activeBookmark) return;
         const bookmarkDoc = doc(db, "bookmarks", bookmarkStore.activeBookmark.id);
-        await updateDoc(bookmarkDoc, {
+        const newFields = {
             name: newName,
             description: newDescription,
             tags: tagStore.tagsInput,
             image: newImg,
             url: newUrl,
-            favicon: newFavicon
-        });
+            favicon: newFavicon,
+            dateModified: Number(moment().format("X"))
+        };
+        await updateDoc(bookmarkDoc, newFields);
+
+        const activeBookmark: IBookmark = { ...bookmarkStore.activeBookmark, ...newFields };
+        bookmarkStore.setActiveBookmark(activeBookmark);
 
         const tagExists = () => tagStore.tagSet.some((tag) => tag.name === tagStore.activeFilter.name);
 

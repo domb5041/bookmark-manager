@@ -1,4 +1,7 @@
 import { makeAutoObservable } from "mobx";
+import { updateDoc, doc } from "@firebase/firestore";
+import { db } from "../firebase-config";
+import moment from "moment";
 
 export interface IBookmark {
     id: string;
@@ -8,6 +11,9 @@ export interface IBookmark {
     image?: string;
     favicon?: string;
     description?: string;
+    dateAdded: number;
+    dateModified?: number;
+    dateOpened?: number;
 }
 
 class bookmarkStore {
@@ -43,6 +49,15 @@ class bookmarkStore {
     explorerType = "list";
     setExplorerTypeList = () => (this.explorerType = "list");
     setExplorerTypeThumbnails = () => (this.explorerType = "thumbnails");
+
+    openBookmark = async () => {
+        if (!this.activeBookmark) return;
+        window.open(this.activeBookmark.url, "_blank");
+        const bookmarkDoc = doc(db, "bookmarks", this.activeBookmark.id);
+        const date = Number(moment().format("X"));
+        await updateDoc(bookmarkDoc, { dateOpened: date });
+        this.activeBookmark.dateOpened = date;
+    };
 }
 
 export default bookmarkStore;

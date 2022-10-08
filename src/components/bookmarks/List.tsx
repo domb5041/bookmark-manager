@@ -62,7 +62,7 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                     key={bookmark.id}
                     onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
                     active={bookmarkStore.activeBookmark?.id === bookmark.id}
-                    onDoubleClick={() => window.open(bookmark.url, "_blank")}
+                    onDoubleClick={bookmarkStore.openBookmark}
                 >
                     <Favicon url={bookmark.favicon} />
                     <div className="bookmark-name">{bookmark.name}</div>
@@ -74,11 +74,7 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                             <Tag key={`${i}-${tag}`} name={tag} />
                         ))}
                     </div>
-                    <Button
-                        symbol="arrow_forward"
-                        onClick={() => window.open(bookmark.url, "_blank")}
-                        id="open-bookmark-button"
-                    />
+                    <Button symbol="arrow_forward" onClick={bookmarkStore.openBookmark} id="open-bookmark-button" />
                 </Bookmark>
             ))}
         </Container>
