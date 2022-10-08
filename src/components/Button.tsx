@@ -8,6 +8,7 @@ const StyledButton = styled.button`
     background-color: ${(props) => props.theme.color.background.object};
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 28px;
     border-radius: 5px;
     cursor: pointer;

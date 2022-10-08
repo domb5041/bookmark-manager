@@ -69,7 +69,7 @@ class tagStore {
     setTagsInput = (tags: string[]) => (this.tagsInput = tags);
 
     sidebarVisible = true;
-    setSidebarVisible = () => (this.sidebarVisible = !this.sidebarVisible);
+    toggleSidebar = () => (this.sidebarVisible = !this.sidebarVisible);
 }
 
 export default tagStore;

@@ -8,6 +8,7 @@ import Thumbnail from "./Thumbnail";
 const Container = styled.div`
     overflow-y: auto;
     padding: 30px 0 0 30px;
+    flex: 1;
     & .my-masonry-grid {
         display: -webkit-box; /* Not needed if autoprefixing */
         display: -ms-flexbox; /* Not needed if autoprefixing */

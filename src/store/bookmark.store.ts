@@ -43,6 +43,9 @@ class bookmarkStore {
     showDeleteBookmarkDialog = () => (this.deleteBookmarkDialogVisible = true);
     hideDeleteBookmarkDialog = () => (this.deleteBookmarkDialogVisible = false);
 
+    bookmarkPreviewVisible = true;
+    toggleBookmarkPreview = () => (this.bookmarkPreviewVisible = !this.bookmarkPreviewVisible);
+
     explorerType = "list";
     setExplorerTypeList = () => (this.explorerType = "list");
     setExplorerTypeThumbnails = () => (this.explorerType = "thumbnails");

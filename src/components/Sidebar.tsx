@@ -18,17 +18,17 @@ const Container = styled.div`
     background-color: ${(props) => props.theme.color.background.surface};
     flex-shrink: 0;
     overflow: hidden;
-    &.dialog-container-enter {
+    &.sidebar-enter {
         width: 0;
     }
-    &.dialog-container-enter-active {
+    &.sidebar-enter-active {
         width: 250px;
         transition: 0.5s;
     }
-    &.dialog-container-exit {
+    &.sidebar-exit {
         width: 250px;
     }
-    &.dialog-container-exit-active {
+    &.sidebar-exit-active {
         width: 0;
         transition: 0.5s;
     }
@@ -89,13 +89,7 @@ const Sidebar = () => {
     const nodeRef = useRef(null);
 
     return (
-        <CSSTransition
-            nodeRef={nodeRef}
-            in={tagStore.sidebarVisible}
-            unmountOnExit
-            timeout={500}
-            classNames="dialog-container"
-        >
+        <CSSTransition nodeRef={nodeRef} in={tagStore.sidebarVisible} unmountOnExit timeout={500} classNames="sidebar">
             <Container id="sidebar" ref={nodeRef}>
                 <Toolbar>
                     <Button

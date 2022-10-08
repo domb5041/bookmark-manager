@@ -23,7 +23,13 @@ const Toolbar = () => {
     const { bookmarkStore, tagStore } = useStores();
     return (
         <Container id="toolbar">
-            <Button symbol="list_alt" onClick={tagStore.setSidebarVisible} id="toggle-sidebar-button" />
+            <Button
+                symbol="menu"
+                onClick={tagStore.toggleSidebar}
+                id="toggle-sidebar-button"
+                style={{ marginRight: 10 }}
+            />
+            <Button symbol="add" onClick={bookmarkStore.showAddBookmarkDialog} id="add-bookmark-button" />
             <Spacer />
             <TextInput
                 id="search-bookmarks-input"
@@ -33,13 +39,6 @@ const Toolbar = () => {
                 style={{ width: 400 }}
             />
             <Spacer />
-            <Button
-                symbol="edit"
-                onClick={bookmarkStore.showEditBookmarkDialog}
-                disabled={bookmarkStore.activeBookmark === ""}
-                id="edit-bookmark-button"
-                style={{ marginRight: 10 }}
-            />
             <Button symbol="view_list" onClick={bookmarkStore.setExplorerTypeList} id="list-view-button" />
             <Button
                 symbol="grid_view"
@@ -47,18 +46,7 @@ const Toolbar = () => {
                 id="thumbnail-view-button"
                 style={{ marginRight: 10 }}
             />
-            <Button
-                symbol="add"
-                onClick={bookmarkStore.showAddBookmarkDialog}
-                id="add-bookmark-button"
-                style={{ marginRight: 10 }}
-            />
-            <Button
-                symbol="delete"
-                onClick={bookmarkStore.showDeleteBookmarkDialog}
-                disabled={bookmarkStore.activeBookmark === ""}
-                id="add-bookmark-button"
-            />
+            <Button symbol="menu" onClick={bookmarkStore.toggleBookmarkPreview} id="toggle-preview-button" />
         </Container>
     );
 };

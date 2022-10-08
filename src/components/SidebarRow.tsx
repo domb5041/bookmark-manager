@@ -33,6 +33,7 @@ const Icon = styled.div<{ color: string }>`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 `;
 
 interface ISidebarRowProps {
