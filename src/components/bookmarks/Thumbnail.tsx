@@ -65,11 +65,11 @@ const Thumbnail: FC<IThumbnailProps> = ({ bookmark }) => {
             active={bookmarkStore.activeBookmark?.id === bookmark.id}
             onDoubleClick={bookmarkStore.openBookmark}
         >
-            <PreviewImg imgUrl={bookmark.image} />
+            <PreviewImg imgUrl={bookmark.image} clipImg />
             <ContainerInner>
                 <Headline>{bookmark.name}</Headline>
                 <Description>{bookmark.description}</Description>
-                <Url url={bookmark.url} style={{ fontSize: 13, whiteSpace: "nowrap", marginBottom: 7 }} />
+                <Url url={bookmark.url} style={{ marginBottom: 7 }} />
                 {bookmark.tags.length > 0 && (
                     <Tags>
                         {bookmark.tags.map((tag, i) => (

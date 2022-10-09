@@ -14,6 +14,7 @@ const StyledButton = styled.button`
     cursor: pointer;
     transition: 0.1s;
     border: 1px solid ${(props) => darken(0.05, props.theme.color.background.object)};
+    flex-shrink: 0;
     &:hover:not(:disabled) {
         background-color: ${(props) => props.theme.color.background.hover.object};
     }

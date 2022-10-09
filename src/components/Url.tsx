@@ -4,7 +4,8 @@ import styled from "styled-components";
 const Container = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
-    word-wrap: break-word;
+    white-space: nowrap;
+    font-size: 13px;
     & .subdomain {
         opacity: 0.5;
     }

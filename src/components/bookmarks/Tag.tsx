@@ -31,9 +31,10 @@ interface ITagProps {
     id?: string;
     onClick?: (e: React.MouseEvent) => void;
     onFocus?: () => void;
+    style?: any;
 }
 
-const Tag: FC<ITagProps> = ({ name, active, onKeyDown, id, onClick, onFocus }) => {
+const Tag: FC<ITagProps> = ({ name, active, onKeyDown, id, onClick, onFocus, style }) => {
     const { tagStore } = useStores();
     const [icon, setIcon] = useState("tag");
     const [color, setColor] = useState(tagColors[0]);
@@ -55,6 +56,7 @@ const Tag: FC<ITagProps> = ({ name, active, onKeyDown, id, onClick, onFocus }) =
             onClick={onClick}
             onFocus={onFocus}
             color={color}
+            style={style}
         >
             <Symbol name={icon} size="17px" color={color} />
             <div className="tag-name">{name}</div>

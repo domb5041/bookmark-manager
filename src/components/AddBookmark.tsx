@@ -93,7 +93,7 @@ const AddBookmark = () => {
             <TagsInput style={{ marginBottom: 10 }} />
             {preview && (
                 <>
-                    <PreviewImg imgUrl={preview.images[0]} style={{ marginBottom: 10 }} />
+                    <PreviewImg imgUrl={preview.images[0]} border style={{ marginBottom: 10 }} />
                     <b>{preview.title}</b>
                     <p>{preview.description}</p>
                 </>

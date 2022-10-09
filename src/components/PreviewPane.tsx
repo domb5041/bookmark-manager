@@ -14,13 +14,8 @@ const Container = styled.div`
     flex-shrink: 0;
     border-left: 1px solid ${(props) => props.theme.color.background.border};
     box-sizing: border-box;
-    position: relative;
-    overflow-y: auto;
-    & > div {
-        padding: 10px;
-        width: 300px;
-        box-sizing: border-box;
-    }
+    display: flex;
+    align-items: stretch;
     &.preview-container-enter {
         width: 0;
     }
@@ -37,15 +32,50 @@ const Container = styled.div`
     }
 `;
 
+const Container2 = styled.div`
+    width: 300px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+`;
+
 const EditDelete = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    padding: 10px;
+`;
+
+const PreviewContent = styled.div`
+    flex: 1;
+    padding: 0 10px;
+    overflow-y: auto;
 `;
 
 const Date = styled.div`
+    font-size: 13px;
+    margin-bottom: 4px;
+    display: flex;
+    & > label {
+        flex: 1;
+    }
+`;
+
+const OpenLink = styled.div`
+    padding: 10px;
+`;
+
+const Heading = styled.div`
     font-size: 14px;
-    margin: 5px;
+    font-weight: bold;
+    margin-bottom: 3px;
+`;
+
+const Divider = styled.hr`
+    border-style: solid;
+    border-top-width: 0;
+    border-color: ${(props) => props.theme.color.background.object};
+    margin: 10px 0;
 `;
 
 const PreviewPane = () => {
@@ -53,8 +83,8 @@ const PreviewPane = () => {
     const nodeRef = useRef(null);
 
     const formatDate = (timestamp: number | undefined) => {
-        if (!timestamp) return "-";
-        return moment.unix(timestamp).format("dddd, D MMMM YYYY, H:mm");
+        if (!timestamp) return "Never";
+        return moment.unix(timestamp).format("ddd, D MMM YYYY, H:mm");
     };
 
     return (
@@ -67,7 +97,7 @@ const PreviewPane = () => {
         >
             <Container ref={nodeRef}>
                 {bookmarkStore.activeBookmark && (
-                    <div>
+                    <Container2>
                         <EditDelete>
                             <Button
                                 symbol="edit"
@@ -84,22 +114,48 @@ const PreviewPane = () => {
                                 id="add-bookmark-button"
                             />
                         </EditDelete>
-                        <PreviewImg imgUrl={bookmarkStore.activeBookmark.image} style={{ marginBottom: 10 }} />
-                        <b>{bookmarkStore.activeBookmark.name}</b>
-                        <p>{bookmarkStore.activeBookmark.description}</p>
-                        <Url url={bookmarkStore.activeBookmark.url} />
-                        {bookmarkStore.activeBookmark.tags.length > 0 &&
-                            bookmarkStore.activeBookmark.tags.map((tag, i) => <Tag key={`${i}-${tag}`} name={tag} />)}
-                        <Date>
-                            <b>Created:</b> {formatDate(bookmarkStore.activeBookmark.dateAdded)}
-                        </Date>
-                        <Date>
-                            <b>Modified:</b> {formatDate(bookmarkStore.activeBookmark.dateModified)}
-                        </Date>
-                        <Date>
-                            <b>Last Opened:</b> {formatDate(bookmarkStore.activeBookmark.dateOpened)}
-                        </Date>
-                    </div>
+                        <PreviewContent>
+                            <PreviewImg
+                                imgUrl={bookmarkStore.activeBookmark.image}
+                                border
+                                style={{ marginBottom: 7 }}
+                            />
+                            <b>{bookmarkStore.activeBookmark.name}</b>
+                            <Divider />
+                            <Heading>Description</Heading>
+                            <p style={{ margin: 0, fontSize: 14 }}>{bookmarkStore.activeBookmark.description}</p>
+                            <Divider />
+                            <Heading>Url</Heading>
+                            <Url url={bookmarkStore.activeBookmark.url} />
+                            <Divider />
+                            <Heading>Tags</Heading>
+                            {bookmarkStore.activeBookmark.tags.length > 0 &&
+                                bookmarkStore.activeBookmark.tags.map((tag, i) => (
+                                    <Tag key={`${i}-${tag}`} name={tag} style={{ marginBottom: 5 }} />
+                                ))}
+                            <Divider />
+                            <Heading>Timestamps</Heading>
+                            <Date>
+                                <label>Created:</label> {formatDate(bookmarkStore.activeBookmark.dateAdded)}
+                            </Date>
+                            <Date>
+                                <label>Modified:</label> {formatDate(bookmarkStore.activeBookmark.dateModified)}
+                            </Date>
+                            <Date>
+                                <label>Last Opened:</label> {formatDate(bookmarkStore.activeBookmark.dateOpened)}
+                            </Date>
+                        </PreviewContent>
+                        <OpenLink>
+                            <Button
+                                symbol="arrow_forward"
+                                text="Open Link"
+                                onClick={bookmarkStore.openBookmark}
+                                disabled={!bookmarkStore.activeBookmark}
+                                id="open-bookmark-button"
+                                style={{ width: "100%" }}
+                            />
+                        </OpenLink>
+                    </Container2>
                 )}
             </Container>
         </CSSTransition>

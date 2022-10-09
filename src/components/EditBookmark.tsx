@@ -102,7 +102,7 @@ const EditBookmark = () => {
                 />
                 <Button onClick={refreshPreview} id="refresh-data-button" symbol="refresh" disabled={!validUrl} />
             </UrlField>
-            <PreviewImg imgUrl={newImg} style={{ marginBottom: 10 }} />
+            <PreviewImg imgUrl={newImg} style={{ marginBottom: 10 }} border />
             <TextInput
                 id="title-input"
                 value={newName}
