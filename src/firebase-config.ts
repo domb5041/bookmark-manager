@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: process.env.API_KEY,
+    apiKey: process.env.FIREBASE_API_KEY,
     authDomain: "bookmark-manager-c52b8.firebaseapp.com",
     projectId: "bookmark-manager-c52b8",
     storageBucket: "bookmark-manager-c52b8.appspot.com",
