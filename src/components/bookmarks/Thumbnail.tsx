@@ -7,6 +7,7 @@ import { IBookmark } from "../../store/bookmark.store";
 import Url from "../common/Url";
 import Tag from "./Tag";
 import PreviewImg from "./PreviewImg";
+import Button from "../common/Button";
 
 const Container = styled.div<{ active: boolean }>`
     overflow: hidden;
@@ -18,6 +19,17 @@ const Container = styled.div<{ active: boolean }>`
     outline: ${(props) => (props.active ? "2px solid grey" : "none")};
     cursor: pointer;
     margin: 0 30px 30px 0;
+    & > .open-bookmark-button {
+        display: ${(props) => (props.active ? "flex" : "none")};
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        height: 25px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    &:hover > .open-bookmark-button {
+        display: flex;
+    }
 `;
 
 const ContainerInner = styled.div`
@@ -55,15 +67,16 @@ const Tags = styled.div`
 
 interface IThumbnailProps {
     bookmark: IBookmark;
+    index: number;
 }
 
-const Thumbnail: FC<IThumbnailProps> = ({ bookmark }) => {
+const Thumbnail: FC<IThumbnailProps> = ({ bookmark, index }) => {
     const { bookmarkStore } = useStores();
     return (
         <Container
             onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
             active={bookmarkStore.activeBookmark?.id === bookmark.id}
-            onDoubleClick={bookmarkStore.openBookmark}
+            onDoubleClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
         >
             <PreviewImg imgUrl={bookmark.image} clipImg />
             <ContainerInner>
@@ -78,6 +91,12 @@ const Thumbnail: FC<IThumbnailProps> = ({ bookmark }) => {
                     </Tags>
                 )}
             </ContainerInner>
+            <Button
+                symbol="arrow_forward"
+                onClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
+                className="open-bookmark-button"
+                id={`open-bookmark-button-${index}`}
+            />
         </Container>
     );
 };

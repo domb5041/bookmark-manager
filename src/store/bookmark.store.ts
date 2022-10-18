@@ -50,7 +50,16 @@ class bookmarkStore {
     setExplorerTypeList = () => (this.explorerType = "list");
     setExplorerTypeThumbnails = () => (this.explorerType = "thumbnails");
 
-    openBookmark = async () => {
+    openBookmark = async (url: string, bookmarkId: string) => {
+        window.open(url, "_blank");
+        const bookmarkDoc = doc(db, "bookmarks", bookmarkId);
+        const date = Number(moment().format("X"));
+        await updateDoc(bookmarkDoc, { dateOpened: date });
+        if (!this.activeBookmark) return;
+        this.activeBookmark.dateOpened = date;
+    };
+
+    openActiveBookmark = async () => {
         if (!this.activeBookmark) return;
         window.open(this.activeBookmark.url, "_blank");
         const bookmarkDoc = doc(db, "bookmarks", this.activeBookmark.id);

@@ -22,6 +22,9 @@ const Bookmark = styled.div<{ active: boolean }>`
     &:hover {
         background-color: ${(props) =>
             props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover.void};
+        & > .open-bookmark-button {
+            opacity: 1;
+        }
     }
     cursor: pointer;
     display: flex;
@@ -46,6 +49,10 @@ const Bookmark = styled.div<{ active: boolean }>`
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    & > .open-bookmark-button {
+        opacity: ${(props) => (props.active ? 1 : 0)};
+        height: 22px;
+    }
 `;
 
 interface IListProps {
@@ -56,13 +63,13 @@ const List: FC<IListProps> = ({ bookmarks }) => {
     const { bookmarkStore } = useStores();
     return (
         <Container id="bookmarks-container-list">
-            {bookmarks?.map((bookmark) => (
+            {bookmarks?.map((bookmark, i) => (
                 <Bookmark
                     id={`bookmark-${bookmark.id}`}
                     key={bookmark.id}
                     onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
                     active={bookmarkStore.activeBookmark?.id === bookmark.id}
-                    onDoubleClick={bookmarkStore.openBookmark}
+                    onDoubleClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
                 >
                     <Favicon url={bookmark.favicon} />
                     <div className="bookmark-name">{bookmark.name}</div>
@@ -74,7 +81,12 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                             <Tag key={`${i}-${tag}`} name={tag} />
                         ))}
                     </div>
-                    <Button symbol="arrow_forward" onClick={bookmarkStore.openBookmark} id="open-bookmark-button" />
+                    <Button
+                        symbol="arrow_forward"
+                        onClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
+                        className="open-bookmark-button"
+                        id={`open-bookmark-button-${i}`}
+                    />
                 </Bookmark>
             ))}
         </Container>

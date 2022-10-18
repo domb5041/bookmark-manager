@@ -24,7 +24,7 @@ const Container = styled.div<{ active: boolean; color: string }>`
     }
     & .edit-tag-button {
         height: 27px;
-        display: ${(props) => (props.active ? "inline-block" : "none")};
+        display: ${(props) => (props.active ? "flex" : "none")};
     }
     &:hover {
         background-color: ${(props) =>

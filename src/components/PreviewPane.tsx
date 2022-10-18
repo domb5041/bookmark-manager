@@ -100,7 +100,7 @@ const PreviewPane = () => {
                     <Container2>
                         <EditDelete>
                             <Button
-                                symbol="edit"
+                                symbol="edit_note"
                                 text="Edit"
                                 onClick={bookmarkStore.showEditBookmarkDialog}
                                 disabled={!bookmarkStore.activeBookmark}
@@ -149,7 +149,7 @@ const PreviewPane = () => {
                             <Button
                                 symbol="arrow_forward"
                                 text="Open Link"
-                                onClick={bookmarkStore.openBookmark}
+                                onClick={bookmarkStore.openActiveBookmark}
                                 disabled={!bookmarkStore.activeBookmark}
                                 id="open-bookmark-button"
                                 style={{ width: "100%" }}

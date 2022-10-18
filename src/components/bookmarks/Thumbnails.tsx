@@ -36,8 +36,8 @@ const Thumbnails: FC<IThumbnailsProps> = ({ bookmarks }) => {
     return (
         <Container id="bookmarks-container-thumbnails">
             <Masonry breakpointCols={columns} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
-                {bookmarks?.map((bookmark) => (
-                    <Thumbnail bookmark={bookmark} key={bookmark.id} />
+                {bookmarks?.map((bookmark, i) => (
+                    <Thumbnail bookmark={bookmark} key={bookmark.id} index={i} />
                 ))}
             </Masonry>
         </Container>
