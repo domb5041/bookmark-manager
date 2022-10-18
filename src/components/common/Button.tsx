@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import Symbol from "./Symbol";
+import Symbol from "../common/Symbol";
 import { darken } from "polished";
 
 const StyledButton = styled.button`

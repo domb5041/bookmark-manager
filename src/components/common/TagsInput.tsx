@@ -1,8 +1,8 @@
 import { observer } from "mobx-react";
 import React, { FC, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useStores } from "../store";
-import Tag from "./bookmarks/Tag";
+import { useStores } from "../../store";
+import Tag from "../bookmarks/Tag";
 
 const Container = styled.div`
     display: flex;

@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { useStores } from "../store";
 import PreviewImg from "./bookmarks/PreviewImg";
 import Tag from "./bookmarks/Tag";
-import Button from "./Button";
-import Url from "./Url";
+import Button from "./common/Button";
+import Url from "./common/Url";
 import { CSSTransition } from "react-transition-group";
 import moment from "moment";
 

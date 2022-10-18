@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Symbol from "../Symbol";
+import Symbol from "../common/Symbol";
 
 interface IFaviconProps {
     url?: string;

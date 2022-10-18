@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
-import Symbol from "../Symbol";
+import Symbol from "../common/Symbol";
 
 const borderStyle = css`
     border: 1px solid ${(props) => props.theme.color.background.border};

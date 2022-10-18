@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useStores } from "../store";
+import { useStores } from "../../store";
 import { observer } from "mobx-react";
-import Button from "./Button";
-import EditTag from "./EditTag";
-import DeleteTag from "./DeleteTag";
+import Button from "../common/Button";
+import EditTag from "../EditTag";
+import DeleteTag from "../DeleteTag";
 import { CSSTransition } from "react-transition-group";
 import { addDoc, doc, writeBatch } from "@firebase/firestore";
-import { db } from "../firebase-config";
-import { tagsCollectionRef } from "../App";
+import { db } from "../../firebase-config";
+import { tagsCollectionRef } from "../../App";
 import SidebarRow from "./SidebarRow";
-import { tagColors } from "../theme";
+import { tagColors } from "../../theme";
 
 const Container = styled.div`
     width: 250px;

@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
-import Url from "../Url";
+import Url from "../common/Url";
 import Tag from "./Tag";
 import PreviewImg from "./PreviewImg";
 

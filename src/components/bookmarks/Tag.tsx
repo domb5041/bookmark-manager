@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
-import Symbol from "../Symbol";
+import Symbol from "../common/Symbol";
 import { getTagBackground, tagColors } from "../../theme";
 
 const Container = styled.div<{ active?: boolean; color: string }>`

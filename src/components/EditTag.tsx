@@ -1,13 +1,13 @@
 import { observer } from "mobx-react";
 import React, { useState } from "react";
 import { useStores } from "../store";
-import DialogBox from "./DialogBox";
+import DialogBox from "./common/DialogBox";
 import { writeBatch, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 import styled from "styled-components";
-import Symbol from "./Symbol";
+import Symbol from "./common/Symbol";
 import { tagColors, getTagBackground } from "../theme";
-import TextInput from "./TextInput";
+import TextInput from "./common/TextInput";
 import moment from "moment";
 
 const Swatch = styled.div<{ color: string }>`

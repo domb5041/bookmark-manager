@@ -1,14 +1,14 @@
 import { observer } from "mobx-react";
 import React, { useState } from "react";
 import { useStores } from "../store";
-import DialogBox from "./DialogBox";
+import DialogBox from "./common/DialogBox";
 import { addDoc } from "@firebase/firestore";
 import { bookmarksCollectionRef } from "../App";
 import axios from "axios";
 import { debounce, isValidHttpUrl } from "../utilities";
 import PreviewImg from "./bookmarks/PreviewImg";
-import TagsInput from "./TagsInput";
-import TextInput from "./TextInput";
+import TagsInput from "./common/TagsInput";
+import TextInput from "./common/TextInput";
 import moment from "moment";
 
 interface IPreview {

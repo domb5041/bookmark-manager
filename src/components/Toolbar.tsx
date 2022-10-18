@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
-import Button from "./Button";
-import TextInput from "./TextInput";
+import Button from "./common/Button";
+import TextInput from "./common/TextInput";
 
 const Container = styled.div`
     height: 50px;

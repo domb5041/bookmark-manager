@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { getTagBackground, tagColors } from "../theme";
-import Symbol from "./Symbol";
+import { getTagBackground, tagColors } from "../../theme";
+import Symbol from "../common/Symbol";
 
 const Container = styled.div<{ active: boolean; color: string }>`
     padding: 3px 10px;

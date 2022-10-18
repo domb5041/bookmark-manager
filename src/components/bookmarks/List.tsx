@@ -3,11 +3,11 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
-import Button from "../Button";
+import Button from "../common/Button";
 import Favicon from "./Favicon";
 import Tag from "./Tag";
 import { darken } from "polished";
-import Url from "../Url";
+import Url from "../common/Url";
 
 const Container = styled.div`
     flex: 1;

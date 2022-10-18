@@ -1,7 +1,7 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { useStores } from "../store";
-import DialogBox from "./DialogBox";
+import DialogBox from "./common/DialogBox";
 import { deleteDoc, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 

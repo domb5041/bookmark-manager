@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import EditBookmark from "./components/EditBookmark";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/sidebar/Sidebar";
 import Toolbar from "./components/Toolbar";
 import Bookmarks from "./components/Bookmarks";
 import { useStores } from "./store";
