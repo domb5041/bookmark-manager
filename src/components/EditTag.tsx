@@ -10,6 +10,7 @@ import { tagColors, getTagBackground } from "../theme";
 import TextInput from "./common/TextInput";
 import moment from "moment";
 import FormRow from "./common/FormRow";
+import Button from "./common/Button";
 
 const Swatch = styled.div<{ color: string }>`
     background-color: ${(props) => () => getTagBackground(props.color)};
@@ -159,6 +160,9 @@ const EditTag = () => {
                         </SwatchSelect>
                     ))}
                 </Swatches>
+            </FormRow>
+            <FormRow label="Delete Tag">
+                <Button symbol="delete" onClick={tagStore.showDeleteTagDialog} id="delete-tag-button" />
             </FormRow>
         </DialogBox>
     );

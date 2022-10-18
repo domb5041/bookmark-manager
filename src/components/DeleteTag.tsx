@@ -35,8 +35,9 @@ const DeleteTag = () => {
                 text: "delete",
                 id: "delete-tag-confirm",
                 onClick: () => {
-                    deleteTag();
                     tagStore.hideDeleteTagDialog();
+                    tagStore.hideEditTagDialog();
+                    deleteTag();
                 }
             }}
         >

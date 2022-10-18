@@ -1,17 +1,15 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { useStores } from "../../store";
 import { getTagBackground, tagColors } from "../../theme";
+import Button from "../common/Button";
 import Symbol from "../common/Symbol";
 
 const Container = styled.div<{ active: boolean; color: string }>`
-    padding: 3px 10px;
+    padding: 3px 3px 3px 10px;
     cursor: pointer;
     background-color: ${(props) => (props.active ? props.theme.color.accent.secondary : "transparent")};
     transition: 0.1s;
-    &:hover {
-        background-color: ${(props) =>
-            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover.surface};
-    }
     white-space: nowrap;
     display: flex;
     align-items: center;
@@ -21,7 +19,19 @@ const Container = styled.div<{ active: boolean; color: string }>`
     }
     & .tag-count {
         font-weight: bold;
+        padding-right: 7px;
         color: ${(props) => props.theme.color.foreground.secondary};
+    }
+    & .edit-tag-button {
+        height: 27px;
+        display: ${(props) => (props.active ? "inline-block" : "none")};
+    }
+    &:hover {
+        background-color: ${(props) =>
+            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover.surface};
+        & .edit-tag-button {
+            display: inline-block;
+        }
     }
 `;
 
@@ -44,9 +54,12 @@ interface ISidebarRowProps {
     onClick: () => void;
     name: string;
     style?: any;
+    index?: number;
+    allowEdit?: boolean;
 }
 
-const SidebarRow: FC<ISidebarRowProps> = ({ icon, color, active, count, onClick, name, style }) => {
+const SidebarRow: FC<ISidebarRowProps> = ({ icon, color, active, count, onClick, name, style, index, allowEdit }) => {
+    const { tagStore } = useStores();
     return (
         <Container active={active} onClick={onClick} style={style} color={color || tagColors[0]}>
             <Icon color={color || tagColors[0]}>
@@ -54,6 +67,14 @@ const SidebarRow: FC<ISidebarRowProps> = ({ icon, color, active, count, onClick,
             </Icon>
             <div className="tag-name">{name}</div>
             <div className="tag-count">{count}</div>
+            {allowEdit && (
+                <Button
+                    symbol="more_horiz"
+                    onClick={tagStore.showEditTagDialog}
+                    className="edit-tag-button"
+                    id={`edit-tag-button-${index}`}
+                />
+            )}
         </Container>
     );
 };
