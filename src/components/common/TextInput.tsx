@@ -19,18 +19,19 @@ const Container = styled.div`
 
 interface ITextInputProps {
     value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     style?: any;
     id: string;
     label?: string;
     placeholder?: string;
+    disabled?: boolean;
 }
 
-const TextInput: FC<ITextInputProps> = ({ value, onChange, style, id, label, placeholder }) => {
+const TextInput: FC<ITextInputProps> = ({ value, onChange, style, id, label, placeholder, disabled }) => {
     return (
         <Container style={style} id={id + "-container"}>
             {label && <label htmlFor={id}>{label}</label>}
-            <input value={value} onChange={onChange} id={id} placeholder={placeholder} />
+            <input value={value} onChange={onChange} id={id} placeholder={placeholder} disabled={disabled} />
         </Container>
     );
 };

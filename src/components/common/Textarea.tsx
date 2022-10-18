@@ -17,15 +17,16 @@ const Container = styled.div`
 
 interface ITextareaProps {
     value: string;
-    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     style?: any;
     id: string;
+    disabled?: boolean;
 }
 
-const Textarea: FC<ITextareaProps> = ({ value, onChange, style, id }) => {
+const Textarea: FC<ITextareaProps> = ({ value, onChange, style, id, disabled }) => {
     return (
         <Container style={style} id={id + "-container"}>
-            <textarea value={value} onChange={onChange} id={id} />
+            <textarea value={value} onChange={onChange} id={id} disabled={disabled} />
         </Container>
     );
 };

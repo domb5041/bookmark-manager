@@ -9,6 +9,7 @@ import Symbol from "./common/Symbol";
 import { tagColors, getTagBackground } from "../theme";
 import TextInput from "./common/TextInput";
 import moment from "moment";
+import FormRow from "./common/FormRow";
 
 const Swatch = styled.div<{ color: string }>`
     background-color: ${(props) => () => getTagBackground(props.color)};
@@ -36,7 +37,6 @@ const SwatchSelect = styled.div<{ active: boolean }>`
 const Swatches = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 10px;
 `;
 
 const Preview = styled(Swatch)`
@@ -117,6 +117,7 @@ const EditTag = () => {
             title="Edit Tag"
             active={tagStore.editTagDialogVisible}
             close={tagStore.hideEditTagDialog}
+            width="550px"
             onEnter={() => {
                 setNewName(tagStore.activeFilter.name);
                 setNewColor(tagStore.activeFilter.color);
@@ -134,30 +135,31 @@ const EditTag = () => {
             <Preview color={newColor}>
                 <Symbol name={newIcon} color={newColor} size="30px" />
             </Preview>
-            <TextInput
-                id="tag-name-input"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-                style={{ marginBottom: 10 }}
-            />
-            <Swatches>
-                {tagColors.map((color, i) => (
-                    <SwatchSelect key={`${i}-${color}`} active={newColor === color}>
-                        <Swatch color={color} onClick={() => setNewColor(color)}>
-                            <Symbol name={newIcon} color={color} size="20px" />
-                        </Swatch>
-                    </SwatchSelect>
-                ))}
-            </Swatches>
-            <Swatches>
-                {icons.map((icon, i) => (
-                    <SwatchSelect key={`${i}-${icon}`} active={newIcon === icon}>
-                        <Swatch color={newColor} key={`${i}-${icon}`} onClick={() => setNewIcon(icon)}>
-                            <Symbol name={icon} color={newColor} size="20px" />
-                        </Swatch>
-                    </SwatchSelect>
-                ))}
-            </Swatches>
+            <FormRow label="Title" style={{ marginBottom: 15 }}>
+                <TextInput id="tag-name-input" value={newName} onChange={(e) => setNewName(e.target.value)} />
+            </FormRow>
+            <FormRow label="Colour" style={{ marginBottom: 15 }}>
+                <Swatches>
+                    {tagColors.map((color, i) => (
+                        <SwatchSelect key={`${i}-${color}`} active={newColor === color}>
+                            <Swatch color={color} onClick={() => setNewColor(color)}>
+                                <Symbol name={newIcon} color={color} size="20px" />
+                            </Swatch>
+                        </SwatchSelect>
+                    ))}
+                </Swatches>
+            </FormRow>
+            <FormRow label="Icon" style={{ marginBottom: 10 }}>
+                <Swatches>
+                    {icons.map((icon, i) => (
+                        <SwatchSelect key={`${i}-${icon}`} active={newIcon === icon}>
+                            <Swatch color={newColor} key={`${i}-${icon}`} onClick={() => setNewIcon(icon)}>
+                                <Symbol name={icon} color={newColor} size="20px" />
+                            </Swatch>
+                        </SwatchSelect>
+                    ))}
+                </Swatches>
+            </FormRow>
         </DialogBox>
     );
 };
