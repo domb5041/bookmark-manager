@@ -12,6 +12,7 @@ const Container = styled.div`
         background-color: ${(props) => props.theme.color.background.highlight};
         border-radius: 5px;
         padding: 0 7px;
+        box-shadow: 0 2px 1px ${(props) => props.theme.color.border.shadow} inset;
     }
     & > label {
         padding-right: 10px;

@@ -12,6 +12,7 @@ const Container = styled.div`
     border-radius: 5px;
     flex-wrap: wrap;
     cursor: text;
+    box-shadow: 0 2px 1px ${(props) => props.theme.color.border.shadow} inset;
 `;
 
 const HiddenInput = styled.input<{ inputValidationError: boolean }>`

@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
-import Button from "./common/Button";
+import ToolbarButton from "./common/ToolbarButton";
 import TextInput from "./common/TextInput";
+import TabButton from "./common/TabButton";
 
 const Container = styled.div`
-    height: 50px;
     display: flex;
-    align-items: center;
-    padding: 0 10px;
+    align-items: flex-start;
+    padding: 10px 15px;
     flex-shrink: 0;
 `;
 
@@ -21,30 +21,62 @@ const Toolbar = () => {
     const { bookmarkStore, tagStore } = useStores();
     return (
         <Container id="toolbar">
-            <Button
+            <ToolbarButton
+                text="Menu"
                 symbol="menu"
                 onClick={tagStore.toggleSidebar}
                 id="toggle-sidebar-button"
-                style={{ marginRight: 10 }}
+                style={{ marginRight: 20 }}
             />
-            <Button symbol="add" onClick={bookmarkStore.showAddBookmarkDialog} id="add-bookmark-button" />
+            <ToolbarButton
+                text="new"
+                symbol="add"
+                onClick={bookmarkStore.showAddBookmarkDialog}
+                id="add-bookmark-button"
+            />
             <Spacer />
             <TextInput
                 id="search-bookmarks-input"
                 value={bookmarkStore.searchTerm}
                 onChange={(e) => bookmarkStore.setSearchTerm(e.target.value)}
                 placeholder={"search " + tagStore.activeFilter.name}
-                style={{ width: 400 }}
+                style={{ width: 350 }}
             />
             <Spacer />
-            <Button symbol="view_list" onClick={bookmarkStore.setExplorerTypeList} id="list-view-button" />
-            <Button
-                symbol="grid_view"
-                onClick={bookmarkStore.setExplorerTypeThumbnails}
-                id="thumbnail-view-button"
-                style={{ marginRight: 10 }}
+            <ToolbarButton
+                text="Sort"
+                symbol="sort_by_alpha"
+                onClick={() => {
+                    console.log("sort");
+                }}
+                id="sort-bookmarks-button"
+                style={{ marginRight: 17 }}
             />
-            <Button symbol="menu" onClick={bookmarkStore.toggleBookmarkPreview} id="toggle-preview-button" />
+            <TabButton
+                label="view"
+                style={{ marginRight: 15 }}
+                activeListener={bookmarkStore.explorerType}
+                buttons={[
+                    {
+                        icon: "format_list_bulleted",
+                        onClick: bookmarkStore.setExplorerTypeList,
+                        id: "list-view-button",
+                        activeId: "list"
+                    },
+                    {
+                        icon: "dashboard",
+                        onClick: bookmarkStore.setExplorerTypeThumbnails,
+                        id: " thumbnail-view-button",
+                        activeId: "thumbnails"
+                    }
+                ]}
+            />
+            <ToolbarButton
+                text="preview"
+                symbol="panorama"
+                onClick={bookmarkStore.toggleBookmarkPreview}
+                id="toggle-preview-button"
+            />
         </Container>
     );
 };

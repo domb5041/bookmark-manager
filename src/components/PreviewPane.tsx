@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useStores } from "../store";
 import PreviewImg from "./bookmarks/PreviewImg";
 import Tag from "./bookmarks/Tag";
+import ToolbarButton from "./common/ToolbarButton";
 import Button from "./common/Button";
 import Url from "./common/Url";
 import { CSSTransition } from "react-transition-group";
@@ -43,8 +44,8 @@ const Container2 = styled.div`
 
 const EditDelete = styled.div`
     display: flex;
-    justify-content: space-between;
-    padding: 10px;
+    justify-content: flex-end;
+    padding: 10px 15px;
 `;
 
 const PreviewContent = styled.div`
@@ -99,14 +100,15 @@ const PreviewPane = () => {
                 {bookmarkStore.activeBookmark && (
                     <Container2>
                         <EditDelete>
-                            <Button
-                                symbol="edit_note"
+                            <ToolbarButton
+                                symbol="edit"
                                 text="Edit"
                                 onClick={bookmarkStore.showEditBookmarkDialog}
                                 disabled={!bookmarkStore.activeBookmark}
                                 id="edit-bookmark-button"
+                                style={{ marginRight: 20 }}
                             />
-                            <Button
+                            <ToolbarButton
                                 symbol="delete"
                                 text="delete"
                                 onClick={bookmarkStore.showDeleteBookmarkDialog}

@@ -34,7 +34,8 @@ export const theme = {
         },
         border: {
             light: satinLinen,
-            heavy: bisonHide
+            heavy: bisonHide,
+            shadow: transparentize(0.7, hemlock)
         },
         foreground: {
             primary: graphite,

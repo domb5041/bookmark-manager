@@ -13,6 +13,7 @@ const Container = styled.div`
         padding: 7px;
         resize: none;
         height: 100px;
+        box-shadow: 0 2px 1px ${(props) => props.theme.color.border.shadow} inset;
     }
 `;
 

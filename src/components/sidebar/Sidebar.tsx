@@ -10,6 +10,7 @@ import { db } from "../../firebase-config";
 import { tagsCollectionRef } from "../../App";
 import SidebarRow from "./SidebarRow";
 import { tagColors } from "../../theme";
+import ToolbarButton from "../common/ToolbarButton";
 
 const Container = styled.div`
     width: 250px;
@@ -17,7 +18,7 @@ const Container = styled.div`
     background-color: ${(props) => props.theme.color.background.surface};
     flex-shrink: 0;
     overflow: hidden;
-    padding: 5px;
+    padding: 0 5px;
     &.sidebar-enter {
         width: 0;
     }
@@ -35,11 +36,10 @@ const Container = styled.div`
 `;
 
 const Toolbar = styled.div`
-    height: 50px;
     display: flex;
-    align-items: center;
-    padding: 0 10px;
-    margin-bottom: 5px;
+    justify-content: space-between;
+    padding: 10px 15px;
+    margin-bottom: 10px;
 `;
 
 const Sidebar = () => {
@@ -89,7 +89,16 @@ const Sidebar = () => {
     return (
         <CSSTransition nodeRef={nodeRef} in={tagStore.sidebarVisible} unmountOnExit timeout={500} classNames="sidebar">
             <Container id="sidebar" ref={nodeRef}>
-                <Toolbar></Toolbar>
+                <Toolbar>
+                    <ToolbarButton
+                        text="profile"
+                        symbol="account_circle"
+                        onClick={() => {
+                            console.log("profile button");
+                        }}
+                        id="profile-button"
+                    />
+                </Toolbar>
                 <EditTag />
                 <DeleteTag />
                 <SidebarRow
