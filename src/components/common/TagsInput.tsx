@@ -227,6 +227,7 @@ const TagsInput: FC<ITagsInputProps> = ({ style }) => {
 
     return (
         <>
+            <label>tags</label>
             <Container onClick={focusInput} id="tags-input-container" style={style}>
                 {tagStore.tagsInput.map((tag, i) => (
                     <Tag

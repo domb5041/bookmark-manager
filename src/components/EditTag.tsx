@@ -43,7 +43,7 @@ const Swatches = styled.div`
 const Preview = styled(Swatch)`
     width: 55px;
     height: 55px;
-    margin: 0 auto 10px auto;
+    margin: 0 auto 15px auto;
 `;
 
 const EditTag = () => {
@@ -118,7 +118,6 @@ const EditTag = () => {
             title="Edit Tag"
             active={tagStore.editTagDialogVisible}
             close={tagStore.hideEditTagDialog}
-            width="550px"
             onEnter={() => {
                 setNewName(tagStore.activeFilter.name);
                 setNewColor(tagStore.activeFilter.color);
@@ -136,10 +135,15 @@ const EditTag = () => {
             <Preview color={newColor}>
                 <Symbol name={newIcon} color={newColor} size="30px" />
             </Preview>
-            <FormRow label="Title" style={{ marginBottom: 15 }}>
-                <TextInput id="tag-name-input" value={newName} onChange={(e) => setNewName(e.target.value)} />
-            </FormRow>
-            <FormRow label="Colour" style={{ marginBottom: 15 }}>
+            <TextInput
+                label="Title"
+                style={{ marginBottom: 15 }}
+                id="tag-name-input"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+            />
+            <div style={{ marginBottom: 15 }}>
+                <label>Colour</label>
                 <Swatches>
                     {tagColors.map((color, i) => (
                         <SwatchSelect key={`${i}-${color}`} active={newColor === color}>
@@ -149,8 +153,9 @@ const EditTag = () => {
                         </SwatchSelect>
                     ))}
                 </Swatches>
-            </FormRow>
-            <FormRow label="Icon" style={{ marginBottom: 10 }}>
+            </div>
+            <div style={{ marginBottom: 10 }}>
+                <label>Icon</label>
                 <Swatches>
                     {icons.map((icon, i) => (
                         <SwatchSelect key={`${i}-${icon}`} active={newIcon === icon}>
@@ -160,10 +165,8 @@ const EditTag = () => {
                         </SwatchSelect>
                     ))}
                 </Swatches>
-            </FormRow>
-            <FormRow label="Delete Tag">
-                <Button symbol="delete" onClick={tagStore.showDeleteTagDialog} id="delete-tag-button" />
-            </FormRow>
+            </div>
+            <Button symbol="delete" onClick={tagStore.showDeleteTagDialog} id="delete-tag-button" />
         </DialogBox>
     );
 };

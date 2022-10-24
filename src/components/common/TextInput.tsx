@@ -2,8 +2,6 @@ import React, { FC } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-    display: flex;
-    align-items: center;
     & > input {
         flex: 1;
         box-sizing: border-box;
@@ -13,9 +11,7 @@ const Container = styled.div`
         border-radius: 5px;
         padding: 0 7px;
         box-shadow: 0 2px 1px ${(props) => props.theme.color.border.shadow} inset;
-    }
-    & > label {
-        padding-right: 10px;
+        width: 100%;
     }
 `;
 

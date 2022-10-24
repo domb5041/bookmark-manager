@@ -22,8 +22,8 @@ export const Container = styled.div<{ width?: string; height?: string }>`
         pointer-events: all;
         max-width: 100%;
         max-height: 100%;
-        width: ${(props) => props.width || "300px"};
-        height: ${(props) => props.height || "500px"};
+        width: ${(props) => props.width || "350px"};
+        height: ${(props) => props.height || "600px"};
         border: 1px solid ${(props) => props.theme.color.border.light};
     }
     &.dialog-container-enter {
@@ -45,7 +45,11 @@ export const Container = styled.div<{ width?: string; height?: string }>`
 export const Header = styled.div`
     padding: 5px;
     text-align: center;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: ${(props) => props.theme.color.foreground.tinted};
+    letter-spacing: 1px;
 `;
 
 export const Body = styled.div`
@@ -56,6 +60,6 @@ export const Body = styled.div`
 
 export const Footer = styled.div`
     display: flex;
-    padding: 5px;
+    padding: 10px;
     justify-content: space-between;
 `;

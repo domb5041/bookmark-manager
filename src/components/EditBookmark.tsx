@@ -13,7 +13,6 @@ import Textarea from "./common/Textarea";
 import { isValidHttpUrl } from "../utilities";
 import moment from "moment";
 import { IBookmark } from "../store/bookmark.store";
-import FormRow from "./common/FormRow";
 
 const EditBookmark = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -87,30 +86,34 @@ const EditBookmark = () => {
             close={bookmarkStore.hideEditBookmarkDialog}
             confirmButton={{ onClick: () => updateBookmark(), text: "Update", id: "update-tags-confirm" }}
             onEnter={onDialogOpening}
-            width="550px"
         >
-            <FormRow label="Url" style={{ marginBottom: 10 }}>
-                <TextInput id="url-input" value={newUrl} onChange={(e) => setNewUrl(e.target.value)} />
-            </FormRow>
-            <FormRow label="Preview" style={{ marginBottom: 10 }}>
+            <TextInput
+                id="url-input"
+                label="Url"
+                value={newUrl}
+                onChange={(e) => setNewUrl(e.target.value)}
+                style={{ marginBottom: 15 }}
+            />
+            <div style={{ marginBottom: 15 }}>
+                <label>Preview</label>
                 <PreviewImg imgUrl={newImg} border />
-            </FormRow>
-            <FormRow label="Title" style={{ marginBottom: 10 }}>
-                <TextInput id="title-input" value={newName} onChange={(e) => setNewName(e.target.value)} />
-            </FormRow>
-            <FormRow label="Description" style={{ marginBottom: 10 }}>
-                <Textarea
-                    id="description-input"
-                    value={newDescription}
-                    onChange={(e) => setNewDescription(e.target.value)}
-                />
-            </FormRow>
-            <FormRow label="Tags" style={{ marginBottom: 10 }}>
-                <TagsInput />
-            </FormRow>
-            <FormRow label="Refresh">
-                <Button onClick={refreshPreview} id="refresh-data-button" symbol="refresh" disabled={!validUrl} />
-            </FormRow>
+            </div>
+            <TextInput
+                label="Title"
+                id="title-input"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                style={{ marginBottom: 15 }}
+            />
+            <Textarea
+                id="description-input"
+                label="Description"
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
+                style={{ marginBottom: 15 }}
+            />
+            <TagsInput style={{ marginBottom: 15 }} />
+            <Button onClick={refreshPreview} id="refresh-data-button" symbol="refresh" disabled={!validUrl} />
         </DialogBox>
     );
 };

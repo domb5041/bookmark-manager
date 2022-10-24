@@ -20,6 +20,7 @@ label {
     text-transform: uppercase;
     color: ${theme.color.foreground.tinted};
     letter-spacing: 1px;
+    display: block;
 }
 
 .material-symbols-outlined {

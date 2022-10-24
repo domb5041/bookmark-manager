@@ -10,7 +10,6 @@ import PreviewImg from "./bookmarks/PreviewImg";
 import TagsInput from "./common/TagsInput";
 import TextInput from "./common/TextInput";
 import moment from "moment";
-import FormRow from "./common/FormRow";
 import Textarea from "./common/Textarea";
 
 interface IPreview {
@@ -71,7 +70,6 @@ const AddBookmark = () => {
             active={bookmarkStore.addBookmarkDialogVisible}
             close={resetDialog}
             onEnter={() => tagStore.setTagsInput([])}
-            width="550px"
             confirmButton={{
                 text: "save",
                 id: "save-bookmark-confirm",
@@ -81,35 +79,42 @@ const AddBookmark = () => {
                 }
             }}
         >
-            <FormRow label="Url" style={{ marginBottom: 10 }}>
-                <TextInput
-                    value={url}
-                    placeholder="url"
-                    id="bookmark-url-input"
-                    onChange={(e) => {
-                        if (isValidHttpUrl(e.target.value)) {
-                            debounce(() => getPreview(e.target.value), 500);
-                        }
-                        setUrl(e.target.value);
-                    }}
-                />
-            </FormRow>
-            <FormRow label="Preview" style={{ marginBottom: 10 }}>
+            <TextInput
+                value={url}
+                label="Url"
+                style={{ marginBottom: 15 }}
+                placeholder="url"
+                id="bookmark-url-input"
+                onChange={(e) => {
+                    if (isValidHttpUrl(e.target.value)) {
+                        debounce(() => getPreview(e.target.value), 500);
+                    }
+                    setUrl(e.target.value);
+                }}
+            />
+            <div style={{ marginBottom: 15 }}>
+                <label>Preview</label>
                 <PreviewImg imgUrl={preview?.images[0]} border />
-            </FormRow>
+            </div>
             {preview && (
                 <>
-                    <FormRow label="Title" style={{ marginBottom: 10 }}>
-                        <TextInput id="title-input" value={preview.title} disabled />
-                    </FormRow>
-                    <FormRow label="Description" style={{ marginBottom: 10 }}>
-                        <Textarea id="description-input" value={preview.description} disabled />
-                    </FormRow>
+                    <TextInput
+                        label="Title"
+                        style={{ marginBottom: 15 }}
+                        id="title-input"
+                        value={preview.title}
+                        disabled
+                    />
+                    <Textarea
+                        label="Description"
+                        style={{ marginBottom: 15 }}
+                        id="description-input"
+                        value={preview.description}
+                        disabled
+                    />
                 </>
             )}
-            <FormRow label="Tags">
-                <TagsInput />
-            </FormRow>
+            <TagsInput />
         </DialogBox>
     );
 };
