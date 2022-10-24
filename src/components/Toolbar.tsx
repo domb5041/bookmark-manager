@@ -7,8 +7,6 @@ import TextInput from "./common/TextInput";
 
 const Container = styled.div`
     height: 50px;
-    border-bottom: 1px solid ${(props) => props.theme.color.background.border};
-    background-color: ${(props) => props.theme.color.background.surface};
     display: flex;
     align-items: center;
     padding: 0 10px;

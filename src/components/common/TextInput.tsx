@@ -8,7 +8,8 @@ const Container = styled.div`
         flex: 1;
         box-sizing: border-box;
         height: 28px;
-        border: 1px solid ${(props) => props.theme.color.background.border};
+        border: 1px solid ${(props) => props.theme.color.border.light};
+        background-color: ${(props) => props.theme.color.background.highlight};
         border-radius: 5px;
         padding: 0 7px;
     }

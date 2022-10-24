@@ -7,8 +7,8 @@ import Tag from "../bookmarks/Tag";
 const Container = styled.div`
     display: flex;
     padding: 5px;
-    background-color: white;
-    border: 1px solid ${(props) => props.theme.color.background.border};
+    background-color: ${(props) => props.theme.color.background.highlight};
+    border: 1px solid ${(props) => props.theme.color.border.light};
     border-radius: 5px;
     flex-wrap: wrap;
     cursor: text;

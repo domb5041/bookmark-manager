@@ -7,12 +7,14 @@ import Symbol from "../common/Symbol";
 
 const Container = styled.div<{ active: boolean; color: string }>`
     padding: 3px 3px 3px 10px;
+    margin-bottom: 1px;
     cursor: pointer;
     background-color: ${(props) => (props.active ? props.theme.color.accent.secondary : "transparent")};
     transition: 0.1s;
     white-space: nowrap;
     display: flex;
     align-items: center;
+    border-radius: 5px;
     & .tag-name {
         flex: 1;
         padding-left: 5px;
@@ -28,7 +30,7 @@ const Container = styled.div<{ active: boolean; color: string }>`
     }
     &:hover {
         background-color: ${(props) =>
-            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover.surface};
+            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover};
         & .edit-tag-button {
             display: inline-block;
         }

@@ -12,7 +12,8 @@ import moment from "moment";
 const Container = styled.div`
     width: 300px;
     flex-shrink: 0;
-    border-left: 1px solid ${(props) => props.theme.color.background.border};
+    background-color: ${(props) => props.theme.color.background.surface};
+    border-left: 1px solid ${(props) => props.theme.color.border.light};
     box-sizing: border-box;
     display: flex;
     align-items: stretch;
@@ -65,16 +66,15 @@ const OpenLink = styled.div`
     padding: 10px;
 `;
 
-const Heading = styled.div`
-    font-size: 14px;
-    font-weight: bold;
+const Heading = styled.label`
+    display: block;
     margin-bottom: 3px;
 `;
 
 const Divider = styled.hr`
     border-style: solid;
     border-top-width: 0;
-    border-color: ${(props) => props.theme.color.background.object};
+    border-color: ${(props) => props.theme.color.border.light};
     margin: 10px 0;
 `;
 
@@ -135,15 +135,9 @@ const PreviewPane = () => {
                                 ))}
                             <Divider />
                             <Heading>Timestamps</Heading>
-                            <Date>
-                                <label>Created:</label> {formatDate(bookmarkStore.activeBookmark.dateAdded)}
-                            </Date>
-                            <Date>
-                                <label>Modified:</label> {formatDate(bookmarkStore.activeBookmark.dateModified)}
-                            </Date>
-                            <Date>
-                                <label>Last Opened:</label> {formatDate(bookmarkStore.activeBookmark.dateOpened)}
-                            </Date>
+                            <Date>Created: {formatDate(bookmarkStore.activeBookmark.dateAdded)}</Date>
+                            <Date>Modified: {formatDate(bookmarkStore.activeBookmark.dateModified)}</Date>
+                            <Date>Last Opened: {formatDate(bookmarkStore.activeBookmark.dateOpened)}</Date>
                         </PreviewContent>
                         <OpenLink>
                             <Button

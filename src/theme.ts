@@ -4,30 +4,46 @@ export const tagColors = ["#595959", "#982A22", "#087D45", "#0068B7", "#8A7A04",
 
 export const getTagBackground = (color: string) => desaturate(0.35, lighten(0.5, color));
 
-const baseColor = "white";
-const accentColor = "#777777";
+// backgrounds
+const whiteRock = "#F0EDDD";
+const springWood = "#F5F3EC";
+const whiteLinen = "#FAF7EF";
+const blackWhite = "#FFFEF9";
+
+// borders
+const satinLinen = "#E6E3D1";
+const bisonHide = "#BFBBA7";
+
+// foregrounds
+const graphite = "#1D1C06";
+const hemlock = "#6B6541";
+const bandicoot = "#848372";
+
+// accents
+const lucky = "#B59A1D";
+const starkWhite = "#E6E2BF";
 
 export const theme = {
     color: {
         background: {
-            border: darken(0.2, baseColor),
-            void: darken(0.05, baseColor),
-            surface: darken(0.1, baseColor),
-            object: darken(0.15, baseColor),
-            hover: {
-                void: darken(0.09, baseColor),
-                surface: darken(0.14, baseColor),
-                object: darken(0.19, baseColor)
-            }
+            void: blackWhite,
+            surface: whiteLinen,
+            object: whiteRock,
+            highlight: springWood,
+            hover: transparentize(0.5, starkWhite)
+        },
+        border: {
+            light: satinLinen,
+            heavy: bisonHide
         },
         foreground: {
-            primary: "black",
-            secondary: "grey"
+            primary: graphite,
+            secondary: bandicoot,
+            tinted: hemlock
         },
         accent: {
-            primary: accentColor,
-            secondary: transparentize(0.6, accentColor),
-            tertiary: transparentize(0.8, accentColor)
+            primary: lucky,
+            secondary: starkWhite
         }
     }
 };

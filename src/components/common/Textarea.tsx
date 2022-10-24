@@ -7,7 +7,8 @@ const Container = styled.div`
     & > textarea {
         flex: 1;
         box-sizing: border-box;
-        border: 1px solid ${(props) => props.theme.color.background.border};
+        background-color: ${(props) => props.theme.color.background.highlight};
+        border: 1px solid ${(props) => props.theme.color.border.light};
         border-radius: 5px;
         padding: 7px;
         resize: none;

@@ -6,22 +6,27 @@ import { IBookmark } from "../../store/bookmark.store";
 import Button from "../common/Button";
 import Favicon from "./Favicon";
 import Tag from "./Tag";
-import { darken } from "polished";
 import Url from "../common/Url";
 
 const Container = styled.div`
     flex: 1;
-    background-color: ${(props) => props.theme.color.background.void};
     overflow: auto;
+    padding: 5px;
 `;
 
-const Bookmark = styled.div<{ active: boolean }>`
-    border-bottom: 1px solid ${(props) => darken(0.05, props.theme.color.background.void)};
+const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
     padding: 5px;
-    background-color: ${(props) => (props.active ? props.theme.color.accent.secondary : "transparent")};
+    margin-bottom: 1px;
+    border-radius: 5px;
+    background-color: ${(props) =>
+        props.active
+            ? props.theme.color.accent.secondary
+            : props.highlight
+            ? props.theme.color.background.highlight
+            : "transparent"};
     &:hover {
         background-color: ${(props) =>
-            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover.void};
+            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover};
         & > .open-bookmark-button {
             opacity: 1;
         }
@@ -70,6 +75,7 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                     onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
                     active={bookmarkStore.activeBookmark?.id === bookmark.id}
                     onDoubleClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
+                    highlight={i % 2 === 0}
                 >
                     <Favicon url={bookmark.favicon} />
                     <div className="bookmark-name">{bookmark.name}</div>

@@ -11,6 +11,7 @@ import AddBookmark from "./components/AddBookmark";
 import DeleteBookmark from "./components/DeleteBookmark";
 import { IBookmark } from "./store/bookmark.store";
 import { ITag } from "./store/tag.store";
+import PreviewPane from "./components/PreviewPane";
 
 export const bookmarksCollectionRef = collection(db, "bookmarks");
 export const tagsCollectionRef = collection(db, "tags");
@@ -81,6 +82,7 @@ function App() {
                 <DeleteBookmark />
                 <Bookmarks />
             </MainArea>
+            <PreviewPane />
         </Container>
     );
 }

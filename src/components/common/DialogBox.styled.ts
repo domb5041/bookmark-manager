@@ -15,7 +15,7 @@ export const Container = styled.div<{ width?: string; height?: string }>`
     & .dialog-panel {
         background: ${(props) => props.theme.color.background.void};
         border-radius: 5px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        /* box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); */
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -24,7 +24,7 @@ export const Container = styled.div<{ width?: string; height?: string }>`
         max-height: 100%;
         width: ${(props) => props.width || "300px"};
         height: ${(props) => props.height || "500px"};
-        border: 1px solid ${(props) => props.theme.color.background.border};
+        border: 1px solid ${(props) => props.theme.color.border.light};
     }
     &.dialog-container-enter {
         opacity: 0;
@@ -46,7 +46,6 @@ export const Header = styled.div`
     padding: 5px;
     text-align: center;
     font-weight: bold;
-    box-shadow: 0 2px 3px ${(props) => props.theme.color.background.border};
 `;
 
 export const Body = styled.div`
@@ -59,5 +58,4 @@ export const Footer = styled.div`
     display: flex;
     padding: 5px;
     justify-content: space-between;
-    box-shadow: 0 -2px 3px ${(props) => props.theme.color.background.border};
 `;

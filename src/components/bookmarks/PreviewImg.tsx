@@ -3,13 +3,14 @@ import styled, { css } from "styled-components";
 import Symbol from "../common/Symbol";
 
 const borderStyle = css`
-    border: 1px solid ${(props) => props.theme.color.background.border};
+    border: 1px solid ${(props) => props.theme.color.border.light};
     border-radius: 5px;
     box-sizing: border-box;
 `;
 
 const Image = styled.img<{ clipImg?: boolean; border?: boolean }>`
     width: 100%;
+    background-color: white;
     ${(props) =>
         props.clipImg &&
         css`
@@ -22,6 +23,7 @@ const Image = styled.img<{ clipImg?: boolean; border?: boolean }>`
 `;
 
 const Placeholder = styled.div<{ border?: boolean }>`
+    background-color: white;
     height: 150px;
     display: flex;
     justify-content: center;

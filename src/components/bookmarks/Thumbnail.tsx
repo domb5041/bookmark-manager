@@ -11,12 +11,12 @@ import Button from "../common/Button";
 
 const Container = styled.div<{ active: boolean }>`
     overflow: hidden;
-    background-color: ${(props) => props.theme.color.background.void};
+    background-color: ${(props) => props.theme.color.background.object};
     border-radius: 5px;
     position: relative;
-    box-shadow: 0 5px 10px ${transparentize(0.9, "black")};
-    border: 1px solid ${(props) => props.theme.color.background.border};
-    outline: ${(props) => (props.active ? "2px solid grey" : "none")};
+    /* box-shadow: 0 5px 10px ${transparentize(0.9, "black")}; */
+    border: 1px solid ${(props) => props.theme.color.border.heavy};
+    outline: ${(props) => (props.active ? "2px solid " + props.theme.color.border.heavy : "none")};
     cursor: pointer;
     margin: 0 30px 30px 0;
     & > .open-bookmark-button {
@@ -25,7 +25,7 @@ const Container = styled.div<{ active: boolean }>`
         top: 5px;
         right: 5px;
         height: 25px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
     }
     &:hover > .open-bookmark-button {
         display: flex;
@@ -34,7 +34,7 @@ const Container = styled.div<{ active: boolean }>`
 
 const ContainerInner = styled.div`
     padding: 8px;
-    border-top: 1px solid ${(props) => props.theme.color.background.border};
+    border-top: 1px solid ${(props) => props.theme.color.border.heavy};
     box-sizing: border-box;
 `;
 

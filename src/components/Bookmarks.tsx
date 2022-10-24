@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import List from "./bookmarks/List";
 import Thumbnails from "./bookmarks/Thumbnails";
 import styled from "styled-components";
-import PreviewPane from "./PreviewPane";
 
 const Container = styled.div`
     display: flex;
@@ -47,7 +46,6 @@ const Bookmarks = () => {
         <Container>
             {bookmarkStore.explorerType === "list" && <List bookmarks={bookmarks} />}
             {bookmarkStore.explorerType === "thumbnails" && <Thumbnails bookmarks={bookmarks} />}
-            <PreviewPane />
         </Container>
     );
 };
