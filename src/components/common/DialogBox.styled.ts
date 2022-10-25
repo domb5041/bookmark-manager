@@ -15,7 +15,7 @@ export const Container = styled.div<{ width?: string; height?: string }>`
     & .dialog-panel {
         background: ${(props) => props.theme.color.background.void};
         border-radius: 5px;
-        /* box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); */
+        box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy};
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -45,7 +45,7 @@ export const Container = styled.div<{ width?: string; height?: string }>`
 export const Header = styled.div`
     padding: 5px;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
     color: ${(props) => props.theme.color.foreground.tinted};

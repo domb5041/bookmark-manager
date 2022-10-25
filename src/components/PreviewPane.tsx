@@ -149,6 +149,7 @@ const PreviewPane = () => {
                                 disabled={!bookmarkStore.activeBookmark}
                                 id="open-bookmark-button"
                                 style={{ width: "100%" }}
+                                styleType="primary"
                             />
                         </OpenLink>
                     </Container2>

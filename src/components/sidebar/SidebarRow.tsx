@@ -26,13 +26,14 @@ const Container = styled.div<{ active: boolean; color: string }>`
     }
     & .edit-tag-button {
         height: 27px;
+        width: 35px;
         display: ${(props) => (props.active ? "flex" : "none")};
     }
     &:hover {
         background-color: ${(props) =>
             props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover};
         & .edit-tag-button {
-            display: inline-block;
+            display: flex;
         }
     }
 `;

@@ -56,7 +56,8 @@ const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
     }
     & > .open-bookmark-button {
         opacity: ${(props) => (props.active ? 1 : 0)};
-        height: 22px;
+        height: 27px;
+        width: 36px;
     }
 `;
 

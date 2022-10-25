@@ -7,12 +7,12 @@ import Tag from "../bookmarks/Tag";
 const Container = styled.div`
     display: flex;
     padding: 5px;
-    background-color: ${(props) => props.theme.color.background.highlight};
+    background-color: ${(props) => props.theme.color.background.surface};
     border: 1px solid ${(props) => props.theme.color.border.light};
     border-radius: 5px;
     flex-wrap: wrap;
     cursor: text;
-    box-shadow: 0 2px 1px ${(props) => props.theme.color.border.shadow} inset;
+    box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy} inset;
 `;
 
 const HiddenInput = styled.input<{ inputValidationError: boolean }>`

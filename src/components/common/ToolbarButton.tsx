@@ -1,4 +1,4 @@
-import { lighten } from "polished";
+import { darken, lighten } from "polished";
 import React, { FC } from "react";
 import styled from "styled-components";
 import Symbol from "../common/Symbol";
@@ -14,7 +14,9 @@ const Container = styled.div`
 const StyledButton = styled.button<{ text?: string; icon?: string }>`
     margin: 0 auto;
     border: none;
-    background-color: ${(props) => props.theme.color.border.light};
+    background-color: ${(props) => props.theme.color.background.void};
+    border: 1px solid ${(props) => props.theme.color.border.light};
+    box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,7 +27,7 @@ const StyledButton = styled.button<{ text?: string; icon?: string }>`
     transition: 0.1s;
     flex-shrink: 0;
     &:hover:not(:disabled) {
-        background-color: ${(props) => lighten(0.05, props.theme.color.accent.secondary)};
+        background-color: ${(props) => props.theme.color.background.surface};
     }
     &:disabled {
         cursor: not-allowed;

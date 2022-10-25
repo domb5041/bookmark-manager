@@ -6,6 +6,7 @@ const borderStyle = css`
     border: 1px solid ${(props) => props.theme.color.border.light};
     border-radius: 5px;
     box-sizing: border-box;
+    box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy};
 `;
 
 const Image = styled.img<{ clipImg?: boolean; border?: boolean }>`

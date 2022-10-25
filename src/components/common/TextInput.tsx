@@ -7,10 +7,10 @@ const Container = styled.div`
         box-sizing: border-box;
         height: 28px;
         border: 1px solid ${(props) => props.theme.color.border.light};
-        background-color: ${(props) => props.theme.color.background.highlight};
+        background-color: ${(props) => props.theme.color.background.surface};
         border-radius: 5px;
         padding: 0 7px;
-        box-shadow: 0 2px 1px ${(props) => props.theme.color.border.shadow} inset;
+        box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy} inset;
         width: 100%;
     }
 `;

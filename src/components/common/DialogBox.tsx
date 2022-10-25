@@ -46,6 +46,7 @@ const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confir
                                 confirmButton.onClick();
                                 close();
                             }}
+                            styleType="primary"
                         />
                     </Footer>
                 </div>

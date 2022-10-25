@@ -5,13 +5,13 @@ const Container = styled.div`
     & > textarea {
         flex: 1;
         box-sizing: border-box;
-        background-color: ${(props) => props.theme.color.background.highlight};
+        background-color: ${(props) => props.theme.color.background.surface};
         border: 1px solid ${(props) => props.theme.color.border.light};
         border-radius: 5px;
         padding: 7px;
         resize: none;
         height: 100px;
-        box-shadow: 0 2px 1px ${(props) => props.theme.color.border.shadow} inset;
+        box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy} inset;
         width: 100%;
     }
 `;

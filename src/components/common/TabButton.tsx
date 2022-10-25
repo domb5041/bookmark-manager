@@ -1,3 +1,4 @@
+import { darken } from "polished";
 import React, { FC } from "react";
 import styled from "styled-components";
 import Symbol from "../common/Symbol";
@@ -7,29 +8,33 @@ const Container = styled.div`
     & .button-text {
         font-size: 12px;
         text-transform: capitalize;
+        margin-top: -1px;
     }
 `;
 
 const StyledTabs = styled.div`
     margin: 0 auto;
-    background-color: ${(props) => props.theme.color.border.light};
+    background-color: ${(props) => props.theme.color.background.highlight};
+    border: 1px solid ${(props) => props.theme.color.border.light};
     display: flex;
-    height: 25px;
+    height: 26px;
     border-radius: 5px;
     flex-shrink: 0;
-    padding: 1px;
+    padding-top: 1px;
     box-sizing: border-box;
-    box-shadow: 0 2px 1px ${(props) => props.theme.color.border.shadow} inset;
+    box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy} inset;
 `;
 
 const Button = styled.button<{ active: boolean }>`
     border: none;
     width: 32px;
     border-radius: 4px;
-    background-color: ${(props) => (props.active ? props.theme.color.background.surface : "transparent")};
+    background-color: ${(props) => (props.active ? props.theme.color.background.void : "transparent")};
     color: ${(props) => (props.active ? props.theme.color.foreground.primary : props.theme.color.foreground.tinted)};
-    margin-top: ${(props) => (props.active ? 0 : 1)}px;
+    box-shadow: 0 1px 0 ${(props) => (props.active ? props.theme.color.border.heavy : "transparent")};
     cursor: pointer;
+    display: flex;
+    align-items: center;
 `;
 
 interface ITabButtonProps {
