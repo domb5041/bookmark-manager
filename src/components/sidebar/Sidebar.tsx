@@ -10,7 +10,7 @@ import { db } from "../../firebase-config";
 import { tagsCollectionRef } from "../../App";
 import SidebarRow from "./SidebarRow";
 import { tagColors } from "../../theme";
-import ToolbarButton from "../common/ToolbarButton";
+import ToolbarButton from "../common/buttons/ToolButton";
 
 const Container = styled.div`
     width: 250px;

@@ -1,7 +1,7 @@
 import { darken } from "polished";
 import React, { FC } from "react";
 import styled from "styled-components";
-import Symbol from "../common/Symbol";
+import Symbol from "../../common/Symbol";
 
 const Container = styled.div`
     text-align: center;

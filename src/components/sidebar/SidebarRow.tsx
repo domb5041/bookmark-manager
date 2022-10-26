@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
 import { getTagBackground, tagColors } from "../../theme";
-import Button from "../common/Button";
+import Button from "../common/buttons/Button";
 import Symbol from "../common/Symbol";
 
 const Container = styled.div<{ active: boolean; color: string }>`

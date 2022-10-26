@@ -7,10 +7,10 @@ import { bookmarksCollectionRef } from "../App";
 import axios from "axios";
 import { debounce, isValidHttpUrl } from "../utilities";
 import PreviewImg from "./bookmarks/PreviewImg";
-import TagsInput from "./common/TagsInput";
-import TextInput from "./common/TextInput";
+import TagsInput from "./common/textInputs/TagsInput";
+import TextInput from "./common/textInputs/TextInput";
 import moment from "moment";
-import Textarea from "./common/Textarea";
+import Textarea from "./common/textInputs/Textarea";
 
 interface IPreview {
     contentType: string;

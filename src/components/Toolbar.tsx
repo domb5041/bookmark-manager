@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
-import ToolbarButton from "./common/ToolbarButton";
-import TabButton from "./common/TabButton";
-import SearchInput from "./common/SearchInput";
+import ToolbarButton from "./common/buttons/ToolButton";
+import TabButton from "./common/buttons/TabButton";
+import TextInput from "./common/textInputs/TextInput";
+import Symbol from "./common/Symbol";
+import MiniButton from "./common/buttons/MiniButton";
 
 const Container = styled.div`
     display: flex;
@@ -35,12 +37,22 @@ const Toolbar = () => {
                 id="add-bookmark-button"
             />
             <Spacer />
-            <SearchInput
+            <TextInput
                 id="search-bookmarks-input"
                 value={bookmarkStore.searchTerm}
                 onChange={(e) => bookmarkStore.setSearchTerm(e.target.value)}
-                placeholder={tagStore.activeFilter.name}
+                placeholder={"Search in " + tagStore.activeFilter.name}
                 style={{ width: 350 }}
+                leftWidget={<Symbol name="search" size="18px" />}
+                rightWidget={
+                    bookmarkStore.searchTerm !== "" && (
+                        <MiniButton
+                            id="search-filter-clear"
+                            onClick={() => bookmarkStore.setSearchTerm("")}
+                            symbol="close"
+                        />
+                    )
+                }
             />
             <Spacer />
             <ToolbarButton

@@ -1,6 +1,6 @@
 import React, { FC, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
-import Button from "./Button";
+import Button from "./buttons/Button";
 import { Container, Header, Body, Footer, FadeTop, FadeBottom } from "./DialogBox.styled";
 
 interface IDialogBoxProps {

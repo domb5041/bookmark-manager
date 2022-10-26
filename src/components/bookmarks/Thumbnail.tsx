@@ -1,5 +1,4 @@
 import { observer } from "mobx-react";
-import { transparentize } from "polished";
 import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
@@ -7,7 +6,7 @@ import { IBookmark } from "../../store/bookmark.store";
 import Url from "../common/Url";
 import Tag from "./Tag";
 import PreviewImg from "./PreviewImg";
-import Button from "../common/Button";
+import Button from "../common/buttons/Button";
 
 const Container = styled.div<{ active: boolean }>`
     overflow: hidden;

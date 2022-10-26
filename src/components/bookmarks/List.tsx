@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
-import Button from "../common/Button";
+import Button from "../common/buttons/Button";
 import Favicon from "./Favicon";
 import Tag from "./Tag";
 import Url from "../common/Url";

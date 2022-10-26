@@ -4,15 +4,16 @@ import DialogBox from "./common/DialogBox";
 import { observer } from "mobx-react";
 import { updateDoc, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
-import TagsInput from "./common/TagsInput";
+import TagsInput from "./common/textInputs/TagsInput";
 import PreviewImg from "./bookmarks/PreviewImg";
 import axios from "axios";
-import TextInput from "./common/TextInput";
-import Button from "./common/Button";
-import Textarea from "./common/Textarea";
+import TextInput from "./common/textInputs/TextInput";
+import Button from "./common/buttons/Button";
+import Textarea from "./common/textInputs/Textarea";
 import { isValidHttpUrl } from "../utilities";
 import moment from "moment";
 import { IBookmark } from "../store/bookmark.store";
+import MiniButton from "./common/buttons/MiniButton";
 
 const EditBookmark = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -93,6 +94,9 @@ const EditBookmark = () => {
                 value={newUrl}
                 onChange={(e) => setNewUrl(e.target.value)}
                 style={{ marginBottom: 15 }}
+                rightWidget={
+                    validUrl && <MiniButton onClick={refreshPreview} id="refresh-data-button" symbol="refresh" />
+                }
             />
             <div style={{ marginBottom: 15 }}>
                 <label>Preview</label>
@@ -113,7 +117,6 @@ const EditBookmark = () => {
                 style={{ marginBottom: 15 }}
             />
             <TagsInput style={{ marginBottom: 15 }} />
-            <Button onClick={refreshPreview} id="refresh-data-button" symbol="refresh" disabled={!validUrl} />
         </DialogBox>
     );
 };

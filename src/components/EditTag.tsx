@@ -7,10 +7,9 @@ import { db } from "../firebase-config";
 import styled from "styled-components";
 import Symbol from "./common/Symbol";
 import { tagColors, getTagBackground } from "../theme";
-import TextInput from "./common/TextInput";
+import TextInput from "./common/textInputs/TextInput";
 import moment from "moment";
-import FormRow from "./common/FormRow";
-import Button from "./common/Button";
+import Button from "./common/buttons/Button";
 
 const Swatch = styled.div<{ color: string }>`
     background-color: ${(props) => () => getTagBackground(props.color)};
