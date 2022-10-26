@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
 import ToolbarButton from "./common/ToolbarButton";
-import TextInput from "./common/TextInput";
 import TabButton from "./common/TabButton";
+import SearchInput from "./common/SearchInput";
 
 const Container = styled.div`
     display: flex;
@@ -35,11 +35,11 @@ const Toolbar = () => {
                 id="add-bookmark-button"
             />
             <Spacer />
-            <TextInput
+            <SearchInput
                 id="search-bookmarks-input"
                 value={bookmarkStore.searchTerm}
                 onChange={(e) => bookmarkStore.setSearchTerm(e.target.value)}
-                placeholder={"search " + tagStore.activeFilter.name}
+                placeholder={tagStore.activeFilter.name}
                 style={{ width: 350 }}
             />
             <Spacer />

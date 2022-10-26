@@ -24,6 +24,7 @@ label {
 }
 
 .material-symbols-outlined {
+    user-select: none;
     font-variation-settings:
     'FILL' 0,
     'wght' 400,
