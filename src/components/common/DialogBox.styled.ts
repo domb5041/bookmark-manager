@@ -10,7 +10,7 @@ export const Container = styled.div<{ width?: string; height?: string }>`
     align-items: center;
     justify-content: center;
     z-index: 3000;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.15);
     padding: 10px;
     & .dialog-panel {
         background: ${(props) => props.theme.color.background.void};
@@ -50,6 +50,25 @@ export const Header = styled.div`
     text-transform: uppercase;
     color: ${(props) => props.theme.color.foreground.tinted};
     letter-spacing: 1px;
+    position: relative;
+`;
+
+export const FadeTop = styled.div`
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background-image: linear-gradient(${(props) => props.theme.color.background.void}, transparent);
+`;
+
+export const FadeBottom = styled.div`
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background-image: linear-gradient(transparent, ${(props) => props.theme.color.background.void});
 `;
 
 export const Body = styled.div`
@@ -62,4 +81,5 @@ export const Footer = styled.div`
     display: flex;
     padding: 10px;
     justify-content: space-between;
+    position: relative;
 `;

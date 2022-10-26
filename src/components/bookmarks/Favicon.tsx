@@ -6,7 +6,7 @@ interface IFaviconProps {
 }
 
 const Favicon: FC<IFaviconProps> = ({ url }) => {
-    return url ? <img src={url} alt="favicon" style={{ width: 20 }} /> : <Symbol name="link" />;
+    return url ? <img src={url} alt="favicon" style={{ width: 20, marginRight: 10 }} /> : <Symbol name="link" />;
 };
 
 export default Favicon;

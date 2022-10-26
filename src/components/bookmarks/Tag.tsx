@@ -19,8 +19,7 @@ const Container = styled.div<{ active?: boolean; color: string }>`
     & .tag-name {
         font-size: 14px;
         color: ${(props) => props.color};
-        padding-bottom: 2px;
-        padding-left: 2px;
+        padding: 0 2px;
     }
 `;
 

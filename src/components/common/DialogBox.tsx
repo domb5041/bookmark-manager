@@ -1,7 +1,7 @@
 import React, { FC, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import Button from "./Button";
-import { Container, Header, Body, Footer } from "./DialogBox.styled";
+import { Container, Header, Body, Footer, FadeTop, FadeBottom } from "./DialogBox.styled";
 
 interface IDialogBoxProps {
     children: any;
@@ -34,9 +34,13 @@ const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confir
         >
             <Container ref={nodeRef} width={width} height={height}>
                 <div className="dialog-panel" onClick={(e) => e.stopPropagation()}>
-                    <Header>{title}</Header>
+                    <Header>
+                        {title}
+                        <FadeTop />
+                    </Header>
                     <Body>{children}</Body>
                     <Footer>
+                        <FadeBottom />
                         <Button id="modal-cancel" onClick={close} text="cancel" />
                         <Button
                             id={confirmButton.id}

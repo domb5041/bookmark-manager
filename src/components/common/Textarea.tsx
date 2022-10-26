@@ -13,6 +13,7 @@ const Container = styled.div`
         height: 100px;
         box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy} inset;
         width: 100%;
+        font-family: "Heebo", sans-serif;
     }
 `;
 

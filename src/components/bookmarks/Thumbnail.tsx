@@ -24,8 +24,8 @@ const Container = styled.div<{ active: boolean }>`
         position: absolute;
         top: 5px;
         right: 5px;
-        height: 25px;
-        /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); */
+        height: 24px;
+        width: 35px;
     }
     &:hover > .open-bookmark-button {
         display: flex;

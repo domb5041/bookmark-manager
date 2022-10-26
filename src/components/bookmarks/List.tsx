@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 
 const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
-    padding: 5px;
+    padding: 4px 4px 4px 7px;
     margin-bottom: 1px;
     border-radius: 5px;
     background-color: ${(props) =>
@@ -47,12 +47,15 @@ const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        margin-right: 10px;
     }
     & > .bookmark-tags {
+        display: flex;
         flex: 1;
-        white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis;
+        margin-right: 10px;
+        flex-shrink: 0;
+        border-radius: 5px;
     }
     & > .open-bookmark-button {
         opacity: ${(props) => (props.active ? 1 : 0)};
