@@ -42,7 +42,7 @@ export const Container = styled.div<{ width?: string; height?: string }>`
     }
 `;
 
-export const Header = styled.div`
+export const Header = styled.div<{ scrolled: boolean }>`
     padding: 5px;
     text-align: center;
     font-size: 14px;
@@ -51,24 +51,8 @@ export const Header = styled.div`
     color: ${(props) => props.theme.color.foreground.tinted};
     letter-spacing: 1px;
     position: relative;
-`;
-
-export const FadeTop = styled.div`
-    position: absolute;
-    bottom: -20px;
-    left: 0;
-    right: 0;
-    height: 20px;
-    background-image: linear-gradient(${(props) => props.theme.color.background.void}, transparent);
-`;
-
-export const FadeBottom = styled.div`
-    position: absolute;
-    top: -20px;
-    left: 0;
-    right: 0;
-    height: 20px;
-    background-image: linear-gradient(transparent, ${(props) => props.theme.color.background.void});
+    border-bottom: ${(props) => "1px solid " + (props.scrolled ? props.theme.color.border.light : "transparent")};
+    transition: 0.2s;
 `;
 
 export const Body = styled.div`
@@ -77,9 +61,11 @@ export const Body = styled.div`
     overflow-y: auto;
 `;
 
-export const Footer = styled.div`
+export const Footer = styled.div<{ overflowed: boolean }>`
     display: flex;
     padding: 10px;
     justify-content: space-between;
     position: relative;
+    border-top: ${(props) => "1px solid " + (props.overflowed ? props.theme.color.border.light : "transparent")};
+    transition: 0.2s;
 `;

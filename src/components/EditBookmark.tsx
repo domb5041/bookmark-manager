@@ -116,7 +116,7 @@ const EditBookmark = () => {
                 onChange={(e) => setNewDescription(e.target.value)}
                 style={{ marginBottom: 15 }}
             />
-            <TagsInput style={{ marginBottom: 15 }} />
+            <TagsInput />
         </DialogBox>
     );
 };
