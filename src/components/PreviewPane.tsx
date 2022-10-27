@@ -9,6 +9,7 @@ import Button from "./common/buttons/Button";
 import Url from "./common/Url";
 import { CSSTransition } from "react-transition-group";
 import moment from "moment";
+import ScrollContainer from "./common/ScrollContainer";
 
 const Container = styled.div`
     width: 300px;
@@ -48,10 +49,8 @@ const EditDelete = styled.div`
     padding: 10px 15px;
 `;
 
-const PreviewContent = styled.div`
-    flex: 1;
-    padding: 0 10px;
-    overflow-y: auto;
+const PreviewContent = styled(ScrollContainer)`
+    padding: 5px 10px;
 `;
 
 const Date = styled.div`

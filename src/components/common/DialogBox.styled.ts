@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ScrollContainer from "./ScrollContainer";
 
 export const Container = styled.div<{ width?: string; height?: string }>`
     position: fixed;
@@ -42,7 +43,7 @@ export const Container = styled.div<{ width?: string; height?: string }>`
     }
 `;
 
-export const Header = styled.div<{ scrolled: boolean }>`
+export const Header = styled.div`
     padding: 5px;
     text-align: center;
     font-size: 14px;
@@ -51,21 +52,17 @@ export const Header = styled.div<{ scrolled: boolean }>`
     color: ${(props) => props.theme.color.foreground.tinted};
     letter-spacing: 1px;
     position: relative;
-    border-bottom: ${(props) => "1px solid " + (props.scrolled ? props.theme.color.border.light : "transparent")};
     transition: 0.2s;
 `;
 
-export const Body = styled.div`
+export const Body = styled(ScrollContainer)`
     padding: 20px;
-    flex: 1;
-    overflow-y: auto;
 `;
 
-export const Footer = styled.div<{ overflowed: boolean }>`
+export const Footer = styled.div`
     display: flex;
     padding: 10px;
     justify-content: space-between;
     position: relative;
-    border-top: ${(props) => "1px solid " + (props.overflowed ? props.theme.color.border.light : "transparent")};
     transition: 0.2s;
 `;

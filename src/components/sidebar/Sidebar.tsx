@@ -11,6 +11,7 @@ import { tagsCollectionRef } from "../../App";
 import SidebarRow from "./SidebarRow";
 import { tagColors } from "../../theme";
 import ToolbarButton from "../common/buttons/ToolButton";
+import ScrollContainer from "../common/ScrollContainer";
 
 const Container = styled.div`
     width: 250px;
@@ -18,7 +19,8 @@ const Container = styled.div`
     background-color: ${(props) => props.theme.color.background.surface};
     flex-shrink: 0;
     overflow: hidden;
-    padding: 0 5px;
+    display: flex;
+    flex-direction: column;
     &.sidebar-enter {
         width: 0;
     }
@@ -39,7 +41,10 @@ const Toolbar = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 10px 15px;
-    margin-bottom: 10px;
+`;
+
+const Rows = styled(ScrollContainer)`
+    padding: 5px;
 `;
 
 const Sidebar = () => {
@@ -101,40 +106,42 @@ const Sidebar = () => {
                 </Toolbar>
                 <EditTag />
                 <DeleteTag />
-                <SidebarRow
-                    active={allItemsSelected}
-                    name="All Items"
-                    icon="emergency"
-                    count={tagStore.allItemsFilter.count}
-                    onClick={() => tagStore.setActiveFilter(tagStore.allItemsFilter)}
-                />
-                {/* <SidebarRow
+                <Rows>
+                    <SidebarRow
+                        active={allItemsSelected}
+                        name="All Items"
+                        icon="emergency"
+                        count={tagStore.allItemsFilter.count}
+                        onClick={() => tagStore.setActiveFilter(tagStore.allItemsFilter)}
+                    />
+                    {/* <SidebarRow
                     active={taggedSelected}
                     onClick={() => tagStore.setActiveFilter(tagStore.taggedItemsFilter)}
                     name="Tagged"
                     count={tagStore.taggedItemsFilter.count}
                 /> */}
-                <SidebarRow
-                    active={untaggedSelected}
-                    onClick={() => tagStore.setActiveFilter(tagStore.untaggedItemsFilter)}
-                    name="Untagged"
-                    icon="question_mark"
-                    count={tagStore.untaggedItemsFilter.count}
-                    style={{ marginBottom: 10 }}
-                />
-                {tagStore.tagSet.map((tag, i) => (
                     <SidebarRow
-                        color={tag.color}
-                        icon={tag.icon}
-                        active={tagStore.activeFilter.name === tag.name}
-                        onClick={() => tagStore.setActiveFilter(tag)}
-                        key={`${i}-${tag.name}`}
-                        name={tag.name}
-                        count={tag.count}
-                        index={i}
-                        allowEdit
+                        active={untaggedSelected}
+                        onClick={() => tagStore.setActiveFilter(tagStore.untaggedItemsFilter)}
+                        name="Untagged"
+                        icon="question_mark"
+                        count={tagStore.untaggedItemsFilter.count}
+                        style={{ marginBottom: 10 }}
                     />
-                ))}
+                    {tagStore.tagSet.map((tag, i) => (
+                        <SidebarRow
+                            color={tag.color}
+                            icon={tag.icon}
+                            active={tagStore.activeFilter.name === tag.name}
+                            onClick={() => tagStore.setActiveFilter(tag)}
+                            key={`${i}-${tag.name}`}
+                            name={tag.name}
+                            count={tag.count}
+                            index={i}
+                            allowEdit
+                        />
+                    ))}
+                </Rows>
             </Container>
         </CSSTransition>
     );

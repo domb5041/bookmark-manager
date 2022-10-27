@@ -7,10 +7,9 @@ import Button from "../common/buttons/Button";
 import Favicon from "./Favicon";
 import Tag from "./Tag";
 import Url from "../common/Url";
+import ScrollContainer from "../common/ScrollContainer";
 
-const Container = styled.div`
-    flex: 1;
-    overflow: auto;
+const Container = styled(ScrollContainer)`
     padding: 5px;
 `;
 

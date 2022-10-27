@@ -4,11 +4,10 @@ import Masonry from "react-masonry-css";
 import styled from "styled-components";
 import { IBookmark } from "../../store/bookmark.store";
 import Thumbnail from "./Thumbnail";
+import ScrollContainer from "../common/ScrollContainer";
 
-const Container = styled.div`
-    overflow-y: auto;
-    padding: 30px 0 0 30px;
-    flex: 1;
+const Container = styled(ScrollContainer)`
+    padding: 5px 0 0 30px;
     & .my-masonry-grid {
         display: -webkit-box; /* Not needed if autoprefixing */
         display: -ms-flexbox; /* Not needed if autoprefixing */
