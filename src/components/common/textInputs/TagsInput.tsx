@@ -6,14 +6,13 @@ import Tag from "../../bookmarks/Tag";
 import { GenericTextInputContainer } from "./TextInput";
 
 const TagsContainer = styled(GenericTextInputContainer)`
-    height: 100px;
+    min-height: 100px;
     box-sizing: border-box;
     & > div {
         display: flex;
         flex-wrap: wrap;
         padding: 6px 8px;
         margin-top: 1px;
-        overflow-y: scroll;
         align-items: flex-start;
     }
 `;
@@ -32,15 +31,17 @@ const SuggestionContainer = styled.div`
 
 const TagsSuggest = styled.div`
     position: absolute;
-    background-color: white;
-    border: 1px solid silver;
+    border: 1px solid ${(props) => props.theme.color.border.light};
+    background-color: ${(props) => props.theme.color.background.void};
     top: 110%;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy};
+    border-radius: 5px;
+    font-size: 14px;
 `;
 
 const TagSuggestRow = styled.div<{ active: boolean }>`
     padding: 2px 10px 2px 7px;
-    background-color: ${(props) => (props.active ? "yellow" : "transparent")};
+    background-color: ${(props) => (props.active ? props.theme.color.accent.secondary : "transparent")};
     cursor: pointer;
     white-space: nowrap;
     &:first-of-type {

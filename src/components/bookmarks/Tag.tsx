@@ -6,7 +6,8 @@ import Symbol from "../common/Symbol";
 import { getTagBackground, tagColors } from "../../theme";
 
 const Container = styled.div<{ active?: boolean; color: string }>`
-    background-color: ${(props) => (props.active ? "yellow" : () => getTagBackground(props.color))};
+    background-color: ${(props) => () => getTagBackground(props.color)};
+    outline: ${(props) => (props.active ? "2px solid " + props.color : "none")};
     border-radius: 3px;
     display: inline-flex;
     align-items: center;

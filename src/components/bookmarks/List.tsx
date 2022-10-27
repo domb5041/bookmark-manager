@@ -52,10 +52,13 @@ const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
     & > .bookmark-tags {
         display: flex;
         flex: 1;
-        overflow: hidden;
+        overflow-x: scroll;
+        border-radius: 3px;
+        &::-webkit-scrollbar {
+            display: none;
+        }
         margin-right: 10px;
         flex-shrink: 0;
-        border-radius: 5px;
     }
     & > .open-bookmark-button {
         opacity: ${(props) => (props.active ? 1 : 0)};
