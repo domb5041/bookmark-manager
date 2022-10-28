@@ -1,3 +1,5 @@
+import moment from "moment";
+
 let debounceTimer: number;
 
 export const debounce = (callback: () => void, time = 300) => {
@@ -15,4 +17,9 @@ export const isValidHttpUrl = (string: string) => {
     }
 
     return url.protocol === "http:" || url.protocol === "https:";
+};
+
+export const formatDate = (timestamp: number | undefined) => {
+    if (!timestamp) return "Never";
+    return moment.unix(timestamp).format("ddd, D MMM YYYY, H:mm");
 };

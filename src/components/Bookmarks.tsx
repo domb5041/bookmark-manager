@@ -10,6 +10,7 @@ const Container = styled.div`
     overflow: hidden;
     flex: 1;
     position: relative;
+    flex-direction: column;
 `;
 
 const Bookmarks = () => {

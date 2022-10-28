@@ -8,9 +8,20 @@ import Favicon from "./Favicon";
 import Tag from "./Tag";
 import Url from "../common/Url";
 import ScrollContainer from "../common/ScrollContainer";
+import { formatDate } from "../../utilities";
+
+const Header = styled.div`
+    display: flex;
+    padding-left: calc(5px + 7px + 30px);
+    padding-right: calc(5px + 4px + 36px);
+    & > label {
+        flex: 1;
+        margin-right: 10px;
+    }
+`;
 
 const Container = styled(ScrollContainer)`
-    padding: 5px;
+    padding: 0 5px 5px 5px;
 `;
 
 const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
@@ -59,6 +70,11 @@ const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
         margin-right: 10px;
         flex-shrink: 0;
     }
+    & > .bookmark-date-created {
+        flex: 1;
+        margin-right: 10px;
+        font-size: 14px;
+    }
     & > .open-bookmark-button {
         opacity: ${(props) => (props.active ? 1 : 0)};
         height: 27px;
@@ -73,35 +89,44 @@ interface IListProps {
 const List: FC<IListProps> = ({ bookmarks }) => {
     const { bookmarkStore } = useStores();
     return (
-        <Container id="bookmarks-container-list">
-            {bookmarks?.map((bookmark, i) => (
-                <Bookmark
-                    id={`bookmark-${bookmark.id}`}
-                    key={bookmark.id}
-                    onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
-                    active={bookmarkStore.activeBookmark?.id === bookmark.id}
-                    onDoubleClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
-                    highlight={i % 2 === 0}
-                >
-                    <Favicon url={bookmark.favicon} />
-                    <div className="bookmark-name">{bookmark.name}</div>
-                    <div className="bookmark-url">
-                        <Url url={bookmark.url} />
-                    </div>
-                    <div className="bookmark-tags">
-                        {bookmark.tags.map((tag, i) => (
-                            <Tag key={`${i}-${tag}`} name={tag} />
-                        ))}
-                    </div>
-                    <Button
-                        symbol="arrow_forward"
-                        onClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
-                        className="open-bookmark-button"
-                        id={`open-bookmark-button-${i}`}
-                    />
-                </Bookmark>
-            ))}
-        </Container>
+        <>
+            <Header id="bookmarks-container-list-headers">
+                <label>title</label>
+                <label>url</label>
+                <label>tags</label>
+                <label>created</label>
+            </Header>
+            <Container id="bookmarks-container-list">
+                {bookmarks?.map((bookmark, i) => (
+                    <Bookmark
+                        id={`bookmark-${bookmark.id}`}
+                        key={bookmark.id}
+                        onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
+                        active={bookmarkStore.activeBookmark?.id === bookmark.id}
+                        onDoubleClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
+                        highlight={i % 2 === 0}
+                    >
+                        <Favicon url={bookmark.favicon} />
+                        <div className="bookmark-name">{bookmark.name}</div>
+                        <div className="bookmark-url">
+                            <Url url={bookmark.url} />
+                        </div>
+                        <div className="bookmark-tags">
+                            {bookmark.tags.map((tag, i) => (
+                                <Tag key={`${i}-${tag}`} name={tag} />
+                            ))}
+                        </div>
+                        <div className="bookmark-date-created">{formatDate(bookmark.dateAdded)}</div>
+                        <Button
+                            symbol="arrow_forward"
+                            onClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
+                            className="open-bookmark-button"
+                            id={`open-bookmark-button-${i}`}
+                        />
+                    </Bookmark>
+                ))}
+            </Container>
+        </>
     );
 };
 

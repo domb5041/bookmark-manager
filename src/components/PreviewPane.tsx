@@ -8,8 +8,8 @@ import ToolbarButton from "./common/buttons/ToolButton";
 import Button from "./common/buttons/Button";
 import Url from "./common/Url";
 import { CSSTransition } from "react-transition-group";
-import moment from "moment";
 import ScrollContainer from "./common/ScrollContainer";
+import { formatDate } from "../utilities";
 
 const Container = styled.div`
     width: 300px;
@@ -81,11 +81,6 @@ const Divider = styled.hr`
 const PreviewPane = () => {
     const { bookmarkStore } = useStores();
     const nodeRef = useRef(null);
-
-    const formatDate = (timestamp: number | undefined) => {
-        if (!timestamp) return "Never";
-        return moment.unix(timestamp).format("ddd, D MMM YYYY, H:mm");
-    };
 
     return (
         <CSSTransition
