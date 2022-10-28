@@ -31,13 +31,16 @@ const Bookmarks = () => {
 
     useEffect(() => {
         if (bookmarkStore.searchTerm === "") {
-            setBookmarks(getBookmarks());
+            const bookmarks = getBookmarks();
+            setBookmarks(bookmarks);
+            bookmarkStore.setActiveBookmark(bookmarks[0]);
         } else {
             const searchResults = getBookmarks().filter((b) => {
                 const lowerBookmarkName = b.name.toLowerCase();
                 const lowerSearchTerm = bookmarkStore.searchTerm.toLowerCase();
                 return lowerBookmarkName.includes(lowerSearchTerm);
             });
+            bookmarkStore.setActiveBookmark(searchResults[0]);
             setBookmarks(searchResults);
         }
     }, [bookmarkStore.searchTerm, tagStore.activeFilter, bookmarkStore.bookmarks]);
