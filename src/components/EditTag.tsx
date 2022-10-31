@@ -6,13 +6,13 @@ import { writeBatch, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 import styled from "styled-components";
 import Symbol from "./common/Symbol";
-import { tagColors, getTagBackground } from "../theme";
 import TextInput from "./common/textInputs/TextInput";
 import moment from "moment";
 import Button from "./common/buttons/Button";
 
-const Swatch = styled.div<{ color: string }>`
-    background-color: ${(props) => () => getTagBackground(props.color)};
+const Swatch = styled.div`
+    color: ${(props) => props.theme.color.accent.darker};
+    background-color: ${(props) => props.theme.color.accent.translucent};
     transition: 0.3s;
     & > .material-symbols-outlined {
         transition: 0.3s;
@@ -31,7 +31,7 @@ const SwatchSelect = styled.div<{ active: boolean }>`
     padding: 2px;
     border-radius: 100%;
     box-sizing: border-box;
-    border: 2px solid ${(props) => (props.active ? "grey" : "transparent")};
+    border: 2px solid ${(props) => (props.active ? props.theme.color.accent.primary : "transparent")};
 `;
 
 const Swatches = styled.div`
@@ -48,7 +48,6 @@ const Preview = styled(Swatch)`
 const EditTag = () => {
     const { bookmarkStore, tagStore } = useStores();
     const [newName, setNewName] = useState("");
-    const [newColor, setNewColor] = useState(tagColors[0]);
     const [newIcon, setNewIcon] = useState("tag");
 
     const icons = [
@@ -101,12 +100,11 @@ const EditTag = () => {
             }
         });
         const tagDoc = doc(db, "tags", tagStore.activeFilter.id);
-        batch.update(tagDoc, { name: newName, color: newColor, icon: newIcon });
+        batch.update(tagDoc, { name: newName, icon: newIcon });
         await batch.commit();
         tagStore.setActiveFilter({
             id: tagStore.activeFilter.id,
             name: newName,
-            color: newColor,
             icon: newIcon,
             count: tagStore.activeFilter.count
         });
@@ -119,7 +117,6 @@ const EditTag = () => {
             close={tagStore.hideEditTagDialog}
             onEnter={() => {
                 setNewName(tagStore.activeFilter.name);
-                setNewColor(tagStore.activeFilter.color);
                 setNewIcon(tagStore.activeFilter.icon);
             }}
             confirmButton={{
@@ -131,8 +128,8 @@ const EditTag = () => {
                 }
             }}
         >
-            <Preview color={newColor}>
-                <Symbol name={newIcon} color={newColor} size="30px" />
+            <Preview>
+                <Symbol name={newIcon} size="30px" />
             </Preview>
             <TextInput
                 label="Title"
@@ -141,25 +138,13 @@ const EditTag = () => {
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
             />
-            <div style={{ marginBottom: 15 }}>
-                <label>Colour</label>
-                <Swatches>
-                    {tagColors.map((color, i) => (
-                        <SwatchSelect key={`${i}-${color}`} active={newColor === color}>
-                            <Swatch color={color} onClick={() => setNewColor(color)}>
-                                <Symbol name={newIcon} color={color} size="20px" />
-                            </Swatch>
-                        </SwatchSelect>
-                    ))}
-                </Swatches>
-            </div>
             <div style={{ marginBottom: 10 }}>
                 <label>Icon</label>
                 <Swatches>
                     {icons.map((icon, i) => (
                         <SwatchSelect key={`${i}-${icon}`} active={newIcon === icon}>
-                            <Swatch color={newColor} key={`${i}-${icon}`} onClick={() => setNewIcon(icon)}>
-                                <Symbol name={icon} color={newColor} size="20px" />
+                            <Swatch key={`${i}-${icon}`} onClick={() => setNewIcon(icon)}>
+                                <Symbol name={icon} size="20px" />
                             </Swatch>
                         </SwatchSelect>
                     ))}

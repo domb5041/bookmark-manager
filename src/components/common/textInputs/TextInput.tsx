@@ -7,7 +7,7 @@ export const GenericTextInputContainer = styled.div<{ focused: boolean }>`
     border-radius: 5px;
     box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy} inset;
     cursor: text;
-    outline: ${(props) => (props.focused ? "2px solid " + props.theme.color.accent.secondary : "none")};
+    outline: ${(props) => (props.focused ? "2px solid " + props.theme.color.accent.primary : "none")};
     box-sizing: border-box;
 `;
 
@@ -17,7 +17,7 @@ const TextInputContainer = styled(GenericTextInputContainer)<{ leftWidget: boole
     padding-left: ${(props) => (props.leftWidget ? 5 : 0)}px;
     padding-right: ${(props) => (props.rightWidget ? 5 : 0)}px;
     & > .material-symbols-outlined {
-        color: ${(props) => props.theme.color.foreground.tinted};
+        color: ${(props) => props.theme.color.foreground.faded};
         pointer-events: none;
     }
     & > * {

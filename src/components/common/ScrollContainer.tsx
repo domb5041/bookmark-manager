@@ -36,7 +36,7 @@ const ScrollContainer: FC<IScrollContainerProps> = ({ children, className, style
         return () => {
             window.removeEventListener("resize", handleScroll);
         };
-    }, []);
+    }, [children]);
 
     return (
         <Container

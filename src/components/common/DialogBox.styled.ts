@@ -49,7 +49,7 @@ export const Header = styled.div`
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
-    color: ${(props) => props.theme.color.foreground.tinted};
+    color: ${(props) => props.theme.color.foreground.faded};
     letter-spacing: 1px;
     position: relative;
     transition: 0.2s;

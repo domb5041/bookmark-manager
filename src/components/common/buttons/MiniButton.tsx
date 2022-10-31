@@ -5,7 +5,7 @@ import Symbol from "../../common/Symbol";
 
 const StyledButton = styled.button`
     background-color: transparent;
-    color: ${(props) => props.theme.color.foreground.tinted};
+    color: ${(props) => props.theme.color.foreground.faded};
     border: none;
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@ const StyledButton = styled.button`
     border-radius: 4px;
     padding: 0;
     &:hover {
-        background-color: ${(props) => transparentize(0.9, props.theme.color.foreground.tinted)};
+        background-color: ${(props) => transparentize(0.9, props.theme.color.foreground.faded)};
     }
 `;
 

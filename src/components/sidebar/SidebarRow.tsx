@@ -1,15 +1,13 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
-import { getTagBackground, tagColors } from "../../theme";
 import Button from "../common/buttons/Button";
 import Symbol from "../common/Symbol";
 
-const Container = styled.div<{ active: boolean; color: string }>`
+const Container = styled.div<{ active: boolean }>`
     padding: 3px 3px 3px 10px;
-    margin-bottom: 1px;
     cursor: pointer;
-    background-color: ${(props) => (props.active ? props.theme.color.accent.secondary : "transparent")};
+    background-color: ${(props) => (props.active ? props.theme.color.accent.primary : "transparent")};
     transition: 0.1s;
     white-space: nowrap;
     display: flex;
@@ -18,11 +16,13 @@ const Container = styled.div<{ active: boolean; color: string }>`
     & .tag-name {
         flex: 1;
         padding-left: 5px;
+        color: ${(props) => props.active && props.theme.color.foreground.active};
+        font-weight: ${(props) => props.active && 600};
     }
     & .tag-count {
-        font-weight: bold;
+        font-weight: 600;
         padding-right: 7px;
-        color: ${(props) => props.theme.color.foreground.secondary};
+        color: ${(props) => (props.active ? props.theme.color.foreground.active : props.theme.color.foreground.faded)};
     }
     & .edit-tag-button {
         height: 27px;
@@ -31,18 +31,20 @@ const Container = styled.div<{ active: boolean; color: string }>`
     }
     &:hover {
         background-color: ${(props) =>
-            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover};
+            props.active ? props.theme.color.accent.primary : props.theme.color.background.object};
         & .edit-tag-button {
             display: flex;
         }
     }
 `;
 
-const Icon = styled.div<{ color: string }>`
+const Icon = styled.div<{ active: boolean }>`
     width: 27px;
     height: 27px;
     border-radius: 100%;
-    background-color: ${(props) => getTagBackground(props.color)};
+    background-color: ${(props) =>
+        props.active ? props.theme.color.foreground.active : props.theme.color.accent.translucent};
+    color: ${(props) => props.theme.color.accent.darker};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,9 +66,9 @@ interface ISidebarRowProps {
 const SidebarRow: FC<ISidebarRowProps> = ({ icon, color, active, count, onClick, name, style, index, allowEdit }) => {
     const { tagStore } = useStores();
     return (
-        <Container active={active} onClick={onClick} style={style} color={color || tagColors[0]}>
-            <Icon color={color || tagColors[0]}>
-                <Symbol name={icon || "tag"} color={color || tagColors[0]} size="20px" />
+        <Container active={active} onClick={onClick} style={style}>
+            <Icon active={active}>
+                <Symbol name={icon || "tag"} size="20px" />
             </Icon>
             <div className="tag-name">{name}</div>
             <div className="tag-count">{count}</div>

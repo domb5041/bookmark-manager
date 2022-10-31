@@ -1,4 +1,3 @@
-import { darken } from "polished";
 import React, { FC } from "react";
 import styled from "styled-components";
 import Symbol from "../../common/Symbol";
@@ -14,7 +13,7 @@ const Container = styled.div`
 
 const StyledTabs = styled.div`
     margin: 0 auto;
-    background-color: ${(props) => props.theme.color.background.highlight};
+    background-color: ${(props) => props.theme.color.background.surface};
     border: 1px solid ${(props) => props.theme.color.border.light};
     display: flex;
     height: 26px;
@@ -30,7 +29,7 @@ const Button = styled.button<{ active: boolean }>`
     width: 32px;
     border-radius: 4px;
     background-color: ${(props) => (props.active ? props.theme.color.background.void : "transparent")};
-    color: ${(props) => (props.active ? props.theme.color.foreground.primary : props.theme.color.foreground.tinted)};
+    color: ${(props) => (props.active ? props.theme.color.foreground.primary : props.theme.color.foreground.faded)};
     box-shadow: 0 1px 0 ${(props) => (props.active ? props.theme.color.border.heavy : "transparent")};
     cursor: pointer;
     display: flex;

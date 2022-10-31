@@ -10,12 +10,12 @@ import Button from "../common/buttons/Button";
 
 const Container = styled.div<{ active: boolean }>`
     overflow: hidden;
-    background-color: ${(props) =>
-        props.active ? props.theme.color.accent.secondary : props.theme.color.background.highlight};
+    background-color: ${(props) => props.theme.color.background.surface};
+    outline: ${(props) => (props.active ? "2px solid " + props.theme.color.accent.primary : "none")};
     border-radius: 5px;
     position: relative;
     box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy};
-    border: 1px solid ${(props) => props.theme.color.border.light};
+    border: 1px solid ${(props) => (props.active ? props.theme.color.accent.primary : props.theme.color.border.light)};
     cursor: pointer;
     margin: 0 30px 30px 0;
     & > .open-bookmark-button {
@@ -33,7 +33,6 @@ const Container = styled.div<{ active: boolean }>`
 
 const ContainerInner = styled.div`
     padding: 8px;
-    /* border-top: 1px solid ${(props) => props.theme.color.border.heavy}; */
     box-sizing: border-box;
 `;
 
@@ -95,6 +94,7 @@ const Thumbnail: FC<IThumbnailProps> = ({ bookmark, index }) => {
                 onClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
                 className="open-bookmark-button"
                 id={`open-bookmark-button-${index}`}
+                styleType="primary"
             />
         </Container>
     );

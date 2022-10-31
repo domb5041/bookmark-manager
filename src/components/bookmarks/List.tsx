@@ -26,17 +26,18 @@ const Container = styled(ScrollContainer)`
 
 const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
     padding: 4px 4px 4px 7px;
-    margin-bottom: 1px;
     border-radius: 5px;
+    font-weight: ${(props) => (props.active ? 600 : 400)};
     background-color: ${(props) =>
         props.active
-            ? props.theme.color.accent.secondary
+            ? props.theme.color.accent.primary
             : props.highlight
-            ? props.theme.color.background.highlight
+            ? props.theme.color.background.surface
             : "transparent"};
+    color: ${(props) => (props.active ? props.theme.color.foreground.active : "initial")};
     &:hover {
         background-color: ${(props) =>
-            props.active ? props.theme.color.accent.secondary : props.theme.color.background.hover};
+            props.active ? props.theme.color.accent.primary : props.theme.color.background.object};
         & > .open-bookmark-button {
             opacity: 1;
         }
@@ -51,6 +52,7 @@ const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 14px;
     }
     & > .bookmark-url {
         flex: 1;
@@ -63,6 +65,7 @@ const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
         display: flex;
         flex: 1;
         overflow-x: scroll;
+        /* padding-bottom: 1px; */
         border-radius: 3px;
         &::-webkit-scrollbar {
             display: none;
@@ -113,7 +116,11 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                         </div>
                         <div className="bookmark-tags">
                             {bookmark.tags.map((tag, i) => (
-                                <Tag key={`${i}-${tag}`} name={tag} />
+                                <Tag
+                                    key={`${i}-${tag}`}
+                                    name={tag}
+                                    active={bookmarkStore.activeBookmark?.id === bookmark.id}
+                                />
                             ))}
                         </div>
                         <div className="bookmark-date-created">{formatDate(bookmark.dateAdded)}</div>

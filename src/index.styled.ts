@@ -18,7 +18,7 @@ label {
     font-size: 13px;
     font-weight: 500;
     text-transform: uppercase;
-    color: ${theme.color.foreground.tinted};
+    color: ${theme.color.foreground.faded};
     letter-spacing: 1px;
     display: block;
 }

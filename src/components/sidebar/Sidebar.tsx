@@ -9,7 +9,6 @@ import { addDoc, doc, writeBatch } from "@firebase/firestore";
 import { db } from "../../firebase-config";
 import { tagsCollectionRef } from "../../App";
 import SidebarRow from "./SidebarRow";
-import { tagColors } from "../../theme";
 import ToolbarButton from "../common/buttons/ToolButton";
 import ScrollContainer from "../common/ScrollContainer";
 
@@ -66,7 +65,6 @@ const Sidebar = () => {
                     await addDoc(tagsCollectionRef, {
                         name: bookmarkTag,
                         icon: "tag",
-                        color: tagColors[0],
                         count: 1
                     });
                 }

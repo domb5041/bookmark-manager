@@ -41,7 +41,7 @@ const TagsSuggest = styled.div`
 
 const TagSuggestRow = styled.div<{ active: boolean }>`
     padding: 2px 10px 2px 7px;
-    background-color: ${(props) => (props.active ? props.theme.color.accent.secondary : "transparent")};
+    background-color: ${(props) => (props.active ? props.theme.color.accent.primary : "transparent")};
     cursor: pointer;
     white-space: nowrap;
     &:first-of-type {

@@ -1,12 +1,11 @@
 import { makeAutoObservable } from "mobx";
 import { RootStore } from ".";
-import { tagColors } from "../theme";
 
 export interface ITag {
     id: string;
     name: string;
     icon: string;
-    color: string;
+    color?: string;
     count: number;
 }
 
@@ -45,9 +44,9 @@ class tagStore {
 
     activeFilterIndex = -1;
 
-    allItemsFilter = { id: "all items", name: "all items", color: tagColors[0], icon: "tag", count: 0 };
-    taggedItemsFilter = { id: "tagged", name: "tagged", color: tagColors[0], icon: "tag", count: 0 };
-    untaggedItemsFilter = { id: "untagged", name: "untagged", color: tagColors[0], icon: "tag", count: 0 };
+    allItemsFilter = { id: "all items", name: "all items", icon: "tag", count: 0 };
+    taggedItemsFilter = { id: "tagged", name: "tagged", icon: "tag", count: 0 };
+    untaggedItemsFilter = { id: "untagged", name: "untagged", icon: "tag", count: 0 };
 
     activeFilter = this.allItemsFilter;
 
