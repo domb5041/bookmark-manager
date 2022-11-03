@@ -1,4 +1,4 @@
-import { lighten, darken } from "polished";
+import { lighten, darken, transparentize } from "polished";
 import React, { FC } from "react";
 import styled, { css } from "styled-components";
 import Symbol from "../../common/Symbol";
@@ -20,10 +20,15 @@ const buttonTypeStyles = {
         &:hover:not(:disabled) {
             background-color: ${(props) => props.theme.color.background.surface};
         }
+    `,
+    minimal: css`
+        background-color: transparent;
+        border: none;
+        color: inherit;
     `
 };
 
-const StyledButton = styled.button<{ text?: string; icon?: string; styleType: "primary" | "secondary" }>`
+const StyledButton = styled.button<{ text?: string; icon?: string; styleType: "primary" | "secondary" | "minimal" }>`
     ${(props) => buttonTypeStyles[props.styleType]};
     text-transform: capitalize;
     padding: 0 12px;
@@ -57,7 +62,7 @@ interface IButtonProps {
     onClick: () => void;
     style?: any;
     className?: string;
-    styleType?: "primary" | "secondary";
+    styleType?: "primary" | "secondary" | "minimal";
 }
 
 const Button: FC<IButtonProps> = ({ text, symbol, disabled, onClick, style, className, styleType }) => {

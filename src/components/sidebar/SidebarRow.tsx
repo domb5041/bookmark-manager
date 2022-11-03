@@ -1,3 +1,4 @@
+import { transparentize } from "polished";
 import React, { FC } from "react";
 import styled from "styled-components";
 import { useStores } from "../../store";
@@ -28,6 +29,13 @@ const Container = styled.div<{ active: boolean }>`
         height: 27px;
         width: 35px;
         display: ${(props) => (props.active ? "flex" : "none")};
+        color: ${(props) => (props.active ? props.theme.color.foreground.active : props.theme.color.foreground.faded)};
+        &:hover:not(:disabled) {
+            background-color: ${(props) =>
+                props.active
+                    ? transparentize(0.8, props.theme.color.foreground.active)
+                    : transparentize(0.9, props.theme.color.foreground.faded)};
+        }
     }
     &:hover {
         background-color: ${(props) =>
@@ -78,6 +86,7 @@ const SidebarRow: FC<ISidebarRowProps> = ({ icon, color, active, count, onClick,
                     onClick={tagStore.showEditTagDialog}
                     className="edit-tag-button"
                     id={`edit-tag-button-${index}`}
+                    styleType="minimal"
                 />
             )}
         </Container>

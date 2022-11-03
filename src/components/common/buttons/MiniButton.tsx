@@ -26,11 +26,12 @@ interface IButtonProps {
     onClick: () => void;
     style?: any;
     disabled?: boolean;
+    className?: string;
 }
 
-const MiniButton: FC<IButtonProps> = ({ symbol, onClick, style, id, disabled }) => {
+const MiniButton: FC<IButtonProps> = ({ symbol, onClick, style, id, disabled, className }) => {
     return (
-        <StyledButton id={id} onClick={onClick} style={style} disabled={disabled}>
+        <StyledButton id={id} onClick={onClick} style={style} disabled={disabled} className={className}>
             <Symbol name={symbol} size="18px" />
         </StyledButton>
     );

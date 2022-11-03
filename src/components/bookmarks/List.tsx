@@ -9,6 +9,7 @@ import Tag from "./Tag";
 import Url from "../common/Url";
 import ScrollContainer from "../common/ScrollContainer";
 import { formatDate } from "../../utilities";
+import { transparentize } from "polished";
 
 const Header = styled.div`
     display: flex;
@@ -82,6 +83,13 @@ const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
         opacity: ${(props) => (props.active ? 1 : 0)};
         height: 27px;
         width: 36px;
+        color: ${(props) => (props.active ? props.theme.color.foreground.active : props.theme.color.foreground.faded)};
+        &:hover:not(:disabled) {
+            background-color: ${(props) =>
+                props.active
+                    ? transparentize(0.8, props.theme.color.foreground.active)
+                    : transparentize(0.9, props.theme.color.foreground.faded)};
+        }
     }
 `;
 
@@ -129,6 +137,7 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                             onClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
                             className="open-bookmark-button"
                             id={`open-bookmark-button-${i}`}
+                            styleType="minimal"
                         />
                     </Bookmark>
                 ))}
