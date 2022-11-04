@@ -104,7 +104,7 @@ const Sidebar = () => {
                 </Toolbar>
                 <EditTag />
                 <DeleteTag />
-                <Rows>
+                <Rows borderBottom={false}>
                     <SidebarRow
                         active={allItemsSelected}
                         name="All Items"

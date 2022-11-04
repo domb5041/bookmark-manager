@@ -1,8 +1,7 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useRef } from "react";
 import { CSSTransition } from "react-transition-group";
 import Button from "./buttons/Button";
 import { Container, Header, Body, Footer } from "./DialogBox.styled";
-import ScrollContainer from "./ScrollContainer";
 
 interface IDialogBoxProps {
     children: any;
@@ -24,30 +23,6 @@ interface IButton {
 
 const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confirmButton, onEnter, width, height }) => {
     const nodeRef = useRef(null);
-    // const bodyRef = useRef<HTMLDivElement>(null);
-    // const [scrolled, setScrolled] = useState(false);
-    // const [overflowed, setOverflowed] = useState(false);
-
-    // const handleScroll = () => {
-    //     const scrollPadding = 10;
-    //     if (bodyRef.current) {
-    //         setScrolled(bodyRef.current.scrollTop > scrollPadding);
-    //         setOverflowed(
-    //             bodyRef.current.scrollTop <= bodyRef.current.scrollHeight - bodyRef.current.offsetHeight - scrollPadding
-    //         );
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     if (active) {
-    //         handleScroll();
-    //         window.addEventListener("resize", handleScroll);
-    //     }
-    //     return () => {
-    //         window.removeEventListener("resize", handleScroll);
-    //     };
-    // }, [active]);
-
     return (
         <CSSTransition
             nodeRef={nodeRef}
@@ -60,12 +35,7 @@ const DialogBox: FC<IDialogBoxProps> = ({ children, active, close, title, confir
             <Container ref={nodeRef} width={width} height={height}>
                 <div className="dialog-panel" onClick={(e) => e.stopPropagation()}>
                     <Header>{title}</Header>
-                    <Body scrollPaddingTop={18} scrollPaddingBottom={18}>
-                        {children}
-                    </Body>
-                    {/* <Body ref={bodyRef} onScroll={handleScroll} scrolled={scrolled} overflowed={overflowed}>
-                        {children}
-                    </Body> */}
+                    <Body>{children}</Body>
                     <Footer>
                         <Button id="modal-cancel" onClick={close} text="cancel" />
                         <Button

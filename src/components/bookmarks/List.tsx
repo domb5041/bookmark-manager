@@ -107,7 +107,7 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                 <label>tags</label>
                 <label>created</label>
             </Header>
-            <Container id="bookmarks-container-list">
+            <Container id="bookmarks-container-list" borderBottom={false}>
                 {bookmarks?.map((bookmark, i) => (
                     <Bookmark
                         id={`bookmark-${bookmark.id}`}

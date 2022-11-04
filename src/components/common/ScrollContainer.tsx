@@ -9,24 +9,16 @@ export const Container = styled.div<{ scrolled: boolean; overflowed: boolean }>`
     transition: border 0.2s;
 `;
 
-interface IScrollContainerProps {
-    children: any;
-    className?: string;
-    style?: any;
-    id?: string;
-    scrollPaddingTop?: number;
-    scrollPaddingBottom?: number;
-}
-
-const ScrollContainer: FC<IScrollContainerProps> = ({ children, className, style, id }) => {
+const ScrollContainer: FC<IScrollContainerProps> = ({ children, className, style, id, borderTop, borderBottom }) => {
     const bodyRef = useRef<HTMLDivElement>(null);
     const [scrolled, setScrolled] = useState(false);
     const [overflowed, setOverflowed] = useState(false);
 
     const handleScroll = () => {
         if (bodyRef.current) {
-            setScrolled(bodyRef.current.scrollTop > 0);
-            setOverflowed(bodyRef.current.scrollTop <= bodyRef.current.scrollHeight - bodyRef.current.offsetHeight);
+            if (borderTop) setScrolled(bodyRef.current.scrollTop > 0);
+            if (borderBottom)
+                setOverflowed(bodyRef.current.scrollTop <= bodyRef.current.scrollHeight - bodyRef.current.offsetHeight);
         }
     };
 
@@ -51,6 +43,20 @@ const ScrollContainer: FC<IScrollContainerProps> = ({ children, className, style
             {children}
         </Container>
     );
+};
+
+interface IScrollContainerProps {
+    children: any;
+    className?: string;
+    style?: any;
+    id?: string;
+    borderTop?: boolean;
+    borderBottom?: boolean;
+}
+
+ScrollContainer.defaultProps = {
+    borderTop: true,
+    borderBottom: true
 };
 
 export default ScrollContainer;
