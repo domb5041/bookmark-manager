@@ -11,7 +11,7 @@ const borderStyle = css`
 
 const Image = styled.img<{ clipImg?: boolean; border?: boolean }>`
     width: 100%;
-    background-color: white;
+    background-color: ${(props) => props.theme.color.background.void};
     ${(props) =>
         props.clipImg &&
         css`
@@ -24,7 +24,8 @@ const Image = styled.img<{ clipImg?: boolean; border?: boolean }>`
 `;
 
 const Placeholder = styled.div<{ border?: boolean }>`
-    background-color: white;
+    background-color: ${(props) => props.theme.color.background.void};
+    color: ${(props) => props.theme.color.foreground.faded};
     height: 150px;
     display: flex;
     justify-content: center;
@@ -44,7 +45,7 @@ const PreviewImg: FC<IPreviewImgProps> = ({ imgUrl, style, clipImg, border }) =>
         <Image src={imgUrl} style={style} clipImg={clipImg} border={border} />
     ) : (
         <Placeholder style={style} border={border}>
-            <Symbol name="web_asset_off" size="100px" color="silver" />
+            <Symbol name="web_asset_off" size="100px" />
         </Placeholder>
     );
 };

@@ -7,7 +7,7 @@ const buttonTypeStyles = {
     primary: css`
         background-color: ${(props) => props.theme.color.accent.primary};
         border: none;
-        color: white;
+        color: ${(props) => props.theme.color.foreground.active};
         box-shadow: 0 1px 0 ${(props) => darken(0.1, props.theme.color.accent.primary)};
         &:hover:not(:disabled) {
             background-color: ${(props) => lighten(0.05, props.theme.color.accent.primary)};

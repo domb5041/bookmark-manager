@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import styled, { ThemeProvider } from "styled-components";
 import EditBookmark from "./components/EditBookmark";
 import Sidebar from "./components/sidebar/Sidebar";
 import Toolbar from "./components/Toolbar";
@@ -12,6 +12,8 @@ import DeleteBookmark from "./components/DeleteBookmark";
 import { IBookmark } from "./store/bookmark.store";
 import { ITag } from "./store/tag.store";
 import PreviewPane from "./components/PreviewPane";
+import { theme } from "./theme";
+import { GlobalStyles } from "./index.styled";
 
 export const bookmarksCollectionRef = collection(db, "bookmarks");
 export const tagsCollectionRef = collection(db, "tags");
@@ -35,6 +37,7 @@ const MainArea = styled.div`
 
 function App() {
     const { bookmarkStore, tagStore } = useStores();
+    const [darkmode, setDarkmode] = useState(false);
 
     useEffect(() => {
         const getBookmarks = async () => {
@@ -72,18 +75,30 @@ function App() {
         };
     }, [tagStore]);
 
+    useEffect(() => {
+        const browserColorScheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+        const changeDarkmode = (e: MediaQueryListEvent) => setDarkmode(e.matches);
+        browserColorScheme.addEventListener("change", changeDarkmode);
+        return () => {
+            browserColorScheme.removeEventListener("change", changeDarkmode);
+        };
+    }, []);
+
     return (
-        <Container id="app-container">
-            <Sidebar />
-            <MainArea id="container-right">
-                <Toolbar />
-                <EditBookmark />
-                <AddBookmark />
-                <DeleteBookmark />
-                <Bookmarks />
-            </MainArea>
-            <PreviewPane />
-        </Container>
+        <ThemeProvider theme={theme(darkmode ? "dark" : "light")}>
+            <GlobalStyles />
+            <Container id="app-container">
+                <Sidebar />
+                <MainArea id="container-right">
+                    <Toolbar />
+                    <EditBookmark />
+                    <AddBookmark />
+                    <DeleteBookmark />
+                    <Bookmarks />
+                </MainArea>
+                <PreviewPane />
+            </Container>
+        </ThemeProvider>
     );
 }
 

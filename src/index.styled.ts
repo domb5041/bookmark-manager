@@ -1,10 +1,14 @@
-import { createGlobalStyle } from "styled-components";
-import { theme } from "./theme";
+import { createGlobalStyle, DefaultTheme, GlobalStyleComponent } from "styled-components";
+import { colors } from "./theme";
 
-export const GlobalStyles = createGlobalStyle`
+type GlobalStyleProps = {
+    theme: { color: typeof colors.dark };
+};
+
+export const GlobalStyles: GlobalStyleComponent<GlobalStyleProps, DefaultTheme> = createGlobalStyle`
 html {
-    background-color: ${theme.color.background.void};
-    color: ${theme.color.foreground.primary};
+    background-color: ${(props) => props.theme.color.background.void};
+    color: ${(props) => props.theme.color.foreground.primary};
 }
 
 body {
@@ -12,13 +16,19 @@ body {
     font-family: 'Heebo', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: ${(props) => props.theme.color.background.void};
+    color: ${(props) => props.theme.color.foreground.primary};
+}
+
+input, button, textarea {
+    color: ${(props) => props.theme.color.foreground.primary};
 }
 
 label {
     font-size: 13px;
     font-weight: 500;
     text-transform: uppercase;
-    color: ${theme.color.foreground.faded};
+    color: ${(props) => props.theme.color.foreground.faded};
     letter-spacing: 1px;
     display: block;
 }

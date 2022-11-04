@@ -4,8 +4,8 @@ const green = "#34BC67";
 const white = "white";
 const black = "black";
 
-export const theme = {
-    color: {
+export const colors = {
+    light: {
         background: {
             void: white,
             surface: darken(0.04, white),
@@ -26,5 +26,31 @@ export const theme = {
             darker: saturate(0.1, darken(0.1, green)),
             translucent: transparentize(0.8, green)
         }
+    },
+    dark: {
+        background: {
+            void: black,
+            surface: lighten(0.1, black),
+            object: lighten(0.2, black)
+        },
+        border: {
+            light: lighten(0.25, black),
+            heavy: lighten(0.3, black)
+        },
+        foreground: {
+            primary: darken(0.1, white),
+            secondary: lighten(0.2, black),
+            faded: lighten(0.5, black),
+            active: black
+        },
+        accent: {
+            primary: green,
+            darker: green,
+            translucent: transparentize(0.8, green)
+        }
     }
 };
+
+export const theme = (mode: "light" | "dark") => ({
+    color: colors[mode]
+});

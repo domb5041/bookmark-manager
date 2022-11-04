@@ -35,7 +35,7 @@ const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
             : props.highlight
             ? props.theme.color.background.surface
             : "transparent"};
-    color: ${(props) => (props.active ? props.theme.color.foreground.active : "initial")};
+    color: ${(props) => props.active && props.theme.color.foreground.active};
     &:hover {
         background-color: ${(props) =>
             props.active ? props.theme.color.accent.primary : props.theme.color.background.object};
