@@ -21,17 +21,17 @@ const Swatch = styled.div`
     height: 30px;
     border-radius: 100%;
     box-sizing: border-box;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 `;
 
-const SwatchSelect = styled.div<{ active: boolean }>`
+export const SwatchSelect = styled.div<{ active: boolean }>`
     padding: 2px;
     border-radius: 100%;
     box-sizing: border-box;
     border: 2px solid ${(props) => (props.active ? props.theme.color.accent.primary : "transparent")};
+    cursor: pointer;
 `;
 
 const Swatches = styled.div`

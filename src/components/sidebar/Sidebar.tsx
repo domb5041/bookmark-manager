@@ -11,6 +11,7 @@ import { tagsCollectionRef } from "../../App";
 import SidebarRow from "./SidebarRow";
 import ToolbarButton from "../common/buttons/ToolButton";
 import ScrollContainer from "../common/ScrollContainer";
+import SettingsDialog from "../SettingsDialog";
 
 const Container = styled.div`
     width: 250px;
@@ -38,7 +39,6 @@ const Container = styled.div`
 
 const Toolbar = styled.div`
     display: flex;
-    justify-content: space-between;
     padding: 10px 15px;
 `;
 
@@ -47,7 +47,7 @@ const Rows = styled(ScrollContainer)`
 `;
 
 const Sidebar = () => {
-    const { bookmarkStore, tagStore } = useStores();
+    const { bookmarkStore, tagStore, settingStore } = useStores();
 
     useEffect(() => {
         tagStore.updateTotalsCounts();
@@ -100,10 +100,18 @@ const Sidebar = () => {
                             console.log("profile button");
                         }}
                         id="profile-button"
+                        style={{ marginRight: 20 }}
+                    />
+                    <ToolbarButton
+                        text="settings"
+                        symbol="settings"
+                        onClick={settingStore.showSettingsDialog}
+                        id="settings-button"
                     />
                 </Toolbar>
                 <EditTag />
                 <DeleteTag />
+                <SettingsDialog />
                 <Rows borderBottom={false}>
                     <SidebarRow
                         active={allItemsSelected}

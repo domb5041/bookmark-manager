@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import EditBookmark from "./components/EditBookmark";
 import Sidebar from "./components/sidebar/Sidebar";
@@ -14,6 +14,7 @@ import { ITag } from "./store/tag.store";
 import PreviewPane from "./components/PreviewPane";
 import { theme } from "./theme";
 import { GlobalStyles } from "./index.styled";
+import { observer } from "mobx-react";
 
 export const bookmarksCollectionRef = collection(db, "bookmarks");
 export const tagsCollectionRef = collection(db, "tags");
@@ -36,7 +37,7 @@ const MainArea = styled.div`
 `;
 
 function App() {
-    const { bookmarkStore, tagStore } = useStores();
+    const { bookmarkStore, tagStore, settingStore } = useStores();
     const [darkmode, setDarkmode] = useState(false);
 
     useEffect(() => {
@@ -77,7 +78,8 @@ function App() {
 
     useEffect(() => {
         const browserColorScheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
-        const changeDarkmode = (e: MediaQueryListEvent) => setDarkmode(e.matches);
+        const changeDarkmode = (e: MediaQueryListEvent | MediaQueryList) => setDarkmode(e.matches);
+        changeDarkmode(browserColorScheme);
         browserColorScheme.addEventListener("change", changeDarkmode);
         return () => {
             browserColorScheme.removeEventListener("change", changeDarkmode);
@@ -85,7 +87,7 @@ function App() {
     }, []);
 
     return (
-        <ThemeProvider theme={theme(darkmode ? "dark" : "light")}>
+        <ThemeProvider theme={theme(darkmode ? "dark" : "light", settingStore.accentColor)}>
             <GlobalStyles />
             <Container id="app-container">
                 <Sidebar />
@@ -102,4 +104,4 @@ function App() {
     );
 }
 
-export default App;
+export default observer(App);

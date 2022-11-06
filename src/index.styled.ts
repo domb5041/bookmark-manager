@@ -1,8 +1,10 @@
 import { createGlobalStyle, DefaultTheme, GlobalStyleComponent } from "styled-components";
-import { colors } from "./theme";
+import { theme } from "./theme";
+
+const themeType = theme("dark", "green");
 
 type GlobalStyleProps = {
-    theme: { color: typeof colors.dark };
+    theme: typeof themeType;
 };
 
 export const GlobalStyles: GlobalStyleComponent<GlobalStyleProps, DefaultTheme> = createGlobalStyle`
