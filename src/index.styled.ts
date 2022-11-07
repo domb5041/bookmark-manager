@@ -1,7 +1,7 @@
 import { createGlobalStyle, DefaultTheme, GlobalStyleComponent } from "styled-components";
 import { theme } from "./theme";
 
-const themeType = theme("dark", "green");
+const themeType = theme("light", "green");
 
 type GlobalStyleProps = {
     theme: typeof themeType;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import EditBookmark from "./components/EditBookmark";
 import Sidebar from "./components/sidebar/Sidebar";
@@ -38,7 +38,6 @@ const MainArea = styled.div`
 
 function App() {
     const { bookmarkStore, tagStore, settingStore } = useStores();
-    const [darkmode, setDarkmode] = useState(false);
 
     useEffect(() => {
         const getBookmarks = async () => {
@@ -78,16 +77,23 @@ function App() {
 
     useEffect(() => {
         const browserColorScheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
-        const changeDarkmode = (e: MediaQueryListEvent | MediaQueryList) => setDarkmode(e.matches);
+        const changeDarkmode = (e: MediaQueryListEvent | MediaQueryList) =>
+            settingStore.setThemeAuto(e.matches ? "dark" : "light");
         changeDarkmode(browserColorScheme);
         browserColorScheme.addEventListener("change", changeDarkmode);
         return () => {
             browserColorScheme.removeEventListener("change", changeDarkmode);
         };
-    }, []);
+    }, [settingStore]);
+
+    useEffect(() => {
+        const { themeSetting, themeAuto, setThemeActual } = settingStore;
+        if (themeSetting === "light" || themeSetting === "dark") setThemeActual(themeSetting);
+        else if (themeSetting === "auto") setThemeActual(themeAuto);
+    }, [settingStore, settingStore.themeAuto, settingStore.themeSetting]);
 
     return (
-        <ThemeProvider theme={theme(darkmode ? "dark" : "light", settingStore.accentColor)}>
+        <ThemeProvider theme={theme(settingStore.themeActual, settingStore.accentColor)}>
             <GlobalStyles />
             <Container id="app-container">
                 <Sidebar />

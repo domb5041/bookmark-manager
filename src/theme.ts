@@ -8,7 +8,7 @@ export const accents = {
     purple: "#9460F5",
     pink: "#FB59BD",
     red: "#F54A55",
-    orange: "orange",
+    orange: "#EF8800",
     yellow: "#EBB734",
     green: "#34BC67"
 };

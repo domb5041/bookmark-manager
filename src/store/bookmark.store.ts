@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { updateDoc, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
 import moment from "moment";
+import { makePersistable } from "mobx-persist-store";
 
 export interface IBookmark {
     id: string;
@@ -19,6 +20,12 @@ export interface IBookmark {
 class bookmarkStore {
     constructor() {
         makeAutoObservable(this);
+        makePersistable(this, {
+            name: "bookmarkStore",
+            properties: ["explorerType"],
+            storage: window.localStorage,
+            debugMode: false
+        });
     }
 
     bookmarks: IBookmark[] = [];
