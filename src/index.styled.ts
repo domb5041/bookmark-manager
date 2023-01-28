@@ -13,6 +13,10 @@ html {
     color: ${(props) => props.theme.color.foreground.primary};
 }
 
+::selection {
+    background-color: ${(props) => props.theme.color.accent.translucent};
+}
+
 body {
     margin: 0;
     font-family: 'Heebo', sans-serif;

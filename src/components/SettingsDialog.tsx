@@ -21,11 +21,12 @@ const Thumbnails = styled.div`
 
 const Color = styled.div<{ color: keyof typeof accents; active: boolean }>`
     cursor: pointer;
-    border: 3px solid ${(props) => props.theme.color.background.void};
+    border: ${(props) => (props.active ? 4 : 0)}px solid ${(props) => props.theme.color.background.void};
     outline: 2px solid ${(props) => (props.active ? props.theme.color.accent.primary : "none")};
+    transition: outline, border-width 0.1s;
     background-color: ${(props) => accents[props.color]};
-    width: 33px;
-    height: 33px;
+    width: 30px;
+    height: 30px;
     border-radius: 100%;
     box-sizing: border-box;
 `;
@@ -56,7 +57,6 @@ const SettingsDialog: FC<ISettingsDialogProps> = ({ prop }) => {
             </Thumbnails>
             <label>Accent Colour</label>
             <Colors>
-                {/* <SwatchSelect active={color === settingStore.accentColor}> */}
                 {Object.keys(accents).map((color) => (
                     <Color
                         color={color as keyof typeof accents}
