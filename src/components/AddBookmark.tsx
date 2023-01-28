@@ -45,7 +45,7 @@ const AddBookmark = () => {
     const getPreview = (url: string) => {
         axios({
             method: "get",
-            url: `/link-preview?url=${url}`
+            url: `/api/linkPreview?url=${url}`
         })
             .then((res) => {
                 setPreview(res.data);
