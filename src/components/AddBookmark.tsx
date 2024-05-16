@@ -36,8 +36,8 @@ const AddBookmark = () => {
             description: preview.description || "",
             url: url,
             tags: tagStore.tagsInput,
-            image: preview.images[0] || "",
-            favicon: preview.favicons[0] || "",
+            image: preview.images?.[0] || "",
+            favicon: preview.favicons?.[0] || "",
             dateAdded: Number(moment().format("X"))
         });
     };
@@ -94,7 +94,7 @@ const AddBookmark = () => {
             />
             <div style={{ marginBottom: 15 }}>
                 <label>Preview</label>
-                <PreviewImg imgUrl={preview?.images[0]} border />
+                <PreviewImg imgUrl={preview?.images?.[0]} border />
             </div>
             {preview && (
                 <>

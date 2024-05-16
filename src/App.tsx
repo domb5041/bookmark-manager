@@ -6,7 +6,7 @@ import Toolbar from "./components/Toolbar";
 import Bookmarks from "./components/Bookmarks";
 import { useStores } from "./store";
 import { db } from "./firebase-config";
-import { collection, getDocs, onSnapshot } from "@firebase/firestore";
+import { collection, getDocs, onSnapshot, addDoc, writeBatch, doc } from "@firebase/firestore";
 import AddBookmark from "./components/AddBookmark";
 import DeleteBookmark from "./components/DeleteBookmark";
 import { IBookmark } from "./store/bookmark.store";
@@ -57,11 +57,42 @@ function App() {
         };
     }, [bookmarkStore]);
 
+    const batch = writeBatch(db);
+
     useEffect(() => {
+        if (bookmarkStore.bookmarks.length === 0) return;
         const getTags = async () => {
+            // inital fetch of tags data
             const data = await getDocs(tagsCollectionRef);
             const dataMap = data.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as ITag[];
+
+            // search bookmarks for all tag and add any missing ones
+            const flattenedTags = bookmarkStore.bookmarks.map((b) => b.tags).flat();
+            const bookmarkTagSet = [...new Set(flattenedTags)];
+            bookmarkTagSet.forEach(async (bookmarkTag) => {
+                const tagExists = dataMap.findIndex((tag) => tag.name === bookmarkTag) > -1;
+                if (tagExists) return;
+                const newTag = {
+                    name: bookmarkTag,
+                    icon: "tag",
+                    count: 1
+                };
+                await addDoc(tagsCollectionRef, newTag);
+            });
+
             tagStore.updateTagSet(dataMap);
+
+            // update counts and remove 0 counts
+            tagStore.tagSet.forEach((tag) => {
+                const tagDoc = doc(db, "tags", tag.id);
+                const count = tagStore.getCount(tag.name);
+                if (count > 0) {
+                    batch.update(tagDoc, { count: count });
+                } else {
+                    batch.delete(tagDoc);
+                }
+            });
+            await batch.commit();
         };
         getTags();
 
@@ -73,7 +104,7 @@ function App() {
         return () => {
             unsubscribeTags();
         };
-    }, [tagStore]);
+    }, [tagStore, bookmarkStore.bookmarks]);
 
     useEffect(() => {
         const browserColorScheme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");

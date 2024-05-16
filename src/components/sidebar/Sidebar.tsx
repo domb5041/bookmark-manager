@@ -5,9 +5,6 @@ import { observer } from "mobx-react";
 import EditTag from "../EditTag";
 import DeleteTag from "../DeleteTag";
 import { CSSTransition } from "react-transition-group";
-import { addDoc, doc, writeBatch } from "@firebase/firestore";
-import { db } from "../../firebase-config";
-import { tagsCollectionRef } from "../../App";
 import SidebarRow from "./SidebarRow";
 import ToolbarButton from "../common/buttons/ToolButton";
 import ScrollContainer from "../common/ScrollContainer";
@@ -52,36 +49,6 @@ const Sidebar = () => {
     useEffect(() => {
         tagStore.updateTotalsCounts();
     }, [bookmarkStore.bookmarks, bookmarkStore]);
-
-    const batch = writeBatch(db);
-
-    useEffect(() => {
-        const syncTags = async () => {
-            const flattenedTags = bookmarkStore.bookmarks.map((b) => b.tags).flat();
-            const bookmarkTagSet = [...new Set(flattenedTags)];
-            bookmarkTagSet.forEach(async (bookmarkTag) => {
-                const tagExists = tagStore.tagSet.findIndex((tag) => tag.name === bookmarkTag) > -1;
-                if (!tagExists) {
-                    await addDoc(tagsCollectionRef, {
-                        name: bookmarkTag,
-                        icon: "tag",
-                        count: 1
-                    });
-                }
-            });
-            tagStore.tagSet.forEach((tag) => {
-                const tagDoc = doc(db, "tags", tag.id);
-                const count = tagStore.getCount(tag.name);
-                if (count > 0) {
-                    batch.update(tagDoc, { count: count });
-                } else {
-                    batch.delete(tagDoc);
-                }
-            });
-            await batch.commit();
-        };
-        syncTags();
-    }, [bookmarkStore.bookmarks, bookmarkStore, tagStore]);
 
     const allItemsSelected = tagStore.activeFilter.name === tagStore.allItemsFilter.name;
     const taggedSelected = tagStore.activeFilter.name === tagStore.taggedItemsFilter.name;
