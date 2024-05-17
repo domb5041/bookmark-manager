@@ -1,0 +1,13 @@
+.container {
+    border-top: transparent;
+    border-bottom: transparent;
+    flex: 1;
+    overflow-y: auto;
+    transition: border 0.2s;
+    &.scrolled {
+        border-top: 1px solid var(--border-light);
+    }
+    &.overflowed {
+        border-bottom: 1px solid var(--border-light);
+    }
+}

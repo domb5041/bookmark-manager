@@ -1,30 +1,4 @@
-import React, { FC } from "react";
-import styled from "styled-components";
-
-const Container = styled.div`
-    display: flex;
-    & .label {
-        text-align: right;
-        flex: 1;
-        margin-top: 4px;
-        padding: 0 10px;
-        overflow-x: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        font-size: 14px;
-    }
-    & .content {
-        display: flex;
-        width: 300px;
-        & > * {
-            flex: 1;
-        }
-    }
-    & .info {
-        flex: 1;
-        padding: 0 10px;
-    }
-`;
+import css from "./FormRow.module.css";
 
 interface IFormRowProps {
     children: any;
@@ -32,13 +6,13 @@ interface IFormRowProps {
     style?: any;
 }
 
-const FormRow: FC<IFormRowProps> = ({ children, label, style }) => {
+const FormRow = ({ children, label, style }: IFormRowProps) => {
     return (
-        <Container style={style}>
-            <div className="label">{label}</div>
-            <div className="content">{children}</div>
-            <div className="info"></div>
-        </Container>
+        <div className={css.formRow} style={style}>
+            <div className={css.label}>{label}</div>
+            <div className={css.content}>{children}</div>
+            <div className={css.info}></div>
+        </div>
     );
 };
 

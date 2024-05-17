@@ -1,31 +1,20 @@
-import React, { FC } from "react";
-import styled from "styled-components";
+import css from "./Url.module.css";
 
-const Container = styled.div`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 13px;
-    & .subdomain {
-        opacity: 0.5;
-    }
-`;
-
-interface IUrlProps {
+interface UrlPropTypes {
     url: string;
     style?: any;
 }
 
-const Url: FC<IUrlProps> = ({ url, style }) => {
+const Url = ({ url, style }: UrlPropTypes) => {
     const formatUrl = () => {
         const partsToRemove = /https?:\/\/|www./g;
         const trimmedStart = url.replace(partsToRemove, "");
         const urlParts = trimmedStart.split("/");
         return (
-            <Container style={style}>
+            <div className={css.url} style={style}>
                 {urlParts[0]}
-                {urlParts[1] && <span className="subdomain">/{urlParts[1]}</span>}
-            </Container>
+                {urlParts[1] && <span className={css.subdomain}>/{urlParts[1]}</span>}
+            </div>
         );
     };
 

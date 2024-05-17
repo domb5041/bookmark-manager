@@ -1,0 +1,10 @@
+.toolbar {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 15px;
+    flex-shrink: 0;
+}
+
+.spacer {
+    flex: 1;
+}

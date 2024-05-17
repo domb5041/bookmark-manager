@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import styled from "styled-components";
+import { useEffect, useRef } from "react";
 import { useStores } from "../../store";
 import { observer } from "mobx-react";
 import EditTag from "../EditTag";
@@ -9,39 +8,7 @@ import SidebarRow from "./SidebarRow";
 import ToolbarButton from "../common/buttons/ToolButton";
 import ScrollContainer from "../common/ScrollContainer";
 import SettingsDialog from "../SettingsDialog";
-
-const Container = styled.div`
-    width: 250px;
-    border-right: 1px solid ${(props) => props.theme.color.border.light};
-    background-color: ${(props) => props.theme.color.background.surface};
-    flex-shrink: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    &.sidebar-enter {
-        width: 0;
-    }
-    &.sidebar-enter-active {
-        width: 250px;
-        transition: 0.5s;
-    }
-    &.sidebar-exit {
-        width: 250px;
-    }
-    &.sidebar-exit-active {
-        width: 0;
-        transition: 0.5s;
-    }
-`;
-
-const Toolbar = styled.div`
-    display: flex;
-    padding: 10px 15px;
-`;
-
-const Rows = styled(ScrollContainer)`
-    padding: 5px;
-`;
+import css from "./Sidebar.module.css";
 
 const Sidebar = () => {
     const { bookmarkStore, tagStore, settingStore } = useStores();
@@ -57,9 +24,20 @@ const Sidebar = () => {
     const nodeRef = useRef(null);
 
     return (
-        <CSSTransition nodeRef={nodeRef} in={tagStore.sidebarVisible} unmountOnExit timeout={500} classNames="sidebar">
-            <Container id="sidebar" ref={nodeRef}>
-                <Toolbar>
+        <CSSTransition
+            nodeRef={nodeRef}
+            in={tagStore.sidebarVisible}
+            unmountOnExit
+            timeout={500}
+            classNames={{
+                enter: css.enter,
+                enterActive: css.enterActive,
+                exit: css.exit,
+                exitActive: css.exitActive
+            }}
+        >
+            <div className={css.sidebar} id="sidebar" ref={nodeRef}>
+                <div className={css.sidebarToolbar}>
                     <ToolbarButton
                         text="profile"
                         symbol="account_circle"
@@ -75,11 +53,11 @@ const Sidebar = () => {
                         onClick={settingStore.showSettingsDialog}
                         id="settings-button"
                     />
-                </Toolbar>
+                </div>
                 <EditTag />
                 <DeleteTag />
                 <SettingsDialog />
-                <Rows borderBottom={false}>
+                <ScrollContainer style={{ padding: 5 }} borderBottom={false}>
                     <SidebarRow
                         active={allItemsSelected}
                         name="All Items"
@@ -114,8 +92,8 @@ const Sidebar = () => {
                             allowEdit
                         />
                     ))}
-                </Rows>
-            </Container>
+                </ScrollContainer>
+            </div>
         </CSSTransition>
     );
 };

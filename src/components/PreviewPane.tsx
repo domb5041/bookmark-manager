@@ -1,6 +1,5 @@
 import { observer } from "mobx-react";
-import React, { useRef } from "react";
-import styled from "styled-components";
+import { useRef } from "react";
 import { useStores } from "../store";
 import PreviewImg from "./bookmarks/PreviewImg";
 import Tag from "./bookmarks/Tag";
@@ -10,73 +9,7 @@ import Url from "./common/Url";
 import { CSSTransition } from "react-transition-group";
 import ScrollContainer from "./common/ScrollContainer";
 import { formatDate } from "../utilities";
-
-const Container = styled.div`
-    width: 300px;
-    flex-shrink: 0;
-    background-color: ${(props) => props.theme.color.background.surface};
-    border-left: 1px solid ${(props) => props.theme.color.border.light};
-    box-sizing: border-box;
-    display: flex;
-    align-items: stretch;
-    &.preview-container-enter {
-        width: 0;
-    }
-    &.preview-container-enter-active {
-        width: 300px;
-        transition: 0.5s;
-    }
-    &.preview-container-exit {
-        width: 300px;
-    }
-    &.preview-container-exit-active {
-        width: 0;
-        transition: 0.5s;
-    }
-`;
-
-const Container2 = styled.div`
-    width: 300px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-`;
-
-const EditDelete = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 15px;
-`;
-
-const PreviewContent = styled(ScrollContainer)`
-    padding: 5px 10px;
-`;
-
-const Date = styled.div`
-    font-size: 13px;
-    margin-bottom: 4px;
-    display: flex;
-    & > label {
-        flex: 1;
-    }
-`;
-
-const OpenLink = styled.div`
-    padding: 10px;
-`;
-
-const Heading = styled.label`
-    display: block;
-    margin-bottom: 3px;
-`;
-
-const Divider = styled.hr`
-    border-style: solid;
-    border-top-width: 0;
-    border-color: ${(props) => props.theme.color.border.light};
-    margin: 10px 0;
-`;
+import css from "./PreviewPane.module.css";
 
 const PreviewPane = () => {
     const { bookmarkStore } = useStores();
@@ -88,12 +21,17 @@ const PreviewPane = () => {
             in={bookmarkStore.bookmarkPreviewVisible}
             unmountOnExit
             timeout={500}
-            classNames="preview-container"
+            classNames={{
+                enter: css.enter,
+                enterActive: css.enterActive,
+                exit: css.exit,
+                exitActive: css.exitActive
+            }}
         >
-            <Container ref={nodeRef}>
+            <div className={css.previewPane} ref={nodeRef}>
                 {bookmarkStore.activeBookmark && (
-                    <Container2>
-                        <EditDelete>
+                    <div className={css.previewPaneInner}>
+                        <div className={css.editDelete}>
                             <ToolbarButton
                                 symbol="edit"
                                 text="Edit"
@@ -109,33 +47,39 @@ const PreviewPane = () => {
                                 disabled={!bookmarkStore.activeBookmark}
                                 id="add-bookmark-button"
                             />
-                        </EditDelete>
-                        <PreviewContent>
+                        </div>
+                        <ScrollContainer style={{ padding: "5px 10px" }}>
                             <PreviewImg
                                 imgUrl={bookmarkStore.activeBookmark.image}
                                 border
                                 style={{ marginBottom: 7 }}
                             />
                             <b>{bookmarkStore.activeBookmark.name}</b>
-                            <Divider />
-                            <Heading>Description</Heading>
+                            <div className={css.divider} />
+                            <label className={css.heading}>Description</label>
                             <p style={{ margin: 0, fontSize: 14 }}>{bookmarkStore.activeBookmark.description}</p>
-                            <Divider />
-                            <Heading>Url</Heading>
+                            <div className={css.divider} />
+                            <label className={css.heading}>Url</label>
                             <Url url={bookmarkStore.activeBookmark.url} />
-                            <Divider />
-                            <Heading>Tags</Heading>
+                            <div className={css.divider} />
+                            <label className={css.heading}>Tags</label>
                             {bookmarkStore.activeBookmark.tags.length > 0 &&
                                 bookmarkStore.activeBookmark.tags.map((tag, i) => (
                                     <Tag key={`${i}-${tag}`} name={tag} style={{ marginBottom: 5 }} />
                                 ))}
-                            <Divider />
-                            <Heading>Timestamps</Heading>
-                            <Date>Created: {formatDate(bookmarkStore.activeBookmark.dateAdded)}</Date>
-                            <Date>Modified: {formatDate(bookmarkStore.activeBookmark.dateModified)}</Date>
-                            <Date>Last Opened: {formatDate(bookmarkStore.activeBookmark.dateOpened)}</Date>
-                        </PreviewContent>
-                        <OpenLink>
+                            <div className={css.divider} />
+                            <label className={css.heading}>Timestamps</label>
+                            <div className={css.date}>
+                                Created: {formatDate(bookmarkStore.activeBookmark.dateAdded)}
+                            </div>
+                            <div className={css.date}>
+                                Modified: {formatDate(bookmarkStore.activeBookmark.dateModified)}
+                            </div>
+                            <div className={css.date}>
+                                Last Opened: {formatDate(bookmarkStore.activeBookmark.dateOpened)}
+                            </div>
+                        </ScrollContainer>
+                        <div className={css.openLink}>
                             <Button
                                 symbol="arrow_forward"
                                 text="Open Link"
@@ -145,10 +89,10 @@ const PreviewPane = () => {
                                 style={{ width: "100%" }}
                                 styleType="primary"
                             />
-                        </OpenLink>
-                    </Container2>
+                        </div>
+                    </div>
                 )}
-            </Container>
+            </div>
         </CSSTransition>
     );
 };

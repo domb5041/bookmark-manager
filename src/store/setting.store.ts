@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { accents } from "../theme";
 import { makePersistable } from "mobx-persist-store";
 
 class settingStore {
@@ -12,6 +11,7 @@ class settingStore {
             debugMode: false
         });
     }
+    accents = ["blue", "purple", "pink", "red", "orange", "yellow", "green"] as const;
 
     themeSetting = "auto";
     setThemeSetting = (setting: "light" | "dark" | "auto") => (this.themeSetting = setting);
@@ -19,12 +19,8 @@ class settingStore {
     themeAuto: "light" | "dark" = "light";
     setThemeAuto = (setting: "light" | "dark") => (this.themeAuto = setting);
 
-    themeActual: "light" | "dark" = this.themeAuto;
-    setThemeActual = (setting: "light" | "dark") => (this.themeActual = setting);
-
-    accentColor: keyof typeof accents = "green";
-    setAccentColor = (color: keyof typeof accents) => (this.accentColor = color);
-
+    accentColor: (typeof this.accents)[number] = this.accents[0];
+    setAccentColor = (color: (typeof this.accents)[number]) => (this.accentColor = color);
     settingsDialogVisible = false;
     showSettingsDialog = () => (this.settingsDialogVisible = true);
     hideSettingsDialog = () => (this.settingsDialogVisible = false);

@@ -1,5 +1,3 @@
-import React from "react";
-import styled from "styled-components";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
 import ToolbarButton from "./common/buttons/ToolButton";
@@ -7,22 +5,12 @@ import TabButton from "./common/buttons/TabButton";
 import TextInput from "./common/textInputs/TextInput";
 import Symbol from "./common/Symbol";
 import MiniButton from "./common/buttons/MiniButton";
-
-const Container = styled.div`
-    display: flex;
-    align-items: flex-start;
-    padding: 10px 15px;
-    flex-shrink: 0;
-`;
-
-const Spacer = styled.div`
-    flex: 1;
-`;
+import css from "./Toolbar.module.css";
 
 const Toolbar = () => {
     const { bookmarkStore, tagStore } = useStores();
     return (
-        <Container id="toolbar">
+        <div className={css.toolbar} id="toolbar">
             <ToolbarButton
                 text="Menu"
                 symbol="menu"
@@ -36,7 +24,7 @@ const Toolbar = () => {
                 onClick={bookmarkStore.showAddBookmarkDialog}
                 id="add-bookmark-button"
             />
-            <Spacer />
+            <div className={css.spacer} />
             <TextInput
                 id="search-bookmarks-input"
                 value={bookmarkStore.searchTerm}
@@ -54,7 +42,7 @@ const Toolbar = () => {
                     )
                 }
             />
-            <Spacer />
+            <div className={css.spacer} />
             <ToolbarButton
                 text="Sort"
                 symbol="sort_by_alpha"
@@ -89,7 +77,7 @@ const Toolbar = () => {
                 onClick={bookmarkStore.toggleBookmarkPreview}
                 id="toggle-preview-button"
             />
-        </Container>
+        </div>
     );
 };
 

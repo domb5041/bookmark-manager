@@ -1,0 +1,100 @@
+:root {
+    color-scheme: light dark;
+}
+
+html {
+    --blue: #2b8af8;
+    --purple: #9460f5;
+    --pink: #fb59bd;
+    --red: #f54a55;
+    --orange: #ef8800;
+    --yellow: #ebb734;
+    --green: #34bc67;
+
+    --background-void: white;
+    --background-surface: color-mix(in srgb, white, black 4%);
+    --background-object: color-mix(in srgb, white, black 10%);
+
+    --border-light: color-mix(in srgb, white, black 15%);
+    --border-heavy: color-mix(in srgb, white, black 25%);
+
+    --foreground-primary: color-mix(in srgb, black, white 10%);
+    --foreground-secondary: color-mix(in srgb, black, white 20%);
+    --foreground-faded: color-mix(in srgb, black, white 50%);
+    --foreground-active: white;
+
+    --accent-darker: color-mix(in srgb, var(--accent-primary), black 10%);
+    --accent-translucent: color-mix(in srgb, var(--accent-primary), transparent 80%);
+
+    background-color: var(--background-void);
+    color: var(--foreground-primary);
+}
+
+[data-theme="dark"] {
+    --background-void: black;
+    --background-surface: color-mix(in srgb, black, white 10%);
+    --background-object: color-mix(in srgb, black, white 20%);
+
+    --border-light: color-mix(in srgb, black, white 25%);
+    --border-heavy: color-mix(in srgb, black, white 30%);
+
+    --foreground-primary: color-mix(in srgb, white, black 10%);
+    --foreground-secondary: color-mix(in srgb, black, white 20%);
+    --foreground-faded: color-mix(in srgb, black, white 50%);
+    --foreground-active: black;
+}
+
+[data-accent="blue"] {
+    --accent-primary: var(--blue);
+}
+[data-accent="purple"] {
+    --accent-primary: var(--purple);
+}
+[data-accent="pink"] {
+    --accent-primary: var(--pink);
+}
+[data-accent="red"] {
+    --accent-primary: var(--red);
+}
+[data-accent="orange"] {
+    --accent-primary: var(--orange);
+}
+[data-accent="yellow"] {
+    --accent-primary: var(--yellow);
+}
+[data-accent="green"] {
+    --accent-primary: var(--green);
+}
+
+::selection {
+    background-color: var(--accent-translucent);
+}
+
+body {
+    margin: 0;
+    font-family: "Heebo", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--background-void);
+    color: var(--foreground-primary);
+}
+
+input,
+button,
+textarea {
+    color: var(--foreground-primary);
+}
+
+label {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--foreground-faded);
+    letter-spacing: 1px;
+    display: block;
+}
+
+.material-symbols-outlined {
+    user-select: none;
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+}

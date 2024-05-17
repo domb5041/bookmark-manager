@@ -1,49 +1,15 @@
 import { observer } from "mobx-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useStores } from "../store";
 import DialogBox from "./common/DialogBox";
 import { writeBatch, doc } from "@firebase/firestore";
 import { db } from "../firebase-config";
-import styled from "styled-components";
 import Symbol from "./common/Symbol";
 import TextInput from "./common/textInputs/TextInput";
 import moment from "moment";
 import Button from "./common/buttons/Button";
-
-const Swatch = styled.div`
-    color: ${(props) => props.theme.color.accent.darker};
-    background-color: ${(props) => props.theme.color.accent.translucent};
-    transition: 0.3s;
-    & > .material-symbols-outlined {
-        transition: 0.3s;
-    }
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-
-export const SwatchSelect = styled.div<{ active: boolean }>`
-    padding: 2px;
-    border-radius: 100%;
-    box-sizing: border-box;
-    border: 2px solid ${(props) => (props.active ? props.theme.color.accent.primary : "transparent")};
-    cursor: pointer;
-`;
-
-const Swatches = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-`;
-
-const Preview = styled(Swatch)`
-    width: 55px;
-    height: 55px;
-    margin: 0 auto 15px auto;
-`;
+import css from "./EditTag.module.css";
+import classNames from "classnames";
 
 const EditTag = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -128,9 +94,9 @@ const EditTag = () => {
                 }
             }}
         >
-            <Preview>
+            <div className={classNames(css.swatch, css.preview)}>
                 <Symbol name={newIcon} size="30px" />
-            </Preview>
+            </div>
             <TextInput
                 label="Title"
                 style={{ marginBottom: 15 }}
@@ -140,15 +106,18 @@ const EditTag = () => {
             />
             <div style={{ marginBottom: 10 }}>
                 <label>Icon</label>
-                <Swatches>
+                <div className={css.swatches}>
                     {icons.map((icon, i) => (
-                        <SwatchSelect key={`${i}-${icon}`} active={newIcon === icon}>
-                            <Swatch key={`${i}-${icon}`} onClick={() => setNewIcon(icon)}>
+                        <div
+                            className={classNames(css.swatchSelect, { [css.active]: newIcon === icon })}
+                            key={`${i}-${icon}`}
+                        >
+                            <div className={css.swatch} key={`${i}-${icon}`} onClick={() => setNewIcon(icon)}>
                                 <Symbol name={icon} size="20px" />
-                            </Swatch>
-                        </SwatchSelect>
+                            </div>
+                        </div>
                     ))}
-                </Swatches>
+                </div>
             </div>
             <Button symbol="delete" onClick={tagStore.showDeleteTagDialog} id="delete-tag-button" />
         </DialogBox>

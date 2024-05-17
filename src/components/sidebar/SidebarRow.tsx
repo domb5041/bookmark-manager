@@ -1,63 +1,8 @@
-import { transparentize } from "polished";
-import React, { FC } from "react";
-import styled from "styled-components";
 import { useStores } from "../../store";
 import Button from "../common/buttons/Button";
 import Symbol from "../common/Symbol";
-
-const Container = styled.div<{ active: boolean }>`
-    padding: 3px 3px 3px 10px;
-    cursor: pointer;
-    background-color: ${(props) => (props.active ? props.theme.color.accent.primary : "transparent")};
-    transition: 0.1s;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    & .tag-name {
-        flex: 1;
-        padding-left: 5px;
-        color: ${(props) => props.active && props.theme.color.foreground.active};
-        font-weight: ${(props) => props.active && 600};
-    }
-    & .tag-count {
-        font-weight: 600;
-        padding-right: 7px;
-        color: ${(props) => (props.active ? props.theme.color.foreground.active : props.theme.color.foreground.faded)};
-    }
-    & .edit-tag-button {
-        height: 27px;
-        width: 35px;
-        display: ${(props) => (props.active ? "flex" : "none")};
-        color: ${(props) => (props.active ? props.theme.color.foreground.active : props.theme.color.foreground.faded)};
-        &:hover:not(:disabled) {
-            background-color: ${(props) =>
-                props.active
-                    ? transparentize(0.8, props.theme.color.foreground.active)
-                    : transparentize(0.9, props.theme.color.foreground.faded)};
-        }
-    }
-    &:hover {
-        background-color: ${(props) =>
-            props.active ? props.theme.color.accent.primary : props.theme.color.background.object};
-        & .edit-tag-button {
-            display: flex;
-        }
-    }
-`;
-
-const Icon = styled.div<{ active: boolean }>`
-    width: 27px;
-    height: 27px;
-    border-radius: 100%;
-    background-color: ${(props) =>
-        props.active ? props.theme.color.foreground.active : props.theme.color.accent.translucent};
-    color: ${(props) => props.theme.color.accent.darker};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-`;
+import css from "./SidebarRow.module.css";
+import classNames from "classnames";
 
 interface ISidebarRowProps {
     icon?: string;
@@ -71,25 +16,25 @@ interface ISidebarRowProps {
     allowEdit?: boolean;
 }
 
-const SidebarRow: FC<ISidebarRowProps> = ({ icon, color, active, count, onClick, name, style, index, allowEdit }) => {
+const SidebarRow = ({ icon, active, count, onClick, name, style, index, allowEdit }: ISidebarRowProps) => {
     const { tagStore } = useStores();
     return (
-        <Container active={active} onClick={onClick} style={style}>
-            <Icon active={active}>
+        <div className={classNames(css.sidebarRow, { [css.active]: active })} onClick={onClick} style={style}>
+            <div className={css.tagIcon}>
                 <Symbol name={icon || "tag"} size="20px" />
-            </Icon>
-            <div className="tag-name">{name}</div>
-            <div className="tag-count">{count}</div>
+            </div>
+            <div className={css.tagName}>{name}</div>
+            <div className={css.tagCount}>{count}</div>
             {allowEdit && (
                 <Button
                     symbol="more_horiz"
                     onClick={tagStore.showEditTagDialog}
-                    className="edit-tag-button"
+                    className={css.editTagButton}
                     id={`edit-tag-button-${index}`}
                     styleType="minimal"
                 />
             )}
-        </Container>
+        </div>
     );
 };
 

@@ -1,15 +1,24 @@
-import React, { FC, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { useEffect, useRef, useState } from "react";
+import css from "./ScrollContainer.module.css";
+import classNames from "classnames";
 
-export const Container = styled.div<{ scrolled: boolean; overflowed: boolean }>`
-    border-top: ${(props) => "1px solid " + (props.scrolled ? props.theme.color.border.light : "transparent")};
-    border-bottom: ${(props) => "1px solid " + (props.overflowed ? props.theme.color.border.light : "transparent")};
-    flex: 1;
-    overflow-y: auto;
-    transition: border 0.2s;
-`;
+interface ScrollContainerPropTypes {
+    children: any;
+    className?: string;
+    style?: any;
+    id?: string;
+    borderTop?: boolean;
+    borderBottom?: boolean;
+}
 
-const ScrollContainer: FC<IScrollContainerProps> = ({ children, className, style, id, borderTop, borderBottom }) => {
+const ScrollContainer = ({
+    children,
+    className,
+    style,
+    id,
+    borderTop = true,
+    borderBottom = true
+}: ScrollContainerPropTypes) => {
     const bodyRef = useRef<HTMLDivElement>(null);
     const [scrolled, setScrolled] = useState(false);
     const [overflowed, setOverflowed] = useState(false);
@@ -31,32 +40,19 @@ const ScrollContainer: FC<IScrollContainerProps> = ({ children, className, style
     }, [children]);
 
     return (
-        <Container
+        <div
             id={id}
             ref={bodyRef}
             onScroll={handleScroll}
-            scrolled={scrolled}
-            overflowed={overflowed}
-            className={className}
+            className={classNames(className, css.container, {
+                [css.scrolled]: scrolled,
+                [css.overflowed]: overflowed
+            })}
             style={style}
         >
             {children}
-        </Container>
+        </div>
     );
-};
-
-interface IScrollContainerProps {
-    children: any;
-    className?: string;
-    style?: any;
-    id?: string;
-    borderTop?: boolean;
-    borderBottom?: boolean;
-}
-
-ScrollContainer.defaultProps = {
-    borderTop: true,
-    borderBottom: true
 };
 
 export default ScrollContainer;

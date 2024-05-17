@@ -1,6 +1,4 @@
 import { observer } from "mobx-react";
-import React, { FC } from "react";
-import styled from "styled-components";
 import { useStores } from "../../store";
 import { IBookmark } from "../../store/bookmark.store";
 import Button from "../common/buttons/Button";
@@ -9,120 +7,41 @@ import Tag from "./Tag";
 import Url from "../common/Url";
 import ScrollContainer from "../common/ScrollContainer";
 import { formatDate } from "../../utilities";
-import { transparentize } from "polished";
-
-const Header = styled.div`
-    display: flex;
-    padding-left: calc(5px + 7px + 30px);
-    padding-right: calc(5px + 4px + 36px);
-    & > label {
-        flex: 1;
-        margin-right: 10px;
-    }
-`;
-
-const Container = styled(ScrollContainer)`
-    padding: 0 5px 5px 5px;
-`;
-
-const Bookmark = styled.div<{ active: boolean; highlight: boolean }>`
-    padding: 4px 4px 4px 7px;
-    border-radius: 5px;
-    font-weight: ${(props) => (props.active ? 600 : 400)};
-    background-color: ${(props) =>
-        props.active
-            ? props.theme.color.accent.primary
-            : props.highlight
-            ? props.theme.color.background.surface
-            : "transparent"};
-    color: ${(props) => props.active && props.theme.color.foreground.active};
-    &:hover {
-        background-color: ${(props) =>
-            props.active ? props.theme.color.accent.primary : props.theme.color.background.object};
-        & > .open-bookmark-button {
-            opacity: 1;
-        }
-    }
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    & > .bookmark-name {
-        flex: 1;
-        margin-right: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 14px;
-    }
-    & > .bookmark-url {
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-right: 10px;
-    }
-    & > .bookmark-tags {
-        display: flex;
-        flex: 1;
-        overflow-x: scroll;
-        /* padding-bottom: 1px; */
-        border-radius: 3px;
-        &::-webkit-scrollbar {
-            display: none;
-        }
-        margin-right: 10px;
-        flex-shrink: 0;
-    }
-    & > .bookmark-date-created {
-        flex: 1;
-        margin-right: 10px;
-        font-size: 14px;
-    }
-    & > .open-bookmark-button {
-        opacity: ${(props) => (props.active ? 1 : 0)};
-        height: 27px;
-        width: 36px;
-        color: ${(props) => (props.active ? props.theme.color.foreground.active : props.theme.color.foreground.faded)};
-        &:hover:not(:disabled) {
-            background-color: ${(props) =>
-                props.active
-                    ? transparentize(0.8, props.theme.color.foreground.active)
-                    : transparentize(0.9, props.theme.color.foreground.faded)};
-        }
-    }
-`;
+import css from "./List.module.css";
+import classNames from "classnames";
 
 interface IListProps {
     bookmarks: IBookmark[] | null;
 }
 
-const List: FC<IListProps> = ({ bookmarks }) => {
+const List = ({ bookmarks }: IListProps) => {
     const { bookmarkStore } = useStores();
     return (
         <>
-            <Header id="bookmarks-container-list-headers">
+            <div className={css.header} id="bookmarks-container-list-headers">
                 <label>title</label>
                 <label>url</label>
                 <label>tags</label>
                 <label>created</label>
-            </Header>
-            <Container id="bookmarks-container-list" borderBottom={false}>
+            </div>
+            <ScrollContainer id="bookmarks-container-list" borderBottom={false} style={{ padding: "0 5px 5px 5px" }}>
                 {bookmarks?.map((bookmark, i) => (
-                    <Bookmark
+                    <div
                         id={`bookmark-${bookmark.id}`}
                         key={bookmark.id}
                         onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
-                        active={bookmarkStore.activeBookmark?.id === bookmark.id}
                         onDoubleClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
-                        highlight={i % 2 === 0}
+                        className={classNames(css.bookmark, {
+                            [css.active]: bookmarkStore.activeBookmark?.id === bookmark.id,
+                            [css.highlight]: i % 2 === 0
+                        })}
                     >
                         <Favicon url={bookmark.favicon} />
-                        <div className="bookmark-name">{bookmark.name}</div>
-                        <div className="bookmark-url">
+                        <div className={css.bookmarkName}>{bookmark.name}</div>
+                        <div className={css.bookmarkUrl}>
                             <Url url={bookmark.url} />
                         </div>
-                        <div className="bookmark-tags">
+                        <div className={css.bookmarkTags}>
                             {bookmark.tags.map((tag, i) => (
                                 <Tag
                                     key={`${i}-${tag}`}
@@ -131,17 +50,17 @@ const List: FC<IListProps> = ({ bookmarks }) => {
                                 />
                             ))}
                         </div>
-                        <div className="bookmark-date-created">{formatDate(bookmark.dateAdded)}</div>
+                        <div className={css.bookmarkDateCreated}>{formatDate(bookmark.dateAdded)}</div>
                         <Button
                             symbol="arrow_forward"
                             onClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
-                            className="open-bookmark-button"
+                            className={css.openBookmarkButton}
                             id={`open-bookmark-button-${i}`}
                             styleType="minimal"
                         />
-                    </Bookmark>
+                    </div>
                 ))}
-            </Container>
+            </ScrollContainer>
         </>
     );
 };

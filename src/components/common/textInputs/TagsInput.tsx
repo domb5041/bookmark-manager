@@ -1,66 +1,15 @@
 import { observer } from "mobx-react";
-import React, { FC, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
 import { useStores } from "../../../store";
 import Tag from "../../bookmarks/Tag";
-import { GenericTextInputContainer } from "./TextInput";
+import css from "./TextInputs.module.css";
+import classNames from "classnames";
 
-const TagsContainer = styled(GenericTextInputContainer)`
-    min-height: 100px;
-    box-sizing: border-box;
-    & > div {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 6px 8px;
-        margin-top: 1px;
-        align-items: flex-start;
-    }
-`;
-
-const HiddenInput = styled.input<{ inputValidationError: boolean }>`
-    min-width: 25px;
-    outline: none;
-    border: none;
-    background-color: transparent;
-    color: ${(props) => (props.inputValidationError ? "red" : "initial")};
-`;
-
-const SuggestionContainer = styled.div`
-    position: relative;
-`;
-
-const TagsSuggest = styled.div`
-    position: absolute;
-    border: 1px solid ${(props) => props.theme.color.border.light};
-    background-color: ${(props) => props.theme.color.background.void};
-    top: 110%;
-    box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy};
-    border-radius: 5px;
-    font-size: 14px;
-`;
-
-const TagSuggestRow = styled.div<{ active: boolean }>`
-    padding: 2px 10px 2px 7px;
-    background-color: ${(props) => (props.active ? props.theme.color.accent.primary : "transparent")};
-    cursor: pointer;
-    white-space: nowrap;
-    &:first-of-type {
-        margin-top: 2px;
-    }
-    &:last-of-type {
-        margin-bottom: 2px;
-    }
-`;
-
-const Error = styled.p`
-    color: red;
-`;
-
-interface ITagsInputProps {
+interface TagsInputPropTypes {
     style?: any;
 }
 
-const TagsInput: FC<ITagsInputProps> = ({ style }) => {
+const TagsInput = ({ style }: TagsInputPropTypes) => {
     const { tagStore } = useStores();
     const [newTag, setNewTag] = useState("");
     const [activeTagIndex, setActiveTagIndex] = useState(-1);
@@ -233,7 +182,14 @@ const TagsInput: FC<ITagsInputProps> = ({ style }) => {
     return (
         <>
             <label>tags</label>
-            <TagsContainer onClick={focusInput} id="tags-input-container" style={style} focused={focused}>
+            <div
+                onClick={focusInput}
+                id="tags-input-container"
+                style={style}
+                className={classNames(css.inputContainer, css.tagsInput, {
+                    [css.focused]: focused
+                })}
+            >
                 <div>
                     {tagStore.tagsInput.map((tag, i) => (
                         <Tag
@@ -250,8 +206,8 @@ const TagsInput: FC<ITagsInputProps> = ({ style }) => {
                             style={{ marginBottom: 5 }}
                         />
                     ))}
-                    <SuggestionContainer id="suggestion-container">
-                        <HiddenInput
+                    <div className={css.suggestionContainer} id="suggestion-container">
+                        <input
                             style={{ width: newTag.length * 10 + "px" }}
                             value={newTag}
                             onChange={(e) => handleInputValueChange(e)}
@@ -266,28 +222,33 @@ const TagsInput: FC<ITagsInputProps> = ({ style }) => {
                             onKeyDown={(e) => handleInputKeyPress(e)}
                             placeholder={tagStore.tagsInput.length > 0 ? "" : "tags"}
                             ref={inputRef}
-                            inputValidationError={inputValidationError}
+                            className={classNames(css.hiddenInput, { [css.validationError]: inputValidationError })}
                         />
                         {tagSuggestions.length > 0 && (
-                            <TagsSuggest id="suggestion-list" style={flipListAlignment ? { right: 0 } : { left: 0 }}>
+                            <div
+                                className={classNames(css.tagSuggest, { [css.alignRight]: flipListAlignment })}
+                                id="suggestion-list"
+                            >
                                 {tagSuggestions.map((tag, i) => (
-                                    <TagSuggestRow
+                                    <div
                                         onMouseDown={(e) => {
                                             e.preventDefault(); // prevent input blur event
                                         }}
                                         onClick={() => handleRowSuggestClick(tag, i)}
                                         key={`${i}-${tag}`}
-                                        active={activeSuggestionIndex === i}
+                                        className={classNames(css.tagSuggestRow, {
+                                            [css.rowActive]: activeSuggestionIndex === i
+                                        })}
                                     >
                                         {tag}
-                                    </TagSuggestRow>
+                                    </div>
                                 ))}
-                            </TagsSuggest>
+                            </div>
                         )}
-                    </SuggestionContainer>
+                    </div>
                 </div>
-            </TagsContainer>
-            {inputValidationError && <Error>Tag already exists</Error>}
+            </div>
+            {inputValidationError && <p className={css.error}>Tag already exists</p>}
         </>
     );
 };

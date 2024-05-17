@@ -1,0 +1,26 @@
+.themes {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.colors {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.color {
+    cursor: pointer;
+    transition: outline 0.1s;
+    background-color: var(--accent-primary);
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    box-sizing: border-box;
+    &.active {
+        outline: 2px solid var(--accent-primary);
+        outline-offset: 2px;
+    }
+}

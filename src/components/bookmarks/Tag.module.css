@@ -1,0 +1,25 @@
+.tag {
+    background-color: var(--accent-translucent);
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 5px;
+    padding: 0 4px;
+    max-width: 150px;
+    overflow: hidden;
+    cursor: pointer;
+    height: 22px;
+    flex-shrink: 0;
+    font-weight: 500;
+    color: var(--accent-darker);
+    &.active {
+        background-color: var(--foreground-active);
+        outline: 2px solid var(--accent-primary);
+    }
+    & .tagName {
+        font-size: 14px;
+        padding: 0 2px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

@@ -1,17 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStores } from "../store";
 import { observer } from "mobx-react";
 import List from "./bookmarks/List";
 import Thumbnails from "./bookmarks/Thumbnails";
-import styled from "styled-components";
-
-const Container = styled.div`
-    display: flex;
-    overflow: hidden;
-    flex: 1;
-    position: relative;
-    flex-direction: column;
-`;
+import css from "./Bookmarks.module.css";
 
 const Bookmarks = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -47,10 +39,10 @@ const Bookmarks = () => {
     }, [bookmarkStore.searchTerm, tagStore.activeFilter, bookmarkStore.bookmarks]);
 
     return (
-        <Container>
+        <div className={css.bookmarks}>
             {bookmarkStore.explorerType === "list" && <List bookmarks={bookmarks} />}
             {bookmarkStore.explorerType === "thumbnails" && <Thumbnails bookmarks={bookmarks} />}
-        </Container>
+        </div>
     );
 };
 

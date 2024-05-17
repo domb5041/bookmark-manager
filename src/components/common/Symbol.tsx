@@ -1,12 +1,6 @@
-import React, { FC } from "react";
-import styled from "styled-components";
+import classNames from "classnames";
 
-const Span = styled.span<{ size?: string; color?: string }>`
-    color: ${(props) => props.color || "inherit"};
-    font-size: ${(props) => props.size || "24px"};
-`;
-
-interface ISymbolProps {
+interface SymbolPropTypes {
     name: string;
     size?: string;
     color?: string;
@@ -14,11 +8,14 @@ interface ISymbolProps {
     style?: any;
 }
 
-const Symbol: FC<ISymbolProps> = ({ name, size, color, style, className }) => {
+const Symbol = ({ name, size = "24px", color = "inherit", style, className }: SymbolPropTypes) => {
     return (
-        <Span className={`material-symbols-outlined ${className || ""}`} size={size} color={color} style={style}>
+        <span
+            className={classNames("material-symbols-outlined", className)}
+            style={{ ...style, color: color, fontSize: size }}
+        >
             {name}
-        </Span>
+        </span>
     );
 };
 

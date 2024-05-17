@@ -1,0 +1,16 @@
+.miniButton {
+    background-color: transparent;
+    color: var(--foreground-faded);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 22px;
+    width: 24px;
+    border-radius: 4px;
+    padding: 0;
+    &:hover {
+        background-color: color-mix(in srgb, var(--foreground-primary), transparent 90%);
+    }
+}

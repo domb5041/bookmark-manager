@@ -1,0 +1,31 @@
+.toolButtonContainer {
+    text-align: center;
+    & .buttonText {
+        font-size: 12px;
+        text-transform: capitalize;
+    }
+}
+
+.button {
+    margin: 0 auto;
+    border: none;
+    background-color: var(--background-void);
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 0 var(--border-heavy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 32px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.1s;
+    flex-shrink: 0;
+    &:hover:not(:disabled) {
+        background-color: var(--background-surface);
+    }
+    &:disabled {
+        cursor: not-allowed;
+        color: grey;
+    }
+}

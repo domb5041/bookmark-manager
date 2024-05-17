@@ -1,0 +1,58 @@
+.previewPane {
+    width: 300px;
+    flex-shrink: 0;
+    background-color: var(--background-surface);
+    border-left: 1px solid var(--border-light);
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+    &.enter {
+        width: 0;
+    }
+    &.enterActive {
+        width: 300px;
+        transition: 0.5s;
+    }
+    &.exit {
+        width: 300px;
+    }
+    &.exitActive {
+        width: 0;
+        transition: 0.5s;
+    }
+}
+
+.previewPaneInner {
+    width: 300px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.editDelete {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 15px;
+}
+
+.date {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.openLink {
+    padding: 10px;
+}
+
+.heading {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.divider {
+    border-style: solid;
+    border-top-width: 0;
+    border-color: var(--border-light);
+    margin: 10px 0;
+}

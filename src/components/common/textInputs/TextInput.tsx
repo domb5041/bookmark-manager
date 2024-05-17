@@ -1,45 +1,8 @@
-import React, { FC, ReactElement, useRef, useState } from "react";
-import styled from "styled-components";
+import React, { ReactElement, useRef, useState } from "react";
+import css from "./TextInputs.module.css";
+import classNames from "classnames";
 
-export const GenericTextInputContainer = styled.div<{ focused: boolean }>`
-    border: 1px solid ${(props) => props.theme.color.border.light};
-    background-color: ${(props) => props.theme.color.background.surface};
-    border-radius: 5px;
-    box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy} inset;
-    cursor: text;
-    outline: ${(props) => (props.focused ? "2px solid " + props.theme.color.accent.primary : "none")};
-    box-sizing: border-box;
-`;
-
-const TextInputContainer = styled(GenericTextInputContainer)<{ leftWidget: boolean; rightWidget: boolean }>`
-    display: flex;
-    align-items: center;
-    padding-left: ${(props) => (props.leftWidget ? 5 : 0)}px;
-    padding-right: ${(props) => (props.rightWidget ? 5 : 0)}px;
-    & > .material-symbols-outlined {
-        color: ${(props) => props.theme.color.foreground.faded};
-        pointer-events: none;
-    }
-    & > * {
-        margin-top: 1px;
-    }
-    & > input {
-        padding-top: 3px;
-        padding-bottom: 3px;
-        padding-left: ${(props) => (props.leftWidget ? 3 : 8)}px;
-        padding-right: ${(props) => (props.rightWidget ? 3 : 8)}px;
-        flex: 1;
-        box-sizing: border-box;
-        width: 100%;
-        font-family: "Heebo", sans-serif;
-        border: none;
-        background-color: transparent;
-        outline: none;
-        font-weight: 400;
-    }
-`;
-
-interface ITextInputProps {
+interface TextInputPropTypes {
     value: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     style?: any;
@@ -51,7 +14,7 @@ interface ITextInputProps {
     rightWidget?: ReactElement | false;
 }
 
-const TextInput: FC<ITextInputProps> = ({
+const TextInput = ({
     value,
     onChange,
     style,
@@ -61,19 +24,21 @@ const TextInput: FC<ITextInputProps> = ({
     disabled,
     leftWidget,
     rightWidget
-}) => {
+}: TextInputPropTypes) => {
     const [focused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     return (
         <>
             {label && <label htmlFor={id}>{label}</label>}
-            <TextInputContainer
+            <div
+                className={classNames(css.inputContainer, css.textBasic, {
+                    [css.focused]: focused,
+                    [css.leftWidget]: leftWidget !== false,
+                    [css.rightWidget]: rightWidget !== false
+                })}
                 style={style}
                 id={id + "-container"}
-                focused={focused}
-                onClick={(e: React.MouseEvent) => inputRef.current?.focus()}
-                leftWidget={leftWidget !== false}
-                rightWidget={rightWidget !== false}
+                onClick={() => inputRef.current?.focus()}
             >
                 {leftWidget && leftWidget}
                 <input
@@ -88,7 +53,7 @@ const TextInput: FC<ITextInputProps> = ({
                     onBlur={() => setFocused(false)}
                 />
                 {rightWidget && rightWidget}
-            </TextInputContainer>
+            </div>
         </>
     );
 };

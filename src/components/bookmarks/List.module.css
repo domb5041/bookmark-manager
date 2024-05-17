@@ -1,0 +1,86 @@
+.header {
+    display: flex;
+    padding-left: calc(5px + 7px + 30px);
+    padding-right: calc(5px + 4px + 36px);
+    & > label {
+        flex: 1;
+        margin-right: 10px;
+    }
+}
+
+.bookmark {
+    padding: 4px 4px 4px 7px;
+    border-radius: 5px;
+    &:hover,
+    &.highlight:hover {
+        background-color: var(--background-object);
+        &.active {
+            background-color: var(--accent-primary);
+        }
+        & > .openBookmarkButton {
+            opacity: 1;
+            color: var(--foreground-primary);
+        }
+    }
+    &.highlight {
+        background-color: var(--background-surface);
+    }
+    &.active,
+    .highlight.active {
+        font-weight: 600;
+        background-color: var(--accent-primary);
+        color: var(--foreground-active);
+        & > .openBookmarkButton {
+            color: var(--foreground-active);
+            opacity: 1;
+            &:hover:not(:disabled) {
+                background-color: color-mix(in srgb, var(--foreground-active), transparent 80%);
+            }
+        }
+    }
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    & > .bookmarkName {
+        flex: 1;
+        margin-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+    }
+    & > .bookmarkUrl {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 10px;
+    }
+    & > .bookmarkTags {
+        display: flex;
+        flex: 1;
+        overflow-x: scroll;
+        /* padding-bottom: 1px; */
+        border-radius: 3px;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+    & > .bookmarkDateCreated {
+        flex: 1;
+        margin-right: 10px;
+        font-size: 14px;
+    }
+    & > .openBookmarkButton {
+        opacity: 0;
+        height: 27px;
+        width: 36px;
+        color: var(--foreground-faded);
+        &:hover:not(:disabled) {
+            background-color: color-mix(in srgb, var(--foreground-faded), transparent 90%);
+        }
+    }
+}

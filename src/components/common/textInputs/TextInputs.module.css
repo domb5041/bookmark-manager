@@ -1,0 +1,121 @@
+.inputContainer {
+    border: 1px solid var(--border-light);
+    background-color: var(--background-surface);
+    border-radius: 5px;
+    box-shadow: 0 1px 0 var(--border-heavy) inset;
+    cursor: text;
+    box-sizing: border-box;
+    &.focused {
+        outline: 2px solid var(--accent-primary);
+    }
+}
+
+.inputContainer.textBasic {
+    display: flex;
+    align-items: center;
+    &.leftWidget {
+        padding-left: 5px;
+        & > input {
+            padding-left: 3px;
+        }
+    }
+    &.rightWidget {
+        padding-right: 5px;
+        & > input {
+            padding-right: 3px;
+        }
+    }
+    & > .material-symbols-outlined {
+        color: var(--foreground-faded);
+        pointer-events: none;
+    }
+    & > * {
+        margin-top: 1px;
+    }
+    & > input {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 8px;
+        padding-right: 8px;
+        flex: 1;
+        box-sizing: border-box;
+        width: 100%;
+        font-family: "Heebo", sans-serif;
+        border: none;
+        background-color: transparent;
+        outline: none;
+        font-weight: 400;
+    }
+}
+
+.inputContainer.textArea {
+    & > textarea {
+        flex: 1;
+        box-sizing: border-box;
+        padding: 6px 8px;
+        margin-top: 1px;
+        resize: none;
+        height: 100px;
+        width: 100%;
+        font-family: "Heebo", sans-serif;
+        outline: none;
+        border: none;
+        background-color: transparent;
+    }
+}
+
+.inputContainer.tagsInput {
+    min-height: 100px;
+    box-sizing: border-box;
+    & > div {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 6px 8px;
+        margin-top: 1px;
+        align-items: flex-start;
+    }
+    .hiddenInput {
+        min-width: 25px;
+        outline: none;
+        border: none;
+        background-color: transparent;
+        &.validationError {
+            color: red;
+        }
+    }
+    .suggestionContainer {
+        position: relative;
+    }
+    .tagSuggest {
+        position: absolute;
+        border: 1px solid var(--border-light);
+        background-color: var(--background-void);
+        top: 110%;
+        box-shadow: 0 1px 0 var(--border-heavy);
+        border-radius: 5px;
+        font-size: 14px;
+        left: 0;
+        &.alignRight {
+            left: auto;
+            right: 0;
+        }
+    }
+    .tagSuggestRow {
+        padding: 2px 10px 2px 7px;
+        &.rowActive {
+            background-color: var(--accent-primary);
+        }
+        cursor: pointer;
+        white-space: nowrap;
+        &:first-of-type {
+            margin-top: 2px;
+        }
+        &:last-of-type {
+            margin-bottom: 2px;
+        }
+    }
+}
+
+.error {
+    color: red;
+}

@@ -1,24 +1,8 @@
-import React, { FC, useRef, useState } from "react";
-import styled from "styled-components";
-import { GenericTextInputContainer } from "./TextInput";
+import React, { useRef, useState } from "react";
+import css from "./TextInputs.module.css";
+import classNames from "classnames";
 
-const TextAreaContainer = styled(GenericTextInputContainer)`
-    & > textarea {
-        flex: 1;
-        box-sizing: border-box;
-        padding: 6px 8px;
-        margin-top: 1px;
-        resize: none;
-        height: 100px;
-        width: 100%;
-        font-family: "Heebo", sans-serif;
-        outline: none;
-        border: none;
-        background-color: transparent;
-    }
-`;
-
-interface ITextareaProps {
+interface TextareaPropTypes {
     value: string;
     onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     style?: any;
@@ -27,17 +11,19 @@ interface ITextareaProps {
     label?: string;
 }
 
-const Textarea: FC<ITextareaProps> = ({ value, onChange, style, id, disabled, label }) => {
+const Textarea = ({ value, onChange, style, id, disabled, label }: TextareaPropTypes) => {
     const [focused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     return (
         <>
             {label && <label htmlFor={id}>{label}</label>}
-            <TextAreaContainer
+            <div
                 style={style}
                 id={id + "-container"}
-                focused={focused}
-                onClick={(e: React.MouseEvent) => inputRef.current?.focus()}
+                onClick={() => inputRef.current?.focus()}
+                className={classNames(css.inputContainer, css.textArea, {
+                    [css.focused]: focused
+                })}
             >
                 <textarea
                     value={value}
@@ -48,7 +34,7 @@ const Textarea: FC<ITextareaProps> = ({ value, onChange, style, id, disabled, la
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
                 />
-            </TextAreaContainer>
+            </div>
         </>
     );
 };

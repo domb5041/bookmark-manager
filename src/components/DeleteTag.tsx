@@ -1,5 +1,4 @@
 import { observer } from "mobx-react";
-import React from "react";
 import { useStores } from "../store";
 import DialogBox from "./common/DialogBox";
 import { writeBatch, doc } from "@firebase/firestore";

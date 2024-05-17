@@ -1,0 +1,29 @@
+.image {
+    width: 100%;
+    background-color: var(--background-void);
+    &.clipped {
+        min-height: 100px;
+        max-height: 200px;
+        object-fit: cover;
+        margin-bottom: -3px;
+    }
+}
+
+.placeholder {
+    background-color: var(--background-void);
+    color: var(--foreground-faded);
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image,
+.placeholder {
+    &.border {
+        border: 1px solid var(--border-light);
+        border-radius: 5px;
+        box-sizing: border-box;
+        box-shadow: 0 1px 0 var(--border-heavy);
+    }
+}

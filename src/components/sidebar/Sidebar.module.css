@@ -1,0 +1,28 @@
+.sidebar {
+    width: 250px;
+    border-right: 1px solid var(--border-light);
+    background-color: var(--background-surface);
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    &.enter {
+        width: 0;
+    }
+    &.enterActive {
+        width: 250px;
+        transition: 0.5s;
+    }
+    &.exit {
+        width: 250px;
+    }
+    &.exitActive {
+        width: 0;
+        transition: 0.5s;
+    }
+}
+
+.sidebarToolbar {
+    display: flex;
+    padding: 10px 15px;
+}

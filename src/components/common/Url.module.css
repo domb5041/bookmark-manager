@@ -1,0 +1,9 @@
+.url {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    & .subdomain {
+        opacity: 0.5;
+    }
+}

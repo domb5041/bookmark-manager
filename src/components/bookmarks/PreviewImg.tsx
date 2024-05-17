@@ -1,37 +1,6 @@
-import React, { FC } from "react";
-import styled, { css } from "styled-components";
 import Symbol from "../common/Symbol";
-
-const borderStyle = css`
-    border: 1px solid ${(props) => props.theme.color.border.light};
-    border-radius: 5px;
-    box-sizing: border-box;
-    box-shadow: 0 1px 0 ${(props) => props.theme.color.border.heavy};
-`;
-
-const Image = styled.img<{ clipImg?: boolean; border?: boolean }>`
-    width: 100%;
-    background-color: ${(props) => props.theme.color.background.void};
-    ${(props) =>
-        props.clipImg &&
-        css`
-            min-height: 100px;
-            max-height: 200px;
-            object-fit: cover;
-            margin-bottom: -3px;
-        `}
-    ${(props) => props.border && borderStyle}
-`;
-
-const Placeholder = styled.div<{ border?: boolean }>`
-    background-color: ${(props) => props.theme.color.background.void};
-    color: ${(props) => props.theme.color.foreground.faded};
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    ${(props) => props.border && borderStyle}
-`;
+import classNames from "classnames";
+import css from "./PreviewImg.module.css";
 
 interface IPreviewImgProps {
     imgUrl?: string;
@@ -40,13 +9,17 @@ interface IPreviewImgProps {
     border?: boolean;
 }
 
-const PreviewImg: FC<IPreviewImgProps> = ({ imgUrl, style, clipImg, border }) => {
+const PreviewImg = ({ imgUrl, style, clipImg, border }: IPreviewImgProps) => {
     return imgUrl ? (
-        <Image src={imgUrl} style={style} clipImg={clipImg} border={border} />
+        <img
+            className={classNames(css.image, { [css.clipped]: clipImg, [css.border]: border })}
+            src={imgUrl}
+            style={style}
+        />
     ) : (
-        <Placeholder style={style} border={border}>
+        <div className={classNames(css.placeholder, { [css.border]: border })} style={style}>
             <Symbol name="web_asset_off" size="100px" />
-        </Placeholder>
+        </div>
     );
 };
 

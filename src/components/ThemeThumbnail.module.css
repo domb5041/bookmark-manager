@@ -1,0 +1,41 @@
+.themeContainer {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.thumbnail {
+    border: 2px solid var(--border-light);
+    height: 70px;
+    border-radius: 7px;
+    cursor: pointer;
+    display: flex;
+    overflow: hidden;
+    &.active {
+        border: 2px solid var(--accent-primary);
+    }
+}
+
+.sidebar {
+    border-right: 1px solid var(--border-light);
+    background-color: var(--background-surface);
+    width: 25px;
+    padding: 6px 3px;
+}
+
+.row {
+    height: 6px;
+    margin-bottom: 6px;
+    background-color: var(--background-surface);
+    border-radius: 2px;
+    &.accent {
+        background-color: var(--accent-primary);
+    }
+}
+
+.mainArea {
+    background-color: var(--background-void);
+    padding: 10px 3px;
+    flex: 1;
+}

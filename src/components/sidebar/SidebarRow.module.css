@@ -1,0 +1,71 @@
+.sidebarRow {
+    padding: 3px 3px 3px 10px;
+    cursor: pointer;
+    transition: 0.1s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    overflow: hidden;
+    & .tagIcon {
+        width: 27px;
+        height: 27px;
+        border-radius: 100%;
+        background-color: var(--accent-translucent);
+        color: var(--accent-darker);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+    }
+    & .tagName {
+        flex: 1;
+        padding-left: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    & .tagCount {
+        font-weight: 600;
+        padding-right: 7px;
+        color: var(--foreground-faded);
+    }
+    & .editTagButton {
+        height: 27px;
+        width: 35px;
+        display: none;
+        color: var(--foreground-faded);
+        &:hover:not(:disabled) {
+            background-color: color-mix(in srgb, var(--foreground-faded), transparent 90%);
+        }
+    }
+    &:hover {
+        background-color: var(--background-object);
+        & .editTagButton {
+            display: flex;
+        }
+    }
+}
+
+.sidebarRow.active {
+    background-color: var(--accent-primary);
+    & .tagIcon {
+        background-color: var(--foreground-active);
+    }
+    & .tagName {
+        color: var(--foreground-active);
+        font-weight: 600;
+    }
+    & .tagCount {
+        color: var(--foreground-active);
+    }
+    & .editTagButton {
+        display: flex;
+        color: var(--foreground-active);
+        &:hover:not(:disabled) {
+            background-color: color-mix(in srgb, var(--foreground-active), transparent 80%);
+        }
+    }
+    &:hover {
+        background-color: var(--accent-primary);
+    }
+}
