@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Button from "../components/common/buttons/Button";
+import MiniButton from "./MiniButton";
 import { fn } from "@storybook/test";
 
-const meta: Meta<typeof Button> = {
-    title: "Button",
-    component: Button,
+const meta: Meta<typeof MiniButton> = {
+    title: "Components/Buttons/MiniButton",
+    component: MiniButton,
     parameters: {
         layout: "centered"
     },
@@ -12,14 +12,12 @@ const meta: Meta<typeof Button> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj<typeof MiniButton>;
 
 export const Primary: Story = {
     args: {
-        text: "Button",
         symbol: "emoji_emotions",
         onClick: fn(),
-        id: "button",
-        styleType: "minimal"
+        id: "minibutton"
     }
 };

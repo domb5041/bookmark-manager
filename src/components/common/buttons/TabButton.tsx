@@ -3,6 +3,7 @@ import css from "./TabButton.module.css";
 import classNames from "classnames";
 
 interface ITabButtonProps {
+    id: string;
     label: string;
     style?: any;
     activeListener: string;
@@ -14,9 +15,9 @@ interface ITabButtonProps {
     }[];
 }
 
-const TabButton = ({ label, style, buttons, activeListener }: ITabButtonProps) => {
+const TabButton = ({ label, style, buttons, activeListener, id }: ITabButtonProps) => {
     return (
-        <div className={css.tabButtonContainer} style={style}>
+        <div className={css.tabButtonContainer} style={style} id={id}>
             <div className={css.tabs}>
                 {buttons.map((b, i) => (
                     <button
@@ -24,6 +25,7 @@ const TabButton = ({ label, style, buttons, activeListener }: ITabButtonProps) =
                         onClick={b.onClick}
                         id={b.id}
                         className={classNames(css.tabButton, { [css.activeTab]: activeListener === b.activeId })}
+                        data-testid={id + "-button-" + i}
                     >
                         <Symbol name={b.icon} size="19px" />
                     </button>

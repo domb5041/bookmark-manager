@@ -11,7 +11,7 @@ interface IButtonProps {
     className?: string;
 }
 
-const MiniButton = ({ symbol, onClick, style, id, disabled, className }: IButtonProps) => {
+const MiniButton = ({ symbol, onClick, style, id, disabled = false, className }: IButtonProps) => {
     return (
         <button
             id={id}
