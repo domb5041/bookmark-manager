@@ -48,3 +48,17 @@
         background-color: var(--background-void-hover);
     }
 }
+
+.contextMenuRow.active {
+    background-color: var(--accent-primary);
+    color: var(--foreground-active);
+    &:hover {
+        background-color: var(--accent-primary);
+    }
+}
+
+.contextMenuRow:not(.active) {
+    & .fadedSymbol {
+        color: var(--foreground-faded);
+    }
+}

@@ -1,0 +1,75 @@
+.miniDialog {
+    user-select: none;
+    position: fixed;
+    left: var(--dialog-left);
+    top: var(--dialog-top);
+    z-index: 3001;
+    background: var(--background-void);
+    border-radius: 5px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 30px;
+    border: 1px solid var(--border-light);
+    transform-origin: var(--dialog-origin);
+    &.enter {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    &.enterActive {
+        opacity: 1;
+        transition: 0.2s;
+        transform: scale(1);
+    }
+    &.exit {
+        opacity: 1;
+        transform: scale(1);
+    }
+    &.exitActive {
+        opacity: 0;
+        transition: 0.2s;
+        transform: scale(0.9);
+    }
+}
+
+.miniDialogHeader {
+    font-size: 12px;
+    display: block;
+    padding: 5px 5px 0 5px;
+    text-align: center;
+}
+
+.miniDialogBody {
+    padding: 5px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.miniDialogFooter {
+    padding: 5px;
+}
+
+.miniDialogArrow {
+    position: absolute;
+    left: var(--arrow-left);
+    top: var(--arrow-top);
+    transform: var(--arrow-rotate);
+    width: 20px;
+    height: 12px;
+    & .arrowFill {
+        fill: var(--background-void);
+    }
+    & .arrowStroke {
+        stroke: var(--border-light);
+    }
+}
+
+.hiddenHideTrigger {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3000;
+}

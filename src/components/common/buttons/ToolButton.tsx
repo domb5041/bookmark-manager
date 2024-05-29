@@ -6,14 +6,14 @@ interface IButtonProps {
     id: string;
     symbol: string;
     disabled?: boolean;
-    onClick: () => void;
+    onClick?: () => void;
     style?: any;
 }
 
-const Button = ({ text, symbol = "build", disabled, onClick, style }: IButtonProps) => {
+const Button = ({ id, text, symbol = "build", disabled, onClick, style }: IButtonProps) => {
     return (
         <div className={css.toolButtonContainer} style={style}>
-            <button disabled={disabled} onClick={onClick} className={css.button}>
+            <button disabled={disabled} onClick={onClick} className={css.button} id={id}>
                 <Symbol name={symbol} size="20px" />
             </button>
             <div className={css.buttonText}>{text}</div>

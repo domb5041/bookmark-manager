@@ -6,6 +6,7 @@ import TextInput from "./common/textInputs/TextInput";
 import Symbol from "./common/Symbol";
 import MiniButton from "./common/buttons/MiniButton";
 import css from "./Toolbar.module.css";
+import SortBookmarks from "./SortBookmarks";
 
 const Toolbar = () => {
     const { bookmarkStore, tagStore } = useStores();
@@ -46,12 +47,11 @@ const Toolbar = () => {
             <ToolbarButton
                 text="Sort"
                 symbol="sort_by_alpha"
-                onClick={() => {
-                    console.log("sort");
-                }}
                 id="sort-bookmarks-button"
                 style={{ marginRight: 17 }}
+                disabled={bookmarkStore.bookmarks.length < 2}
             />
+            <SortBookmarks />
             <TabButton
                 label="view"
                 style={{ marginRight: 15 }}
