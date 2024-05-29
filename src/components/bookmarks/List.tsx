@@ -31,6 +31,12 @@ const List = ({ bookmarks }: IListProps) => {
                         key={bookmark.id}
                         onClick={() => bookmarkStore.setActiveBookmark(bookmark)}
                         onDoubleClick={() => bookmarkStore.openBookmark(bookmark.url, bookmark.id)}
+                        onContextMenu={(e) => {
+                            bookmarkStore.setActiveBookmark(bookmark);
+                            e.preventDefault()
+                            bookmarkStore.showContextMenu()
+                            bookmarkStore.setContextMenuPos(e)
+                        }}
                         className={classNames(css.bookmark, {
                             [css.active]: bookmarkStore.activeBookmark?.id === bookmark.id,
                             [css.highlight]: i % 2 === 0

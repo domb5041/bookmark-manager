@@ -13,6 +13,7 @@ import { ITag } from "./store/tag.store";
 import PreviewPane from "./components/PreviewPane";
 import { observer } from "mobx-react";
 import css from "./App.module.css";
+import ContextMenu from "./components/common/ContextMenu";
 
 export const bookmarksCollectionRef = collection(db, "bookmarks");
 export const tagsCollectionRef = collection(db, "tags");
@@ -124,6 +125,7 @@ function App() {
                 <Bookmarks />
             </div>
             <PreviewPane />
+            <ContextMenu/>
         </div>
     );
 }

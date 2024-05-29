@@ -74,6 +74,22 @@ class bookmarkStore {
         await updateDoc(bookmarkDoc, { dateOpened: date });
         this.activeBookmark.dateOpened = date;
     };
+
+    contextMenuVisible = false;
+    showContextMenu = () => (this.contextMenuVisible = true);
+    hideContextMenu = () => (this.contextMenuVisible = false);
+
+    contextMenuPos = [0, 0];
+    setContextMenuPos = (e: MouseEvent) => {
+        const margin = 2;
+        const menuWidth = 212 + margin;
+        const menuHeight = 118 + margin;
+        const overflowX = e.pageX + menuWidth > window.innerWidth;
+        const overflowY = e.pageY + menuHeight > window.innerHeight;
+        const x = overflowX ? window.innerWidth - menuWidth : e.pageX;
+        const y = overflowY ? window.innerHeight - menuHeight : e.pageY;
+        this.contextMenuPos = [x, y];
+    };
 }
 
 export default bookmarkStore;

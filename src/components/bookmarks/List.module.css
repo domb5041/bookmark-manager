@@ -11,9 +11,11 @@
 .bookmark {
     padding: 4px 4px 4px 7px;
     border-radius: 5px;
+    transition: background-color 0.2s;
+    margin-bottom: 1px;
     &:hover,
     &.highlight:hover {
-        background-color: var(--background-object);
+        background-color: var(--background-surface-hover);
         &.active {
             background-color: var(--accent-primary);
         }

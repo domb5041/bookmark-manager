@@ -1,14 +1,14 @@
 import classNames from "classnames";
 
 interface SymbolPropTypes {
-    name: string;
+    name?: string;
     size?: string;
     color?: string;
     className?: string;
     style?: any;
 }
 
-const Symbol = ({ name, size = "24px", color = "inherit", style, className }: SymbolPropTypes) => {
+const Symbol = ({ name = "close", size = "24px", color = "inherit", style, className }: SymbolPropTypes) => {
     return (
         <span
             className={classNames("material-symbols-outlined", className)}
