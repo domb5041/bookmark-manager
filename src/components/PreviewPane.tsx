@@ -10,15 +10,20 @@ import { CSSTransition } from "react-transition-group";
 import ScrollContainer from "./common/ScrollContainer";
 import { formatDate } from "../utilities";
 import css from "./PreviewPane.module.css";
+import { useMediaQuery } from "react-responsive";
 
 const PreviewPane = () => {
     const { bookmarkStore } = useStores();
     const nodeRef = useRef(null);
 
+    const enoughSpace = useMediaQuery({
+        query: `(min-width: 1000px)`
+    });
+
     return (
         <CSSTransition
             nodeRef={nodeRef}
-            in={bookmarkStore.bookmarkPreviewVisible}
+            in={bookmarkStore.bookmarkPreviewVisible && enoughSpace}
             unmountOnExit
             timeout={500}
             classNames={{

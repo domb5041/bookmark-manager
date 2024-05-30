@@ -24,6 +24,8 @@ const DeleteBookmark = () => {
             title="Delete Bookmark"
             active={bookmarkStore.deleteBookmarkDialogVisible}
             close={bookmarkStore.hideDeleteBookmarkDialog}
+            width="300px"
+            height="200px"
             confirmButton={{
                 text: "delete",
                 id: "delete-bookmark-confirm",

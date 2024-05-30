@@ -7,15 +7,16 @@ interface IButtonProps {
     id: string;
     symbol?: string;
     disabled?: boolean;
-    onClick: () => void;
+    onClick?: () => void;
     style?: any;
     className?: string;
     styleType?: "primary" | "secondary" | "minimal";
 }
 
-const Button = ({ text, symbol, disabled, onClick, style, className, styleType = "secondary" }: IButtonProps) => {
+const Button = ({ id, text, symbol, disabled, onClick, style, className, styleType = "secondary" }: IButtonProps) => {
     return (
         <button
+            id={id}
             disabled={disabled}
             onClick={onClick}
             style={style}

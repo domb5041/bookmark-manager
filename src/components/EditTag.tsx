@@ -84,6 +84,7 @@ const EditTag = () => {
             onEnter={() => {
                 setNewName(tagStore.activeFilter.name);
                 setNewIcon(tagStore.activeFilter.icon);
+                document.getElementById("tag-name-input")?.focus();
             }}
             confirmButton={{
                 text: "update",

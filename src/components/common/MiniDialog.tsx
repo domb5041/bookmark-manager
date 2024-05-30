@@ -42,10 +42,10 @@ const MiniDialog = forwardRef(
 
         useEffect(() => {
             const element = document.getElementById(attachTo);
-            element.addEventListener("click", show);
+            element?.addEventListener("click", show);
             window.addEventListener("resize", hide);
             return () => {
-                element.removeEventListener("click", show);
+                element?.removeEventListener("click", show);
                 window.removeEventListener("resize", hide);
             };
         }, [attachTo]);
@@ -66,6 +66,7 @@ const MiniDialog = forwardRef(
             const calculatePosition = () => {
                 // trigger element dimensions
                 const element = document.getElementById(attachTo);
+                if (!element) return;
                 const triggerBox = element.getBoundingClientRect();
                 const triggerX = triggerBox.left;
                 const triggerY = triggerBox.top;
@@ -213,6 +214,7 @@ const MiniDialog = forwardRef(
                     onEnter={onOpen}
                     onExited={onClose}
                     nodeRef={dialogRef}
+                    onBlur={hide}
                 >
                     <div
                         ref={dialogRef}
