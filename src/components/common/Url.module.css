@@ -4,6 +4,6 @@
     white-space: nowrap;
     font-size: 13px;
     & .subdomain {
-        opacity: 0.5;
+        opacity: 0.6;
     }
 }

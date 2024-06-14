@@ -27,6 +27,9 @@
     &.withIcon .buttonText {
         padding-left: 3px;
     }
+    &:focus:not(:active) {
+        outline: 2px solid var(--accent-primary);
+    }
 }
 
 .button.primary {
@@ -40,6 +43,16 @@
 }
 
 .button.secondary {
+    background-color: var(--accent-secondary);
+    border: none;
+    color: var(--foreground-active);
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--accent-secondary), black 10%);
+    &:hover:not(:disabled) {
+        background-color: color-mix(in srgb, var(--accent-secondary), white 5%);
+    }
+}
+
+.button.default {
     background-color: var(--background-void);
     border: 1px solid var(--border-light);
     box-shadow: 0 1px 0 var(--border-heavy);

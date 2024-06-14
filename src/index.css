@@ -11,67 +11,73 @@ html {
     --pink: #fb59bd;
     --red: #f54a55;
     --orange: #ef8800;
-    --yellow: #ebb734;
+    --yellow: #e0a716;
     --green: #34bc67;
 
     --background-void: white;
-    --background-void-hover: color-mix(in srgb, var(--background-void), black 7%);
-    --background-surface: color-mix(in srgb, white, black 4%);
-    --background-surface-hover: color-mix(in srgb, var(--background-surface), black 7%);
-    --background-object: color-mix(in srgb, white, black 10%);
+    --background-surface: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 99%) 97%);
+    --background-hover: color-mix(in srgb, var(--accent-primary), transparent 80%);
 
-    --border-light: color-mix(in srgb, white, black 15%);
-    --border-heavy: color-mix(in srgb, white, black 25%);
+    --border-light: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 95%) 90%);
+    --border-heavy: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 85%) 80%);
 
-    --foreground-primary: color-mix(in srgb, black, white 10%);
-    --foreground-secondary: color-mix(in srgb, black, white 20%);
-    --foreground-faded: color-mix(in srgb, black, white 50%);
+    --foreground-primary: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 9%) 70%);
+    --foreground-secondary: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 40%) 70%);
+    --foreground-faded: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 55%) 70%);
     --foreground-active: white;
 
     --accent-primary: var(--blue);
-    --accent-darker: color-mix(in srgb, var(--accent-primary), black 10%);
-    --accent-translucent: color-mix(in srgb, var(--accent-primary), transparent 80%);
+    --accent-secondary: var(--yellow);
+    --accent-darker: color-mix(in srgb, var(--accent-secondary), hsl(0, 0%, 10%) 20%);
+    --accent-translucent: color-mix(in srgb, var(--accent-secondary), white 80%);
 
     background-color: var(--background-void);
     color: var(--foreground-primary);
 }
 
 [data-theme="dark"] {
-    --background-void: black;
-    --background-void-hover: color-mix(in srgb, var(--background-void), white 13%);
-    --background-surface: color-mix(in srgb, black, white 10%);
-    --background-surface-hover: color-mix(in srgb, var(--background-surface), white 7%);
-    --background-object: color-mix(in srgb, black, white 20%);
+    --background-void: hsl(0, 0%, 8%);
+    --background-surface: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 8%) 97%);
 
-    --border-light: color-mix(in srgb, black, white 25%);
-    --border-heavy: color-mix(in srgb, black, white 30%);
+    --border-light: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 16%) 90%);
+    --border-heavy: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 25%) 85%);
 
-    --foreground-primary: color-mix(in srgb, white, black 10%);
-    --foreground-secondary: color-mix(in srgb, black, white 20%);
-    --foreground-faded: color-mix(in srgb, black, white 50%);
+    --foreground-primary: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 97%) 80%);
+    --foreground-secondary: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 71%) 70%);
+    --foreground-faded: color-mix(in srgb, var(--accent-primary), hsl(0, 0%, 55%) 70%);
     --foreground-active: black;
+
+    --accent-darker: color-mix(in srgb, var(--accent-secondary), hsl(0, 0%, 90%) 20%);
+    --accent-translucent: color-mix(in srgb, var(--accent-secondary), hsl(0, 0%, 7%) 75%);
 }
 
 [data-accent="blue"] {
     --accent-primary: var(--blue);
+    --accent-secondary: var(--orange);
 }
 [data-accent="purple"] {
     --accent-primary: var(--purple);
+    --accent-secondary: var(--yellow);
 }
 [data-accent="pink"] {
     --accent-primary: var(--pink);
+    --accent-secondary: var(--blue);
 }
 [data-accent="red"] {
     --accent-primary: var(--red);
+    --accent-secondary: var(--purple);
 }
 [data-accent="orange"] {
     --accent-primary: var(--orange);
+    --accent-secondary: var(--purple);
 }
 [data-accent="yellow"] {
     --accent-primary: var(--yellow);
+    --accent-secondary: var(--blue);
 }
 [data-accent="green"] {
     --accent-primary: var(--green);
+    --accent-secondary: var(--purple);
 }
 
 ::selection {

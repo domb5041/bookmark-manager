@@ -4,6 +4,7 @@
         font-size: 12px;
         text-transform: capitalize;
         margin-top: -1px;
+        color: var(--foreground-secondary);
     }
 }
 
@@ -28,6 +29,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    background-color: transparent;
     &.activeTab {
         background-color: var(--background-void);
         color: var(--foreground-primary);

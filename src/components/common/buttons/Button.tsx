@@ -10,10 +10,10 @@ interface IButtonProps {
     onClick?: () => void;
     style?: any;
     className?: string;
-    styleType?: "primary" | "secondary" | "minimal";
+    styleType?: "default" | "primary" | "secondary" | "minimal";
 }
 
-const Button = ({ id, text, symbol, disabled, onClick, style, className, styleType = "secondary" }: IButtonProps) => {
+const Button = ({ id, text, symbol, disabled, onClick, style, className, styleType = "default" }: IButtonProps) => {
     return (
         <button
             id={id}

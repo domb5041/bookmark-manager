@@ -21,7 +21,7 @@ const SidebarRow = ({ icon, active, count, onClick, name, style, index, allowEdi
     return (
         <div className={classNames(css.sidebarRow, { [css.active]: active })} onClick={onClick} style={style}>
             <div className={css.tagIcon}>
-                <Symbol name={icon || "tag"} size="20px" />
+                <Symbol name={icon || "tag"} size="19px" />
             </div>
             <div className={css.tagName}>{name}</div>
             <div className={css.tagCount}>{count}</div>

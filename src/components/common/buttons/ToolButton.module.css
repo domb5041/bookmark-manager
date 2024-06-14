@@ -3,6 +3,7 @@
     & .buttonText {
         font-size: 12px;
         text-transform: capitalize;
+        color: var(--foreground-secondary);
     }
 }
 
@@ -27,5 +28,8 @@
     &:disabled {
         cursor: not-allowed;
         color: grey;
+    }
+    &:focus:not(:active) {
+        outline: 2px solid var(--accent-primary);
     }
 }

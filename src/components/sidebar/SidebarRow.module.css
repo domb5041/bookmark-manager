@@ -35,11 +35,11 @@
         display: none;
         color: var(--foreground-faded);
         &:hover:not(:disabled) {
-            background-color: color-mix(in srgb, var(--foreground-faded), transparent 90%);
+            background-color: var(--background-hover);
         }
     }
     &:hover {
-        background-color: var(--background-object);
+        background-color: var(--background-hover);
         & .editTagButton {
             display: flex;
         }
