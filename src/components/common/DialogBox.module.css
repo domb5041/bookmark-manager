@@ -22,6 +22,9 @@
         max-height: 100%;
         border: 1px solid var(--border-light);
     }
+    &:not(.enter) .panel {
+        transition: width, height, 0.3s;
+    }
     &.enter {
         opacity: 0;
         & .panel {

@@ -37,8 +37,13 @@
 }
 
 .date {
+    & label {
+        font-size: 13px;
+    }
     font-size: 13px;
     margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .openLink {

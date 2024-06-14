@@ -11,6 +11,8 @@ import TagsInput from "./common/textInputs/TagsInput";
 import TextInput from "./common/textInputs/TextInput";
 import moment from "moment";
 import Textarea from "./common/textInputs/Textarea";
+import MiniButton from "./common/buttons/MiniButton";
+import LoadingWheel from "./common/LoadingWheel";
 
 interface IPreview {
     contentType: string;
@@ -27,10 +29,12 @@ interface IPreview {
 const AddBookmark = () => {
     const { bookmarkStore, tagStore } = useStores();
     const [url, setUrl] = useState("");
+    const [gettingPreview, setGettingPreview] = useState(false);
     const [preview, setPreview] = useState<IPreview | null>(null);
 
     const createBookmark = async () => {
         if (!preview) return;
+        console.log(preview);
         await addDoc(bookmarksCollectionRef, {
             name: preview.title || "",
             description: preview.description || "",
@@ -43,36 +47,53 @@ const AddBookmark = () => {
     };
 
     const getPreview = (url: string) => {
+        setGettingPreview(true);
         axios({
             method: "get",
             url: `/api/linkPreview?url=${url}`
         })
             .then((res) => {
+                setGettingPreview(false);
                 setPreview(res.data);
-                // console.log(res.data);
+                console.log(res.data);
             })
             .catch((err: Error) => {
                 console.error(err);
-                setPreview(null);
+                setGettingPreview(false);
+                setPreview({
+                    title: "",
+                    description: "",
+                    url: url,
+                    images: [],
+                    favicons: []
+                });
             });
     };
 
     const resetDialog = () => {
-        bookmarkStore.hideAddBookmarkDialog();
         tagStore.setTagsInput([]);
         setPreview(null);
         setUrl("");
+        setGettingPreview(false);
+    };
+
+    const updateField = (field: string, e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const newPreview = { ...preview, [field]: e.target.value } as IPreview;
+        setPreview(newPreview);
     };
 
     return (
         <DialogBox
             title="Add Bookmark"
             active={bookmarkStore.addBookmarkDialogVisible}
-            close={resetDialog}
-            onEnter={() => tagStore.setTagsInput([])}
+            close={bookmarkStore.hideAddBookmarkDialog}
+            onExited={resetDialog}
+            height={preview ? "850px" : gettingPreview ? "400px" : "200px"}
+            width="400px"
             confirmButton={{
                 text: "save",
                 id: "save-bookmark-confirm",
+                disabled: !preview,
                 onClick: () => {
                     createBookmark();
                     resetDialog();
@@ -88,33 +109,41 @@ const AddBookmark = () => {
                 onChange={(e) => {
                     if (isValidHttpUrl(e.target.value)) {
                         debounce(() => getPreview(e.target.value), 500);
+                    } else {
+                        tagStore.setTagsInput([]);
+                        setPreview(null);
                     }
                     setUrl(e.target.value);
                 }}
+                rightWidget={
+                    preview !== null && <MiniButton id="reset-add-bookmark" onClick={resetDialog} symbol="close" />
+                }
+                disabled={preview !== null}
             />
-            <div style={{ marginBottom: 15 }}>
-                <label>Preview</label>
-                <PreviewImg imgUrl={preview?.images?.[0]} border />
-            </div>
+            <LoadingWheel isVisible={gettingPreview} />
             {preview && (
                 <>
+                    <div style={{ marginBottom: 15 }}>
+                        <label>Preview</label>
+                        <PreviewImg imgUrl={preview?.images?.[0]} border />
+                    </div>
                     <TextInput
                         label="Title"
                         style={{ marginBottom: 15 }}
                         id="title-input"
                         value={preview.title}
-                        disabled
+                        onChange={(e) => updateField("title", e)}
                     />
                     <Textarea
                         label="Description"
                         style={{ marginBottom: 15 }}
                         id="description-input"
                         value={preview.description}
-                        disabled
+                        onChange={(e) => updateField("description", e)}
                     />
+                    <TagsInput />
                 </>
             )}
-            <TagsInput />
         </DialogBox>
     );
 };

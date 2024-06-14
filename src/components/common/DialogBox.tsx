@@ -16,6 +16,7 @@ interface DialogBoxPropTypes {
         id: string;
     };
     onEnter?: () => void;
+    onExited?: () => void;
     width?: string;
     height?: string;
 }
@@ -27,6 +28,7 @@ const DialogBox = ({
     title,
     confirmButton,
     onEnter,
+    onExited,
     width = "350px",
     height = "600px"
 }: DialogBoxPropTypes) => {
@@ -44,6 +46,7 @@ const DialogBox = ({
                 exitActive: css.exitActive
             }}
             onEnter={onEnter}
+            onExited={onExited}
         >
             <div className={css.container} ref={nodeRef}>
                 <div

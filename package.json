@@ -40,6 +40,7 @@
     },
     "scripts": {
         "dev": "vite",
+        "vercel-dev": "vercel dev",
         "build": "vite build",
         "storybook": "storybook dev -p 6006 --no-open",
         "build-storybook": "storybook build"

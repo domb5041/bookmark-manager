@@ -20,6 +20,10 @@ const PreviewPane = () => {
         query: `(min-width: 1000px)`
     });
 
+    if (!bookmarkStore.activeBookmark) return;
+
+    const { image, name, description, url, tags, dateAdded, dateModified, dateOpened } = bookmarkStore.activeBookmark;
+
     return (
         <CSSTransition
             nodeRef={nodeRef}
@@ -54,35 +58,52 @@ const PreviewPane = () => {
                             />
                         </div>
                         <ScrollContainer style={{ padding: "5px 10px" }}>
-                            <PreviewImg
-                                imgUrl={bookmarkStore.activeBookmark.image}
-                                border
-                                style={{ marginBottom: 7 }}
-                            />
-                            <b>{bookmarkStore.activeBookmark.name}</b>
-                            <div className={css.divider} />
-                            <label className={css.heading}>Description</label>
-                            <p style={{ margin: 0, fontSize: 14 }}>{bookmarkStore.activeBookmark.description}</p>
-                            <div className={css.divider} />
-                            <label className={css.heading}>Url</label>
-                            <Url url={bookmarkStore.activeBookmark.url} />
-                            <div className={css.divider} />
-                            <label className={css.heading}>Tags</label>
-                            {bookmarkStore.activeBookmark.tags.length > 0 &&
-                                bookmarkStore.activeBookmark.tags.map((tag, i) => (
-                                    <Tag key={`${i}-${tag}`} name={tag} style={{ marginBottom: 5 }} />
-                                ))}
-                            <div className={css.divider} />
-                            <label className={css.heading}>Timestamps</label>
-                            <div className={css.date}>
-                                Created: {formatDate(bookmarkStore.activeBookmark.dateAdded)}
-                            </div>
-                            <div className={css.date}>
-                                Modified: {formatDate(bookmarkStore.activeBookmark.dateModified)}
-                            </div>
-                            <div className={css.date}>
-                                Last Opened: {formatDate(bookmarkStore.activeBookmark.dateOpened)}
-                            </div>
+                            {image && <PreviewImg imgUrl={image} border style={{ marginBottom: 12 }} />}
+                            {name && (
+                                <>
+                                    <b>{name}</b>
+                                    <div className={css.divider} />
+                                </>
+                            )}
+                            {description && (
+                                <>
+                                    <label className={css.heading}>Description</label>
+                                    <p style={{ margin: 0, fontSize: 14 }}>{description}</p>
+                                    <div className={css.divider} />
+                                </>
+                            )}
+                            {url && (
+                                <>
+                                    <label className={css.heading}>Url</label>
+                                    <Url url={url} />
+                                    <div className={css.divider} />
+                                </>
+                            )}
+                            {tags.length > 0 && (
+                                <>
+                                    <label className={css.heading}>Tags</label>
+                                    {tags.length > 0 &&
+                                        tags.map((tag, i) => (
+                                            <Tag key={`${i}-${tag}`} name={tag} style={{ marginBottom: 5 }} />
+                                        ))}
+                                    <div className={css.divider} />
+                                </>
+                            )}
+                            {dateAdded && (
+                                <div className={css.date}>
+                                    <label>Created</label> {formatDate(dateAdded)}
+                                </div>
+                            )}
+                            {dateModified && (
+                                <div className={css.date}>
+                                    <label>Modified</label> {formatDate(dateModified)}
+                                </div>
+                            )}
+                            {dateOpened && (
+                                <div className={css.date}>
+                                    <label>Opened</label> {formatDate(dateOpened)}
+                                </div>
+                            )}
                         </ScrollContainer>
                         <div className={css.openLink}>
                             <Button
