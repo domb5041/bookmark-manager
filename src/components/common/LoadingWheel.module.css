@@ -2,14 +2,72 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100px;
+    &.enter {
+        opacity: 0;
+        & .loadingWheel {
+            transform: scale(0.8) rotate(-90deg);
+        }
+    }
+    &.enterActive {
+        opacity: 1;
+        transition: 0.5s;
+        & .loadingWheel {
+            transform: scale(1) rotate(0);
+            transition: 0.5s;
+        }
+    }
+    &.exit {
+        opacity: 1;
+        & .loadingWheel {
+            transform: scale(1) rotate(0);
+        }
+    }
+    &.exitActive {
+        opacity: 0;
+        transition: 0.5s;
+        & .loadingWheel {
+            transform: scale(0.8) rotate(90deg);
+            transition: 0.5s;
+        }
+    }
+}
+
+.container.contained {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.container.inline {
+    position: block;
+}
+
+.container.hide {
+    background-color: var(--foreground-active);
+}
+.container.fade {
+    background-color: color-mix(in oklab, var(--foreground-active), transparent 50%);
+}
+.container.none {
+    background-color: transparent;
 }
 
 .loadingWheel {
     position: relative;
-    width: 30px;
-    height: 30px;
-    /* border: 1px solid red; */
+    min-width: 15px;
+    min-height: 15px;
+    max-width: 70px;
+    max-height: 70px;
     & > div {
         position: absolute;
         /* border: 1px solid red; */
@@ -20,13 +78,27 @@
         animation-name: pulse;
         animation-iteration-count: infinite;
         opacity: 0.2;
+        width: 9%;
+        min-width: 2.5px;
+        max-width: 4px;
         & > div {
-            background-color: var(--accent-primary);
-            width: 2.5px;
-            height: 8px;
             border-radius: 20px;
+            width: 100%;
+            height: 55%;
+            min-height: 4px;
         }
     }
+}
+
+.loadingWheel.default > div > div {
+    background-color: var(--accent-primary);
+}
+.loadingWheel.primary > div > div,
+.loadingWheel.secondary > div > div {
+    background-color: var(--foreground-active);
+}
+.loadingWheel.minimal > div > div {
+    background-color: var(--foreground-faded);
 }
 
 @keyframes pulse {

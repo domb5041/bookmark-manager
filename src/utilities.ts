@@ -23,3 +23,10 @@ export const formatDate = (timestamp: number | undefined) => {
     if (!timestamp) return "Never";
     return moment.unix(timestamp).format("ddd, D MMM YYYY, H:mm");
 };
+
+export const formatUrl = (url: string) => {
+    const partsToRemove = /https?:\/\/|www./g;
+    const trimmedStart = url.replace(partsToRemove, "");
+    const urlParts = trimmedStart.split("/");
+    return urlParts;
+};

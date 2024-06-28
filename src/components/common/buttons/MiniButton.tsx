@@ -1,6 +1,7 @@
 import Symbol from "../../common/Symbol";
 import css from "./MiniButton.module.css";
 import classNames from "classnames";
+import LoadingWheel from "../LoadingWheel";
 
 interface IButtonProps {
     id: string;
@@ -9,18 +10,20 @@ interface IButtonProps {
     style?: any;
     disabled?: boolean;
     className?: string;
+    loading?: boolean;
 }
 
-const MiniButton = ({ symbol, onClick, style, id, disabled = false, className }: IButtonProps) => {
+const MiniButton = ({ symbol, onClick, style, id, disabled = false, className, loading = false }: IButtonProps) => {
     return (
         <button
             id={id}
             onClick={onClick}
             style={style}
-            disabled={disabled}
+            disabled={disabled || loading}
             className={classNames(className, css.miniButton)}
         >
-            <Symbol name={symbol} size="18px" />
+            {!loading && <Symbol name={symbol} size="18px" className={css.buttonSymbol} />}
+            <LoadingWheel isVisible={loading} size={18} background="none" color="minimal" />
         </button>
     );
 };

@@ -17,7 +17,6 @@ type Story = StoryObj<typeof Button>;
 export const Primary: Story = {
     args: {
         text: "Button",
-        symbol: "emoji_emotions",
         onClick: fn(),
         id: "button",
         styleType: "primary"

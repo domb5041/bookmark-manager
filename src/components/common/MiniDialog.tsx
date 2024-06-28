@@ -214,7 +214,6 @@ const MiniDialog = forwardRef(
                     onEnter={onOpen}
                     onExited={onClose}
                     nodeRef={dialogRef}
-                    onBlur={hide}
                 >
                     <div
                         ref={dialogRef}
@@ -257,7 +256,7 @@ const MiniDialog = forwardRef(
                         </svg>
                     </div>
                 </CSSTransition>
-                {isVisible && <div onMouseDown={hide} id={`${id}-hidden-close`} className={css.hiddenHideTrigger} />}
+                {isVisible && <div onClick={hide} id={`${id}-hidden-close`} className={css.hiddenHideTrigger} />}
             </>
         );
     }

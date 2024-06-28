@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Symbol from "../common/Symbol";
 
 interface IFaviconProps {
@@ -5,7 +6,12 @@ interface IFaviconProps {
 }
 
 const Favicon = ({ url }: IFaviconProps) => {
-    return url ? <img src={url} alt="favicon" style={{ width: 20 }} /> : <Symbol name="image" size="20px" />;
+    const [error, setError] = useState(false);
+    return url && !error ? (
+        <img onError={() => setError(true)} src={url} alt="favicon" style={{ width: 20 }} />
+    ) : (
+        <Symbol name="image" size="20px" />
+    );
 };
 
 export default Favicon;

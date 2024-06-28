@@ -14,6 +14,8 @@ interface DialogBoxPropTypes {
         onClick: () => void;
         disabled?: boolean;
         id: string;
+        loading?: boolean;
+        style?: any;
     };
     onEnter?: () => void;
     onExited?: () => void;
@@ -64,9 +66,9 @@ const DialogBox = ({
                             disabled={confirmButton.disabled}
                             onClick={() => {
                                 confirmButton.onClick();
-                                close();
                             }}
                             styleType="primary"
+                            loading={confirmButton.loading}
                         />
                     </div>
                 </div>

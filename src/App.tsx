@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import EditBookmark from "./components/EditBookmark";
 import Sidebar from "./components/sidebar/Sidebar";
 import Toolbar from "./components/Toolbar";
 import Bookmarks from "./components/Bookmarks";
@@ -119,13 +118,12 @@ function App() {
             <Sidebar />
             <div className={css.mainArea} id="container-right">
                 <Toolbar />
-                <EditBookmark />
                 <AddBookmark />
                 <DeleteBookmark />
                 <Bookmarks />
             </div>
             <PreviewPane />
-            <ContextMenu/>
+            <ContextMenu />
         </div>
     );
 }

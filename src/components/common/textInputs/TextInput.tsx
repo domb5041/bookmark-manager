@@ -5,6 +5,7 @@ import classNames from "classnames";
 interface TextInputPropTypes {
     value: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     style?: any;
     id: string;
     label?: string;
@@ -23,7 +24,8 @@ const TextInput = ({
     placeholder,
     disabled,
     leftWidget,
-    rightWidget
+    rightWidget,
+    onKeyDown
 }: TextInputPropTypes) => {
     const [focused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -49,8 +51,10 @@ const TextInput = ({
                     placeholder={placeholder}
                     disabled={disabled}
                     autoComplete="off"
+                    data-form-type="other"
                     onFocus={() => setFocused(true)}
                     onBlur={() => setFocused(false)}
+                    onKeyDown={onKeyDown}
                 />
                 {rightWidget && rightWidget}
             </div>

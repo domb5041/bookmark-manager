@@ -1,4 +1,5 @@
 import css from "./Url.module.css";
+import { formatUrl } from "../../utilities";
 
 interface UrlPropTypes {
     url: string;
@@ -6,19 +7,14 @@ interface UrlPropTypes {
 }
 
 const Url = ({ url, style }: UrlPropTypes) => {
-    const formatUrl = () => {
-        const partsToRemove = /https?:\/\/|www./g;
-        const trimmedStart = url.replace(partsToRemove, "");
-        const urlParts = trimmedStart.split("/");
-        return (
-            <div className={css.url} style={style}>
-                {urlParts[0]}
-                {urlParts[1] && <span className={css.subdomain}>/{urlParts[1]}</span>}
-            </div>
-        );
-    };
+    const formattedUrl = formatUrl(url);
 
-    return formatUrl();
+    return (
+        <div className={css.url} style={style}>
+            {formattedUrl[0]}
+            {formattedUrl[1] && <span className={css.subdomain}>/{formattedUrl[1]}</span>}
+        </div>
+    );
 };
 
 export default Url;

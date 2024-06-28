@@ -9,9 +9,9 @@ export interface IBookmark {
     name: string;
     url: string;
     tags: string[];
-    image?: string;
-    favicon?: string;
-    description?: string;
+    image: string;
+    favicon: string;
+    description: string;
     dateAdded: number;
     dateModified?: number;
     dateOpened?: number;
